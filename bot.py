@@ -9,6 +9,7 @@ from discord import Game
 from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
+# this bot made for the bcs pogo community with love
 
 
 TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY'
