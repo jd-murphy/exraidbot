@@ -1,3 +1,4 @@
 discord.py
 requests
 apiclient
+apiclient.discovery
