@@ -2,4 +2,3 @@ discord.py
 requests
 google-api-python-client
 oauth2client
-csv
