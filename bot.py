@@ -4,8 +4,7 @@ import requests
 import asyncio
 from discord.ext.commands import Bot
 from discord import Game
-from apiclient import discovery
-from apiclient.discovery import build
+from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
 
