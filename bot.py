@@ -271,16 +271,16 @@ async def createNewExRaid(context, gym_name):
                 description='Get a location pin for the gym.', 
                 brief='Get a location pin for the gym.')
 async def pin(context, gym_name):
-    RANGE_NAME = "All!A1:C20"
+    RANGE_NAME = "All!A2:C2"
     result = service.spreadsheets().values().get(spreadsheetId=PIN_SPREADSHEET_ID, range=RANGE_NAME).execute()
     values = result.get('values', [])
     if not values:
         msg = 'No data found.'
         print('No data found.')
     else:
-        msg = "Gyms in BCS: \n"
+        msg = "Gym in BCS: \n"
         for cell in values:
-            msg += (cell[0] + "\n")
+            msg += (cell[0] + "\n" + cell[1] + "\n" + cell[2])
     await client.say(msg)
 
 
