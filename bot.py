@@ -3,11 +3,13 @@ import os
 import random
 import requests
 import asyncio
+import csv
 from discord.ext.commands import Bot
 from discord import Game
 from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
+
 
 TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY'
 BOT_PREFIX = ("$", "!")
@@ -27,6 +29,7 @@ SPREADSHEET_ID = '15rbINq27Qt5lN-xl2FutRyzE93o4dH381mpStNGKCLc' #mine
 PIN_SPREADSHEET_ID = '1ocKnXUDbgy-9ty0tFE7gAx3PR1cY9dne5wfjPu9dymI'
 
 RAIDS = ['Empty list']
+GYMS = {}
 emoji = [
         ':100:',
         ':ok_hand:',
@@ -61,6 +64,7 @@ async def help():
         "**!join [number]**    Sign up for an Ex Raid.\n\n" + \
         "**!leave [number]**    Remove your name from the sheet for a raid.\n\n" + \
         "**!createNewExRaid [gym name]**    Create a new sheet for an Ex Raid that is not on the list.\n\n" + \
+        "**!pin [gym name]**    Get a location pin for the gym. Please type one word unique to the gym name *OR* more than one word in quotation marks, such as: \n      **!pin fellowship**\n      **!pin \"sky cutter\" **\n\n" + \
         ":point_right:    Type   **!raids**   to get started! ")
     await client.say(msg)
         
@@ -68,6 +72,7 @@ async def help():
 @client.event
 async def on_ready():
     resetRaids()
+    loadGyms()
     await client.change_presence(game=Game(name="Pokemon Go, duh"))
     print("Logged in as " + client.user.name)
 
@@ -270,22 +275,44 @@ async def createNewExRaid(context, gym_name):
 @client.command(pass_context=True,
                 description='Get a location pin for the gym.', 
                 brief='Get a location pin for the gym.')
-async def pin(context, gym_name):
-    RANGE_NAME = "All!A2:C2"
-    result = service.spreadsheets().values().get(spreadsheetId=PIN_SPREADSHEET_ID, range=RANGE_NAME).execute()
-    values = result.get('values', [])
-    if not values:
-        msg = 'No data found.'
-        print('No data found.')
-    else:
-        msg = "Gym in BCS: \n"
-        for cell in values:
-            msg += (cell[0] + "\n" + cell[1] + "\n" + cell[2])
-    await client.say(msg)
+async def pin(context, gym_name):    
+    # RANGE_NAME = "All!A2:C250"
+    # result = service.spreadsheets().values().get(spreadsheetId=PIN_SPREADSHEET_ID, range=RANGE_NAME).execute()
+    # values = result.get('values', [])
+    # if not values:
+    #     msg = 'No data found.'
+    #     print('No data found.')
+    # else:
+    #     for cell in values:
+    #         msg += (cell[0] + ": \n" + cell[2])
+    # await client.say(msg)
 
 
 
 
+    # gym = (value for key, value in GYMS.items() if gym_name.lower in key.lower())
+
+    for key, value in GYMS.items():
+        if gym_name.lower() in key.lower():
+            gym = value
+
+    # gym = GYMS.get('Dixie Chicken')
+    # print("\n\ngym " + gym)
+    if gym is None:
+        gym = "Sorry, try searching a different keyword."
+
+    await client.say(gym)
+
+
+def loadGyms():
+    with open("gyms.txt", mode="r") as infile:
+        reader = csv.reader(infile)
+        for row in reader:
+            k = row[0]
+            v = row[2]
+            GYMS[k] = v
+    print(GYMS['Dixie Chicken'])
+    
 
 # async def list_servers():
 #     await client.wait_until_ready()
