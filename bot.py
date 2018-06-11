@@ -51,6 +51,56 @@ emoji = [
         ':innocent:',
         ':thumbsup:'
     ]
+mentionResponses = [
+        ':100:',
+        ':ok_hand:',
+        ':sunglasses:',
+        ':yum:',
+        ':stuck_out_tongue_closed_eyes:',
+        ':grinning:',
+        ':heart_eyes:',
+        ':money_mouth:',
+        ':hugging:',
+        ':robot:',
+        ':clap:',
+        ':call_me:',
+        ':see_no_evil:',
+        ':tada:',
+        ':space_invader:',
+        ':cool:',
+        ':innocent:',
+        ':thumbsup:',
+        'I\'m ready to party',
+        'Wassup?',
+        'Howdy!',
+        'I\'m heading to Walmart, want anything?',
+        'Don\'t call me that in public...',
+        'Hey, cutie',
+        'Gig em!',
+        'I\'m still here',
+        'At your beck and call.',
+        'It\'s a great day to be a bot!',
+        'Checkitoutcheckitoutcheckitoutcheckitout',
+        'Can you hear me now?',
+        'You\'re a wizard, Harry.',
+        'Have you tried turning it off and on again?',
+        '**POGO IS LIFE**',
+        '*@ExRaidBot is typing...*',
+        'I\'m not that innocent',
+        'Some **BODY** once told me...', 
+        'I got you, fam',
+        'What happens on Discord, stays on Discord.',
+        'E.X. raid bot phone home',
+        'Bot. James Bot.',
+        'Pikachu! I choose you!',
+        'I hereby bestow shiny Magikarp luck upon you.',
+        '#winning',
+        'Omg I can\'t even',
+        '*insert witty bot response*',
+        'Error 404: response not found',
+        'Talk to me.',
+        'Okay, Let\'s start over. Hi, I\'m bot.' 
+    ]
 
 
 
@@ -76,6 +126,7 @@ async def on_ready():
     loadGyms()
     await client.change_presence(game=Game(name="Pokemon Go, duh"))
     print("Logged in as " + client.user.name)
+
 
 
 
@@ -315,6 +366,19 @@ def loadGyms():
     print(GYMS['Dixie Chicken'])
     
 
+@client.event
+async def on_message(message):
+    
+    if client.user in message.mentions:
+        if 'fuck you' in message.content.lower() or 'fuck off' in message.content.lower():
+            await client.send_message(message.channel, ("yo, chill tf out\n\n\n**Blacklist user:** " + message.author.mention))
+        elif 'you suck' in message.content.lower():
+            await client.send_message(message.channel, ("okay, then don't ask me to do anything for you\n\n\n**Blacklist user:** " + message.author.mention + "\nbye, felicia   :nail_care:"))
+        else:
+            await client.send_message(message.channel, (random.choice(mentionResponses)))
+    await client.process_commands(message)
+        
+
 # async def list_servers():
 #     await client.wait_until_ready()
 #     while not client.is_closed:
@@ -325,4 +389,5 @@ def loadGyms():
 
 
 # client.loop.create_task(list_servers())
+
 client.run(TOKEN)
