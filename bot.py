@@ -99,7 +99,28 @@ mentionResponses = [
         '*insert witty bot response*',
         'Error 404: response not found',
         'Talk to me.',
-        'Okay, Let\'s start over. Hi, I\'m bot.' 
+        'Okay, Let\'s start over. Hi, I\'m bot.',
+        '*Hakuna Matata*',
+        'Anybody want a peanut?',
+        'You keep using that word. I do not think it means what you think it means.',
+        'Yoo-Hoo! Big summer blowout!',
+        'Just keep swimming.',
+        'Fish are friends, not food.',
+        '*A wild Squirtle appeared!*',
+        '**Gotcha!**',
+        '**Critical catch!**',
+        '*A wild Totodile appeared!*', 
+        '*A wild Eevee appeared!*',
+        '*A wild Jigglypuff appeared!*',
+        '*A wild Charmander appeared!*',
+        'Some people would say I\'m just a bot...',
+        'beep boop',
+        'Shh. Be vewy vewy quiet. I\'m hunting wabbits!',
+        'I knew I shoulda taken that left turn at Albuquerque...',
+        'Cash me outside, howbow dah',
+        'Rest in peace Harambe',
+        'Saturdays are for cracking open a cold one with the bots.',
+        '01101001 00100000 01101000 01100101 01100001 01110010 01110100 00100000 01100100 01101001 01110011 01100011 01101111 01110010 01100100'
     ]
 
 
@@ -374,8 +395,18 @@ async def on_message(message):
             await client.send_message(message.channel, ("yo, chill tf out\n\n\n**Blacklist user:** " + message.author.mention))
         elif 'you suck' in message.content.lower():
             await client.send_message(message.channel, ("okay, then don't ask me to do anything for you\n\n\n**Blacklist user:** " + message.author.mention + "\nbye, felicia   :nail_care:"))
+        elif 'thanks' in message.content.lower() or 'thank you' in message.content.lower():
+            await client.send_message(message.channel, "Anything for you kid.")
         else:
             await client.send_message(message.channel, (random.choice(mentionResponses)))
+
+    if 'bad bot' in message.content.lower():
+        await client.send_message(message.channel, "I prefer 'naughty.'")
+    elif 'naughty bot' in message.content.lower():
+        await client.send_message(message.channel, "Santa made a list. He checked it twice. I'm still on the naughty list. :shrug:")
+    elif 'good bot' in message.content.lower():
+        await client.send_message(message.channel, "01110100 01101000 01100001 01101110 01101011 00100000 01111001 01101111 01110101")
+
     await client.process_commands(message)
         
 
