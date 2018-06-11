@@ -8,9 +8,7 @@ from apiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
 
-#   'My Project-9a3705daf06d.json'   - google sheets credentials file
 
-TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY'
 BOT_PREFIX = ("$", "!")
 
 # Setup the Sheets API1join 
@@ -25,7 +23,7 @@ service = build('sheets', 'v4', http=creds.authorize(Http()))
 # Call the Sheets API
 
 SPREADSHEET_ID = '15rbINq27Qt5lN-xl2FutRyzE93o4dH381mpStNGKCLc' #mine
-############## SPREADSHEET_ID = '1L9idNXi38x42gGvSBVExGjLoCH6LQCBmQfJMIUfpKF8' #nicks
+
 
 RAIDS = ['Empty list']
 emoji = [
