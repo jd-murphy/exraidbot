@@ -24,7 +24,7 @@ service = build('sheets', 'v4', http=creds.authorize(Http()))
 # Call the Sheets API
 
 SPREADSHEET_ID = '15rbINq27Qt5lN-xl2FutRyzE93o4dH381mpStNGKCLc' #mine
-
+PIN_SPREADSHEET_ID = '1ocKnXUDbgy-9ty0tFE7gAx3PR1cY9dne5wfjPu9dymI'
 
 RAIDS = ['Empty list']
 emoji = [
@@ -266,6 +266,22 @@ async def createNewExRaid(context, gym_name):
         msg = "  (createNewExRaid - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
     await client.say(context.message.author.mention + msg)
 
+
+@client.command(pass_context=True,
+                description='Get a location pin for the gym.', 
+                brief='Get a location pin for the gym.')
+async def pin(context, gym_name):
+    RANGE_NAME = "All!A1:C20"
+    result = service.spreadsheets().values().get(spreadsheetId=PIN_SPREADSHEET_ID, range=RANGE_NAME).execute()
+    values = result.get('values', [])
+    if not values:
+        msg = 'No data found.'
+        print('No data found.')
+    else:
+        msg = "Gyms in BCS: \n"
+        for cell in values:
+            msg += (cell[0] + "\n")
+    await client.say(msg)
 
 
 
