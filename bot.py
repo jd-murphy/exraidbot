@@ -195,7 +195,7 @@ async def raiders(context, number):
     try: 
         num = int(number)
         if (0 < num) and (num <= len(RAIDS)):
-            RANGE_NAME = RAIDS[num-1] + "!A3:B100"
+            RANGE_NAME = RAIDS[num-1] + "!A3:D100"
             result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
             values = result.get('values', [])
             if not values:
@@ -204,10 +204,29 @@ async def raiders(context, number):
             else:
                 msg = 'Trainers attending ' + RAIDS[num-1] + ": \n"
                 for cell in values:
-                    if cell[0] == '': 
-                        msg += (cell[1] + "\n")
+                    if cell[0]:
+                        try:
+                            msg += (cell[0] + "    ")
+                        except:
+                            pass
                     else:
-                        msg += (cell[0]  + "\n")
+                        try:
+                            msg += (cell[1] + "   ")
+                        except:
+                            pass
+
+                    try:
+                        msg += (cell[2] + "   ")
+                    except:
+                        pass
+                    try:
+                        msg += (cell[3] + "   ")
+                    except:
+                        pass
+                
+                    msg += "\n\n"
+
+                    
         else:
             msg = "Try entering a number between 1 and " + str(len(RAIDS))
     except Exception as e:
