@@ -74,7 +74,6 @@ mentionResponses = [
         'Wassup?',
         'Howdy!',
         'I\'m heading to Walmart, want anything?',
-        'Don\'t call me that in public...',
         'Hey, cutie',
         'Gig em!',
         'I\'m still here',
@@ -82,11 +81,10 @@ mentionResponses = [
         'It\'s a great day to be a bot!',
         'Checkitoutcheckitoutcheckitoutcheckitout',
         'Can you hear me now?',
-        'You\'re a wizard, Harry.',
+        'Yer a wizard, Harry.',
         'Have you tried turning it off and on again?',
         '**POGO IS LIFE**',
         '*@ExRaidBot is typing...*',
-        'I\'m not that innocent',
         'Some **BODY** once told me...', 
         'I got you, fam',
         'What happens on Discord, stays on Discord.',
@@ -97,7 +95,6 @@ mentionResponses = [
         '#winning',
         'Omg I can\'t even',
         '*insert witty bot response*',
-        'Error 404: response not found',
         'Talk to me.',
         'Okay, Let\'s start over. Hi, I\'m bot.',
         '*Hakuna Matata*',
@@ -118,7 +115,7 @@ mentionResponses = [
         'Shh. Be vewy vewy quiet. I\'m hunting wabbits!',
         'I knew I shoulda taken that left turn at Albuquerque...',
         'Cash me outside, howbow dah',
-        'Rest in peace Harambe',
+        'RIP Harambe',
         'Saturdays are for cracking open a cold one with the bots.',
         '01101001 00100000 01101000 01100101 01100001 01110010 01110100 00100000 01100100 01101001 01110011 01100011 01101111 01110010 01100100'
     ]
@@ -133,7 +130,8 @@ async def help():
         "        *Don't* type the square brackets.\n        *Do* type the exclamation point.\n\n" + \
         "**!raids**    To see a list of upcoming Ex Raids. Use the numbers from this list for the other commands, such as: \n      **!raiders 1** \n      **!join 2** \n      **!leave 3**\n\n" + \
         "**!raiders [number]**    To see a list of people signed up for the Ex Raid.\n\n" +  \
-        "**!join [number]**    Sign up for an Ex Raid.\n\n" + \
+        # "**!join [number]**    Sign up for an Ex Raid.\n\n" + \
+        "**!join [number] [trainer name] [start time] [team]**    Sign up for an Ex Raid.\n\n" + \
         "**!leave [number]**    Remove your name from the sheet for a raid.\n\n" + \
         "**!createNewExRaid [gym name]**    Create a new sheet for an Ex Raid that is not on the list.\n\n" + \
         "**!pin [gym name]**    Get a location pin for the gym. Please type one word unique to the gym name *OR* more than one word in quotation marks, such as: \n      **!pin fellowship**\n      **!pin \"sky cutter\" **\n\n" + \
@@ -221,21 +219,24 @@ async def raiders(context, number):
 @client.command(pass_context=True, 
                 description='Adds your name to the spreadsheet for a Raid.', 
                 brief='Adds your name to the spreadsheet for a Raid.')
-async def join(context, number):
+async def join(context, number, trainerName, startTime, team):
     resetRaids()
     try: 
         num = int(number)
         if (0 < num) and (num <= len(RAIDS)):
             values = [
                 [
-                    context.message.author.name
+                    context.message.author.name,
+                    trainerName,
+                    startTime,
+                    team
                 ]
             ]
             resource = {
                 "majorDimension": "ROWS",
                 "values": values
                 }
-            range = RAIDS[num-1] + "!A1:B1"
+            range = RAIDS[num-1] + "!A1:D1"
             service.spreadsheets().values().append(
                 spreadsheetId=SPREADSHEET_ID,
                 range=range,
@@ -349,28 +350,11 @@ async def createNewExRaid(context, gym_name):
                 description='Get a location pin for the gym.', 
                 brief='Get a location pin for the gym.')
 async def pin(context, gym_name):    
-    # RANGE_NAME = "All!A2:C250"
-    # result = service.spreadsheets().values().get(spreadsheetId=PIN_SPREADSHEET_ID, range=RANGE_NAME).execute()
-    # values = result.get('values', [])
-    # if not values:
-    #     msg = 'No data found.'
-    #     print('No data found.')
-    # else:
-    #     for cell in values:
-    #         msg += (cell[0] + ": \n" + cell[2])
-    # await client.say(msg)
-
-
-
-
-    # gym = (value for key, value in GYMS.items() if gym_name.lower in key.lower())
 
     for key, value in GYMS.items():
         if gym_name.lower() in key.lower():
             gym = value
 
-    # gym = GYMS.get('Dixie Chicken')
-    # print("\n\ngym " + gym)
     if gym is None:
         gym = "Sorry, try searching a different keyword."
 
@@ -401,11 +385,9 @@ async def on_message(message):
             await client.send_message(message.channel, (random.choice(mentionResponses)))
 
     if 'bad bot' in message.content.lower():
-        await client.send_message(message.channel, "I prefer 'naughty.'")
-    elif 'naughty bot' in message.content.lower():
-        await client.send_message(message.channel, "Santa made a list. He checked it twice. I'm still on the naughty list. :shrug:")
+        await client.send_message(message.channel, "I will try to behave.")
     elif 'good bot' in message.content.lower():
-        await client.send_message(message.channel, "01110100 01101000 01100001 01101110 01101011 00100000 01111001 01101111 01110101")
+        await client.send_message(message.channel, ":heart_eyes::heart_eyes::heart_eyes:")
 
     await client.process_commands(message)
         
