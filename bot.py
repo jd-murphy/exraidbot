@@ -49,7 +49,7 @@ emoji = [
         ':space_invader:',
         ':cool:',
         ':innocent:',
-        ':thumbsup:'
+        ':thumbsup:',
     ]
 mentionResponses = [
         ':100:',
@@ -220,18 +220,30 @@ async def raiders(context, number):
                     except:
                         pass
                     try:
-                        msg += (cell[3] + "   ")
+                        if cell[3]:
+                            team = cell[3].lower()
+                            if team == 'instinct':
+                                msg += " <:emoji_name:456205777389092895> "
+                            if team == 'mystic':
+                                msg += " <:emoji_name:456205778022563851> "
+                            if team == 'valor':
+                                msg += " <:emoji_name:456205778395725834> "
                     except:
                         pass
                 
                     msg += "\n\n"
-
+# <:emoji_name:456205777389092895>
+# <:emoji_name:456205778022563851>
+# <:emoji_name:456205778395725834>
                     
         else:
             msg = "Try entering a number between 1 and " + str(len(RAIDS))
     except Exception as e:
         msg = "  (raiders - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
     await client.say(msg)
+
+
+
 
 
 
@@ -407,8 +419,40 @@ async def on_message(message):
         await client.send_message(message.channel, "I will try to behave.")
     elif 'good bot' in message.content.lower():
         await client.send_message(message.channel, ":heart_eyes::heart_eyes::heart_eyes:")
+    
+    # if 'instinct' in message.content.lower():
+    #     await client.send_message(message.channel, Server.emoji.instinct)
+    # if 'mystic' in message.content.lower():
+    #     await client.send_message(message.channel, Server.emoji.mystic)
+    # if 'valor' in message.content.lower():
+    #     await client.send_message(message.channel, Server.emoji.valor)
 
     await client.process_commands(message)
+        
+
+
+
+@client.command(pass_context=True)
+async def showEmojis(context):    
+
+    v = 2
+    await client.say("<:emoji_name:456205777389092895>")
+    
+    # for x in client.get_all_emojis():
+    #     print(x.id)
+    #     await client.say(<:emoji_name:456205777389092895><:emoji_name:456205778022563851><:emoji_name:456205778395725834>)
+
+        # if x.id == "294956739688923136":
+    # await client.add_reaction(message,str(x))
+
+# <:emoji_name:456205777389092895>
+# <:emoji_name:456205778022563851>
+# <:emoji_name:456205778395725834>
+
+#  456205777389092895
+# 456205778022563851
+# 456205778395725834
+    # await client.say()
         
 
 # async def list_servers():
