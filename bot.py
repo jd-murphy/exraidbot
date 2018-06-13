@@ -207,7 +207,7 @@ async def raiders(context, number):
                 msg = 'No data found.'
                 print('No data found.')
             else:
-                msg = ''
+                msg = '  '
                 # msg = 'Trainers attending ' + RAIDS[num-1] + ": \n"
                 for cell in values:
                     if cell[0]:
@@ -237,7 +237,7 @@ async def raiders(context, number):
                     except:
                         pass
                 
-                    msg += "   \n"
+                    msg += "   \n  "
 
                     
 
