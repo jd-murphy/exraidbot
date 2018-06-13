@@ -239,11 +239,21 @@ async def raiders(context, number):
                 
                     msg += "\r\n"
 
-                    
+
+
+                    # # pin = getPinForGym(gym_name) this needs to replace the hardcoded link below     ***********************
+                    # for key, value in GYMS.items():
+                    #     if (RAIDS[num-1]).lower() in key.lower():
+                    #         gymPin = value
+
+
+                    gymPin = "https://www.google.com/maps?q=30.616412,-96.3463220"
+
+
 
                     raidersString = msg
-                    embed=discord.Embed(title="GPS pin for the gym", url="https://www.google.com/maps?q=30.608839,-96.3372580", color=0x2af8f6)
-                    embed.set_author(name="Staking the Claim 6/12/2018")
+                    embed=discord.Embed(title="GPS pin for the gym", url=gymPin, color=0x2af8f6)
+                    embed.set_author(name=(RAIDS[num-1]))
                     embed.add_field(name='Trainers signed up for this raid: ', value=raidersString, inline=True)
                     # embed.add_field(name='Start Time', value='second', inline=False)
                     # embed.add_field(name='Team', value='third', inline=False)
@@ -254,7 +264,6 @@ async def raiders(context, number):
             msg = "Try entering a number between 1 and " + str(len(RAIDS))
     except Exception as e:
         msg = "  (raiders - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
-    # await client.say(msg)
     await client.say(embed=embed)
 
 
@@ -419,6 +428,18 @@ async def pin(context, gym_name):
         gym = "Sorry, try searching a different keyword."
 
     await client.say(gym)
+
+
+def pinGym(gym_name):    
+
+    for key, value in GYMS.items():
+        if gym_name.lower() in key.lower():
+            gym = value
+
+    if gym is None:
+        gym = "Sorry, try searching a different keyword."
+
+    yield from gym
 
 
 def loadGyms():
