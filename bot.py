@@ -430,16 +430,12 @@ async def pin(context, gym_name):
     await client.say(gym)
 
 
-def pinGym(gym_name):    
+@client.command()
+async def signUp():    
 
-    for key, value in GYMS.items():
-        if gym_name.lower() in key.lower():
-            gym = value
+    await client.say('Click this link to sign up for an upcoming EX Raid \n\n https://goo.gl/forms/BkIdUUvn8Hra9Z692')
 
-    if gym is None:
-        gym = "Sorry, try searching a different keyword."
 
-    yield from gym
 
 
 def loadGyms():
