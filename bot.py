@@ -237,7 +237,7 @@ async def raiders(context, number):
                     except:
                         pass
                 
-                    msg += "\n\n"
+                    msg += " \n "
 
                     
 
