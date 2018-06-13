@@ -200,7 +200,11 @@ async def raiders(context, number):
     try: 
         num = int(number)
         if (0 < num) and (num <= len(RAIDS)):
-            RANGE_NAME = RAIDS[num-1] + "!A3:D100"
+            if (RAIDS[num-1]) == 'Form Responses':
+                RANGE_NAME = RAIDS[num-1] + "!C3:F100"
+            else:
+                RANGE_NAME = RAIDS[num-1] + "!A3:D100"
+
             result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
             values = result.get('values', [])
             if not values:
