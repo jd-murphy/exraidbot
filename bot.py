@@ -4,6 +4,7 @@ import random
 import requests
 import asyncio
 import csv
+import discord
 from discord.ext.commands import Bot
 from discord import Game
 from googleapiclient.discovery import build
@@ -28,6 +29,10 @@ service = build('sheets', 'v4', http=creds.authorize(Http()))
 
 SPREADSHEET_ID = '15rbINq27Qt5lN-xl2FutRyzE93o4dH381mpStNGKCLc' #mine
 PIN_SPREADSHEET_ID = '1ocKnXUDbgy-9ty0tFE7gAx3PR1cY9dne5wfjPu9dymI'
+
+INSTINCT_EMOJI = "<:emoji_name:456205777389092895>" # <:emoji_name:456205777389092895> # instinct
+MYSTIC_EMOJI = "<:emoji_name:456205778022563851>" # <:emoji_name:456205778022563851> # mystic
+VALOR_EMOJI = "<:emoji_name:456205778395725834>" # <:emoji_name:456205778395725834> # valor
 
 RAIDS = ['Empty list']
 GYMS = {}
@@ -202,46 +207,70 @@ async def raiders(context, number):
                 msg = 'No data found.'
                 print('No data found.')
             else:
-                msg = 'Trainers attending ' + RAIDS[num-1] + ": \n"
+                msg = ''
+                # msg = 'Trainers attending ' + RAIDS[num-1] + ": \n"
                 for cell in values:
                     if cell[0]:
                         try:
-                            msg += (cell[0] + "    ")
+                            msg += (cell[0] + "     ")
                         except:
                             pass
                     else:
                         try:
-                            msg += (cell[1] + "   ")
+                            msg += (cell[1] + "     ")
                         except:
                             pass
 
                     try:
-                        msg += (cell[2] + "   ")
+                        msg += (cell[2] + "     ")
                     except:
                         pass
                     try:
                         if cell[3]:
                             team = cell[3].lower()
                             if team == 'instinct':
-                                msg += " <:emoji_name:456205777389092895> "
+                                msg += INSTINCT_EMOJI
                             if team == 'mystic':
-                                msg += " <:emoji_name:456205778022563851> "
+                                msg += MYSTIC_EMOJI
                             if team == 'valor':
-                                msg += " <:emoji_name:456205778395725834> "
+                                msg += VALOR_EMOJI
                     except:
                         pass
                 
                     msg += "\n\n"
-# <:emoji_name:456205777389092895>
-# <:emoji_name:456205778022563851>
-# <:emoji_name:456205778395725834>
+
                     
+
+                    raidersString = msg
+                    embed=discord.Embed(title="GPS pin for the gym", url="https://www.google.com/maps?q=30.608839,-96.3372580", color=0x2af8f6)
+                    embed.set_author(name="Staking the Claim 6/12/2018")
+                    embed.add_field(name='Trainers signed up for this raid: ', value=raidersString, inline=True)
+                    # embed.add_field(name='Start Time', value='second', inline=False)
+                    # embed.add_field(name='Team', value='third', inline=False)
+
+
+
         else:
             msg = "Try entering a number between 1 and " + str(len(RAIDS))
     except Exception as e:
         msg = "  (raiders - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
-    await client.say(msg)
+    # await client.say(msg)
+    await client.say(embed=embed)
 
+
+
+
+
+# @client.command(pass_context=True)
+# async def embedRaiders(context, raiders):
+#     raidersString = ''
+#     embed=discord.Embed(title="GPS pin for the gym", url="https://www.google.com/maps?q=30.608839,-96.3372580", color=0x2af8f6)
+#     embed.set_author(name="Staking the Claim 6/12/2018")
+#     embed.add_field(name='Trainer Name', value=raidersString, inline=False)
+#     # embed.add_field(name='Start Time', value='second', inline=False)
+#     # embed.add_field(name='Team', value='third', inline=False)
+#     await client.say(embed=embed)
+    
 
 
 
@@ -420,12 +449,6 @@ async def on_message(message):
     elif 'good bot' in message.content.lower():
         await client.send_message(message.channel, ":heart_eyes::heart_eyes::heart_eyes:")
     
-    # if 'instinct' in message.content.lower():
-    #     await client.send_message(message.channel, Server.emoji.instinct)
-    # if 'mystic' in message.content.lower():
-    #     await client.send_message(message.channel, Server.emoji.mystic)
-    # if 'valor' in message.content.lower():
-    #     await client.send_message(message.channel, Server.emoji.valor)
 
     await client.process_commands(message)
         
@@ -434,26 +457,22 @@ async def on_message(message):
 
 @client.command(pass_context=True)
 async def showEmojis(context):    
-
-    v = 2
-    await client.say("<:emoji_name:456205777389092895>")
     
-    # for x in client.get_all_emojis():
-    #     print(x.id)
-    #     await client.say(<:emoji_name:456205777389092895><:emoji_name:456205778022563851><:emoji_name:456205778395725834>)
+    for x in client.get_all_emojis():
+        print(x.id)
+    await client.say("<:emoji_name:456205777389092895><:emoji_name:456205778022563851><:emoji_name:456205778395725834>")
 
-        # if x.id == "294956739688923136":
+    #     if x.id == "294956739688923136":
     # await client.add_reaction(message,str(x))
 
-# <:emoji_name:456205777389092895>
-# <:emoji_name:456205778022563851>
-# <:emoji_name:456205778395725834>
 
-#  456205777389092895
-# 456205778022563851
-# 456205778395725834
-    # await client.say()
+
+
         
+
+
+
+
 
 # async def list_servers():
 #     await client.wait_until_ready()
