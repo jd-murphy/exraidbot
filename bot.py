@@ -299,7 +299,8 @@ async def join(context, number):
         # context.message.author.name
         raid = RAIDS[num-1]
         encodedRaid = raid.replace(' ', '+')
-        link = "https://docs.google.com/forms/d/e/1FAIpQLSe91_7jTnj2HDFO7FchoFNBgaGnSrtRa72jTs9Fck4XmeP2wA/viewform?usp=pp_url&entry.854648901=" + encodedRaid + "&entry.498196543=" + context.message.author.name
+        encodedDiscordUserName =  context.message.author.name.replace(' ', '+')
+        link = "https://docs.google.com/forms/d/e/1FAIpQLSe91_7jTnj2HDFO7FchoFNBgaGnSrtRa72jTs9Fck4XmeP2wA/viewform?usp=pp_url&entry.854648901=" + encodedRaid + "&entry.498196543=" + encodedDiscordUserName
         print('\n\n\nHere is the link ->\n', link)
         print('\nhere is the context.message.author.name -> ', context.message.author.name)
         # msg = ' Here is your link to sign up for ' + raid + "\n" + link
