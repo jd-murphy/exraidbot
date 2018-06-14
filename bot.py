@@ -300,18 +300,20 @@ async def join(context, number):
         raid = RAIDS[num-1]
         encodedRaid = raid.replace(' ', '+')
         link = "https://docs.google.com/forms/d/e/1FAIpQLSe91_7jTnj2HDFO7FchoFNBgaGnSrtRa72jTs9Fck4XmeP2wA/viewform?usp=pp_url&entry.854648901=" + encodedRaid + "&entry.498196543=" + context.message.author.name
-        msg = ' Here is your link to sign up for ' + raid + "\n" + link
+        print('\n\n\nHere is the link ->\n')
+        print('\nhere is the context.message.author.name -> ', context.message.author.name)
+        # msg = ' Here is your link to sign up for ' + raid + "\n" + link
         embed=discord.Embed(title="Click here to sign up!", url=link, color=0x00ccf1)
         embed.set_author(name="Follow this link to sign up for your raid.\nThis link is for " + context.message.author.name + " only.")
         # await client.say(embed=embed)
-        embedSuccess = True
+        # embedSuccess = True
         await client.say(context.message.author.mention, embed=embed)
     # else:
     #     msg = "Try entering a number between 1 and " + str(len(RAIDS))
     #     await client.say(context.message.author.mention, msg)
    
 
-   
+
 # old join 
 # @client.command(pass_context=True, 
 #                 description='Adds your name to the spreadsheet for a Raid.', 
