@@ -288,41 +288,65 @@ async def raiders(context, number):
 
 
 
-
+# new join
 @client.command(pass_context=True, 
                 description='Adds your name to the spreadsheet for a Raid.', 
                 brief='Adds your name to the spreadsheet for a Raid.')
-async def join(context, number, trainerName, startTime, team):
+async def join(context, number):
     resetRaids()
-    try: 
-        num = int(number)
-        if (0 < num) and (num <= len(RAIDS)):
-            values = [
-                [
-                    context.message.author.name,
-                    trainerName,
-                    startTime,
-                    team
-                ]
-            ]
-            resource = {
-                "majorDimension": "ROWS",
-                "values": values
-                }
-            range = RAIDS[num-1] + "!A1:D1"
-            service.spreadsheets().values().append(
-                spreadsheetId=SPREADSHEET_ID,
-                range=range,
-                body=resource,
-                valueInputOption="USER_ENTERED"
-                ).execute()
+    num = int(number)
+    if (0 < num) and (num <= len(RAIDS)):
+        # context.message.author.name
+        raid = RAIDS[num-1]
+        encodedRaid = raid.replace(' ', '+')
+        link = "https://docs.google.com/forms/d/e/1FAIpQLSe91_7jTnj2HDFO7FchoFNBgaGnSrtRa72jTs9Fck4XmeP2wA/viewform?usp=pp_url&entry.854648901=" + encodedRaid + "&entry.498196543=" + context.message.author.name
+        msg = ' Here is your link to sign up for ' + raid + "\n" + link
+        embed=discord.Embed(title="Click here to sign up!", url=link, color=0x00ccf1)
+        embed.set_author(name="Follow this link to sign up for your raid.\nThis link is for " + context.message.author.name + " only.")
+        # await client.say(embed=embed)
+        embedSuccess = True
+        await client.say(context.message.author.mention, embed=embed)
+    # else:
+    #     msg = "Try entering a number between 1 and " + str(len(RAIDS))
+    #     await client.say(context.message.author.mention, msg)
+   
 
-            msg = ", you have been added to " + RAIDS[num-1] + " " + random.choice(emoji)
-        else:
-            msg = "Try entering a number between 1 and " + str(len(RAIDS))
-    except Exception as e:
-        msg = "  (join - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
-    await client.say(context.message.author.mention + msg)
+   
+# old join 
+# @client.command(pass_context=True, 
+#                 description='Adds your name to the spreadsheet for a Raid.', 
+#                 brief='Adds your name to the spreadsheet for a Raid.')
+# async def join(context, number, trainerName, startTime, team):
+#     resetRaids()
+#     try: 
+#         num = int(number)
+#         if (0 < num) and (num <= len(RAIDS)):
+#             values = [
+#                 [
+#                     context.message.author.name,
+#                     trainerName,
+#                     startTime,
+#                     team
+#                 ]
+#             ]
+#             resource = {
+#                 "majorDimension": "ROWS",
+#                 "values": values
+#                 }
+#             range = RAIDS[num-1] + "!A1:D1"
+#             service.spreadsheets().values().append(
+#                 spreadsheetId=SPREADSHEET_ID,
+#                 range=range,
+#                 body=resource,
+#                 valueInputOption="USER_ENTERED"
+#                 ).execute()
+
+#             msg = ", you have been added to " + RAIDS[num-1] + " " + random.choice(emoji)
+#         else:
+#             msg = "Try entering a number between 1 and " + str(len(RAIDS))
+#     except Exception as e:
+#         msg = "  (join - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
+#     await client.say(context.message.author.mention + msg)
    
 
 
