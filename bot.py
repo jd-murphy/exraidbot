@@ -14,7 +14,7 @@ from oauth2client import file, client, tools
 
 
 TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY'
-BOT_PREFIX = ("$", "!")
+BOT_PREFIX = ("!")
 
 # Setup the Sheets API1join 
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
@@ -144,6 +144,8 @@ async def help():
     await client.say(msg)
         
 
+        
+
 @client.event
 async def on_ready():
     resetRaids()
@@ -154,12 +156,15 @@ async def on_ready():
 
 
 
+
 def resetRaids():
     RAIDS.clear()
     sheet_metadata = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
     sheets = sheet_metadata.get('sheets', '')
     for sheet in sheets:
         RAIDS.append(sheet.get("properties", {}).get("title"))
+
+
 
 
 
@@ -181,6 +186,8 @@ async def raids():
 
 
 
+
+
 def printRaids():
     raidsString = ""
     raidsString = "Upcoming Ex Raids: " + "\n"
@@ -189,6 +196,8 @@ def printRaids():
         i+=1
         raidsString+= (str(i) + ".     " + str(key) + "\n")
     return raidsString
+
+
 
 
 
@@ -259,8 +268,7 @@ async def raiders(context, number):
                     embed=discord.Embed(title="GPS pin for the gym", url=gymPin, color=0x2af8f6)
                     embed.set_author(name=(RAIDS[num-1]))
                     embed.add_field(name='Trainers signed up for this raid: ', value=raidersString, inline=True)
-                    # embed.add_field(name='Start Time', value='second', inline=False)
-                    # embed.add_field(name='Team', value='third', inline=False)
+                    
 
 
 
@@ -274,15 +282,7 @@ async def raiders(context, number):
 
 
 
-# @client.command(pass_context=True)
-# async def embedRaiders(context, raiders):
-#     raidersString = ''
-#     embed=discord.Embed(title="GPS pin for the gym", url="https://www.google.com/maps?q=30.608839,-96.3372580", color=0x2af8f6)
-#     embed.set_author(name="Staking the Claim 6/12/2018")
-#     embed.add_field(name='Trainer Name', value=raidersString, inline=False)
-#     # embed.add_field(name='Start Time', value='second', inline=False)
-#     # embed.add_field(name='Team', value='third', inline=False)
-#     await client.say(embed=embed)
+
     
 
 
@@ -306,13 +306,28 @@ async def join(context, number):
         # msg = ' Here is your link to sign up for ' + raid + "\n" + link
         embed=discord.Embed(title="Click here to sign up!", url=link, color=0x00ccf1)
         embed.set_author(name="Follow this link to sign up for your raid.\nThis link is for " + context.message.author.name + " only.")
-        # await client.say(embed=embed)
-        # embedSuccess = True
-        await client.say(context.message.author.mention, embed=embed)
-    # else:
-    #     msg = "Try entering a number between 1 and " + str(len(RAIDS))
-    #     await client.say(context.message.author.mention, msg)
+ 
+        await client.send_message(context.message.channel, "Check yo DMs " + context.message.author.mention)
+        # await client.add_reaction(context.message, '\U0001F44D')
+        await client.send_message(context.message.author, embed=embed)
+
+                
+
+
+# @client.event
+# async def on_reaction_add(reaction, user):
+#     channel = reaction.message.channel
+#     print(reaction.emoji)
+#     await client.send_message(channel, '{} has added {} to the the message {}'.format(user.name,reaction.emoji,reaction.message.content))       
    
+
+
+
+@client.command()
+async def share():
+    link = "https://goo.gl/forms/gbTUkEkzaMxAbgFy1"
+    await client.say("Copy and paste this sign up link to share with others who are not on Discord.\n" + link)
+
 
 
 # old join 
@@ -419,6 +434,9 @@ async def leave(context, number):
 
 
 
+
+
+
 @client.command(pass_context=True,
                 description='Creates a new Ex Raid spreadsheet.', 
                 brief='Creates a new Ex Raid spreadsheet.')
@@ -446,25 +464,56 @@ async def createNewExRaid(context, gym_name):
     await client.say(context.message.author.mention + msg)
 
 
+
+
+
+
 @client.command(pass_context=True,
                 description='Get a location pin for the gym.', 
                 brief='Get a location pin for the gym.')
 async def pin(context, gym_name):    
-
+    matches = []
     for key, value in GYMS.items():
         if gym_name.lower() in key.lower():
+            name = key
             gym = value
+            matches.append([name, gym])
 
-    if gym is None:
-        gym = "Sorry, try searching a different keyword."
+    print('matches contains ' + str(len(matches)) + ' results')
+    if len(matches) > 1:
+        
+        gymsString = ''
+        i = 1
+        print("matching gyms: \n")
+        for k in matches:
+            print(k[0] + " " + k[1])
+            gymsString += (str(i) + ".  " + k[0] + "\n")
+            i+=1
+        
+        await client.send_message(context.message.channel, 'Were you looking for one of these gyms?\n' + gymsString + "\nType **$pin [number]** to get your pin")
 
-    await client.say(gym)
+        def check(msg):
+            return msg.content.startswith('$pin')
+
+        message = await client.wait_for_message(author=context.message.author, check=check)
+        num = message.content[len('$pin'):].strip()
+        print('num: ' + str(num))
+        await client.send_message(message.channel, matches[int(num)-1][0] + "\n" + matches[int(num)-1][1])
+    else:        
+        await client.say(matches[0][0] + "\n" + matches[0][1])
+ 
+
+
+
+
+
 
 
 @client.command()
 async def signUp():    
-
     await client.say('Click this link to sign up for an upcoming EX Raid \n\n https://goo.gl/forms/BkIdUUvn8Hra9Z692')
+
+
 
 
 
@@ -478,6 +527,8 @@ def loadGyms():
             GYMS[k] = v
     print(GYMS['Dixie Chicken'])
     
+
+
 
 @client.event
 async def on_message(message):
@@ -503,6 +554,8 @@ async def on_message(message):
 
 
 
+
+
 @client.command(pass_context=True)
 async def showEmojis(context):    
     
@@ -510,9 +563,7 @@ async def showEmojis(context):
         print(x.id)
     await client.say("<:emoji_name:456205777389092895><:emoji_name:456205778022563851><:emoji_name:456205778395725834>")
 
-    #     if x.id == "294956739688923136":
-    # await client.add_reaction(message,str(x))
-
+   
 
 
 
