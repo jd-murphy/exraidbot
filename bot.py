@@ -13,6 +13,16 @@ from oauth2client import file, client, tools
 # this bot made for the bcs pogo community with love
 
 
+# testing text extraction 
+import pytesseract
+from PIL import Image
+import aiohttp
+import json
+# testing text extraction
+
+
+
+
 TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY'
 BOT_PREFIX = ("!")
 
@@ -33,6 +43,12 @@ PIN_SPREADSHEET_ID = '1ocKnXUDbgy-9ty0tFE7gAx3PR1cY9dne5wfjPu9dymI'
 INSTINCT_EMOJI = "<:emoji_name:456205777389092895>" # <:emoji_name:456205777389092895> # instinct
 MYSTIC_EMOJI = "<:emoji_name:456205778022563851>" # <:emoji_name:456205778022563851> # mystic
 VALOR_EMOJI = "<:emoji_name:456205778395725834>" # <:emoji_name:456205778395725834> # valor
+
+
+# testing text extraction
+months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+# testing text extraction
+
 
 RAIDS = ['Empty list']
 GYMS = {}
@@ -532,6 +548,185 @@ def loadGyms():
 
 @client.event
 async def on_message(message):
+
+    
+
+
+
+
+    # testing text extraction from image
+    print('\n\non message! -> \n\n')
+    # print('message.attachment:')
+    # print(message.attachment)
+    if message.attachments:
+        print('message.attachments:')
+        print(message.attachments)
+
+        for x in message.attachments:
+            print('url found in message.attachments:')
+            print(x['url'])
+            url = x['url']
+            async def processImage(_url):
+                SHEET_ID = "1ST_WxLsxyocBmhLn58PqsFvN98cTn36l1pJIm1IQoqs"
+
+                r = requests.get(_url, stream = True)
+                
+                text = pytesseract.image_to_string(Image.open(r.raw))
+
+                for month in months:
+                    if month in text:
+                        text = (text[text.find(month):text.find('Get directions')])
+                        break
+
+                text = text.split('\n')
+                output = []
+                for chunk in text:
+                    if not chunk.isspace() and chunk is not '' and chunk is not None:
+                        output.append(chunk)
+
+                print('\n\n----- output -----')
+                print("Date: " + output[0])
+                print("Gym: " + output[1])
+                print("\n\n")
+
+                ##########################
+
+                await client.send_message(message.channel, message.author.mention + " You've been added to the EX Raid at " + output[1] + " on " + output[0] + " \nType **$set [desired start time] [team name]** to finish signing up. For example you could type **$set hatch mystic** if you are available to begin at hatch and you are team mystic.")
+                
+                def setInfo(msg):
+                    return msg.content.startswith('$set')
+
+                msg = await client.wait_for_message(author=message.author, check=setInfo)
+                info = msg.content[len('$set'):].strip()
+               
+                info = info.split(" ")
+                startTime = info[0]
+                team = info[1]
+
+
+                try: 
+                    sheetName = ''
+                    writeRange = ''
+                    values = ''
+                    resource = ''
+
+
+                    values = [
+                        [
+                            message.author.name,
+                            # trainerName,
+                            startTime,
+                            team
+                        ]
+                    ]
+                    resource = {
+                        "majorDimension": "ROWS",
+                        "values": values
+                        }
+
+                    sheetName = (output[1] + " " + output[0])
+                    
+                    writeRange = (sheetName + "!A1:D")
+                    
+
+                    try:
+
+                        writeRange = ("'" + sheetName + "'!A:D")
+                        # body = {
+                        #         'values': values
+                        #     }
+                        
+                        ####
+                        result = service.spreadsheets().values().get(spreadsheetId=SHEET_ID, range=writeRange).execute()
+                        retrievedValues = result.get('values', [])
+                        print('retrievedValues -> ')
+                        print(retrievedValues)
+                        print('printing elements .... ')
+                        newValues = []
+                        for element in retrievedValues:
+                            print(element)
+                            newValues.append(element)
+                        
+                        newValues.append([
+                            message.author.name,
+                            startTime,
+                            team
+                        ])
+                        print('newValues -> ')
+                        print(newValues)
+
+
+                        ####
+                        body = {
+                                'values': newValues
+                            }
+                        result = service.spreadsheets().values().update(
+                            spreadsheetId=SHEET_ID, range=writeRange,
+                            valueInputOption="USER_ENTERED", body=body).execute()
+
+
+
+                        msg = " you were added successfully!"
+
+                    except Exception as e:
+                        print("PROBLEM")
+                        print('Attempt to create sheet')
+
+            
+                        writeRange = ("'" + str(sheetName) + "'!A1:D10")
+                        body = {
+                            "requests": [
+                                {
+                                "addSheet": {
+                                    "properties": {
+                                    "title": sheetName
+                                        }
+                                    }
+                                },
+                                # {
+                                # "append": {
+                                #     "properties": {
+                                #     "title": sheetName
+                                #         }
+                                #     }
+                                # },
+
+                            ]
+                        }
+
+                        service.spreadsheets().batchUpdate(spreadsheetId=SHEET_ID, body=body).execute()  
+                        print('sheet created')
+                        print('adding first user')
+                     
+
+                        try:
+                            writeRange = ("'" + sheetName + "'!A1:D")
+                            body = {
+                                    'values': values
+                                }
+                            result = service.spreadsheets().values().update(
+                                spreadsheetId=SHEET_ID, range=writeRange,
+                                valueInputOption="USER_ENTERED", body=body).execute()
+
+                            msg = " you were added successfully!"
+                        except Exception as e:
+                            print('something isnt working right .........' + str(e))
+
+                
+                except Exception as e:
+                    msg = "  (join - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
+                await client.send_message(message.channel, message.author.mention + msg)
+
+
+
+                await client.add_reaction(msg, '\U0001F44D') 
+       
+        await processImage(url)
+        # testing text extraction from image
+
+
+
+
     
     if client.user in message.mentions:
         if 'fuck you' in message.content.lower() or 'fuck off' in message.content.lower():
