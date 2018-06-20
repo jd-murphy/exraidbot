@@ -591,9 +591,14 @@ async def on_message(message):
                 print("Gym: " + output[1])
                 print("\n\n")
 
+
+                raidLocation = output[1]
+                raidTime = output[0]
+                raidTime = raidTime.split(' ')
+                raidTime = (raidTime[0] + ' ' + raidTime[1] + ' ' + raidTime[2] + ' ' + raidTime[3])
                 ##########################
 
-                await client.send_message(message.channel, message.author.mention + " Your pass for \n**" + output[1] + "** on \n**" + output[0] + "** was uploaded. \nType **$set [desired start time] [team name]** to finish signing up. \nFor example: \n    **$set hatch mystic**\n**$set noon valor**\n**$set 1:30 instinct**")
+                await client.send_message(message.channel, message.author.mention + " Your pass for \n**" + raidLocation + "**\n**" + raidTime + "**\n was uploaded. Type **$set [desired start time] [team name]** to finish signing up. \nFor example: \n    **$set hatch mystic**\n    **$set noon valor**\n    **$set 1:30 instinct**")
                 
                 def setInfo(msg):
                     return msg.content.startswith('$set')
