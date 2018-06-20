@@ -593,7 +593,7 @@ async def on_message(message):
 
                 ##########################
 
-                await client.send_message(message.channel, message.author.mention + " You've been added to the EX Raid at " + output[1] + " on " + output[0] + " \nType **$set [desired start time] [team name]** to finish signing up. For example you could type **$set hatch mystic** if you are available to begin at hatch and you are team mystic.")
+                await client.send_message(message.channel, message.author.mention + " Your pass for the EX Raid at " + output[1] + " on " + output[0] + "was accepted. \nType **$set [desired start time] [team name]** to finish signing up. \n:point_right: For example, type  **$set hatch mystic**  if you are available to begin at hatch and you are team mystic.")
                 
                 def setInfo(msg):
                     return msg.content.startswith('$set')
@@ -721,7 +721,7 @@ async def on_message(message):
 
 
 
-                await client.add_reaction(msg, '\U0001F44D') 
+                await client.add_reaction(message, '\U0001F44D') 
        
         await processImage(url)
         # testing text extraction from image
