@@ -593,7 +593,7 @@ async def on_message(message):
 
                 ##########################
 
-                await client.send_message(message.channel, message.author.mention + " Your pass for the EX Raid at " + output[1] + " on " + output[0] + "was accepted. \nType **$set [desired start time] [team name]** to finish signing up. \n:point_right: For example, type  **$set hatch mystic**  if you are available to begin at hatch and you are team mystic.")
+                await client.send_message(message.channel, message.author.mention + " Your pass for **" + output[1] + "** on **" + output[0] + "** was uploaded. \nType **$set [desired start time] [team name]** to finish signing up. \n For example: \n    **$set hatch mystic**  \n    **$set noon valor**  \n    **$set 1:30 instinct**")
                 
                 def setInfo(msg):
                     return msg.content.startswith('$set')
