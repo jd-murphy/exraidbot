@@ -3,5 +3,5 @@ requests
 google-api-python-client
 oauth2client
 pytesseract
-PIL
+Pillow
 aiohttp
