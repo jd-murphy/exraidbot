@@ -15,6 +15,7 @@ from oauth2client import file, client, tools
 
 # testing text extraction 
 import pytesseract
+from tesseract import image_to_string
 from PIL import Image
 import aiohttp
 import json
@@ -571,7 +572,8 @@ async def on_message(message):
 
                 r = requests.get(_url, stream = True)
                 
-                text = pytesseract.image_to_string(Image.open(r.raw))
+                # text = pytesseract.image_to_string(Image.open(r.raw))
+                text = image_to_string(Image.open(r.raw))
 
                 for month in months:
                     if month in text:
