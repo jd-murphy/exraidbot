@@ -550,16 +550,9 @@ def loadGyms():
 @client.event
 async def on_message(message):
 
-    
-
-
-
-
-    # testing text extraction from image
-    print('\n\non message! -> \n\n')
-    # print('message.attachment:')
-    # print(message.attachment)
     if message.attachments:
+        print('message with attachment from:')
+        print(message.author)
         print('message.attachments:')
         print(message.attachments)
 
@@ -587,6 +580,7 @@ async def on_message(message):
                         output.append(chunk)
 
                 print('\n\n----- output -----')
+                print(message.author)
                 print("Date: " + output[0])
                 print("Gym: " + output[1])
                 print("\n\n")
