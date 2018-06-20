@@ -593,12 +593,13 @@ async def on_message(message):
 
                 ##########################
 
-                await client.send_message(message.channel, message.author.mention + " Your pass for **" + output[1] + "** on **" + output[0] + "** was uploaded. \nType **$set [desired start time] [team name]** to finish signing up. \n For example: \n    **$set hatch mystic**  \n    **$set noon valor**  \n    **$set 1:30 instinct**")
+                await client.send_message(message.channel, message.author.mention + " Your pass for \n**" + output[1] + "** on \n**" + output[0] + "** was uploaded. \nType **$set [desired start time] [team name]** to finish signing up. \nFor example: \n    **$set hatch mystic**\n**$set noon valor**\n**$set 1:30 instinct**")
                 
                 def setInfo(msg):
                     return msg.content.startswith('$set')
 
                 msg = await client.wait_for_message(author=message.author, check=setInfo)
+                await client.add_reaction(msg, '\U0001F44D') 
                 info = msg.content[len('$set'):].strip()
                
                 info = info.split(" ")
@@ -721,7 +722,7 @@ async def on_message(message):
 
 
 
-                await client.add_reaction(message, '\U0001F44D') 
+                # await client.add_reaction(message, '\U0001F44D') 
        
         await processImage(url)
         # testing text extraction from image
