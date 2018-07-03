@@ -843,15 +843,15 @@ async def testTwilio(context):
     print('calling twilio api..')
     account_sid = environ['account_sid']
     auth_token = environ['auth_token']
-    client = Client(account_sid, auth_token)
+    twilioClient = Client(account_sid, auth_token)
 
-    message = client.messages.create(
+    twilioMessage = twilioClient.messages.create(
         body='ExRaidBot here! testing send message... can you hear me now?',
         from_='+14244002403',
         to='15415148992'
     )
 
-    print('message sent, message.sid -> ' + str(message.sid))
+    print('message sent, twilioMessage.sid -> ' + str(twilioMessage.sid))
 
     await client.say(':thumbsup:')
 
