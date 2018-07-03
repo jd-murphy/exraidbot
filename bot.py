@@ -777,15 +777,15 @@ async def rank(context, action, role):
     if action.lower() == 'join':    
         await client.add_roles(user, role)
         await client.send_message(context.message.channel, "you've been added to " + str(role) + " :thumbsup:" + user.mention)
-        await client.send_message(user, 'This dm should ask for and create the user profile.txt')
+        await client.send_message(user, 'To add a phone number for text notifications for your role, type: **!set [cell-phone-number]**  \njust like this -> **!set 555-123-1234** ')
         def setInfo(msg):
-            return msg.content.startswith('$set')
+            return msg.content.startswith('!set')
         msg = await client.wait_for_message(author=user, check=setInfo)
         info = msg.content[len('$set'):].strip()       
         info = info.split(" ")
         phoneNumber = info[0]
         print('phone: ' + str(phoneNumber))
-        await client.send_message('your phone number ' + str(phoneNumber) + ' will be set for notifications. remove your number at any time by private messaging @ExRaidBot "$removePhone"')
+        await client.send_message(user, 'your phone number ' + str(phoneNumber) + ' will be set for notifications. remove your number at any time by private messaging @ExRaidBot "$removePhone"')
 
     elif action.lower() == 'leave':
         await client.remove_roles(user, role)
