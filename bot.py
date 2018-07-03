@@ -799,7 +799,7 @@ async def rank(context, action, roleArg):
 
 
 
-
+        # works for reading and writing to s3 bucket
         bucket = 'user-profile-bucket-ex-raid-bot'
         fileName = 'roleProfiles.csv'
         
@@ -810,7 +810,7 @@ async def rank(context, action, roleArg):
 
         s3Resource.Object(bucket, fileName).upload_file(fileName)
         print('upload complete')
-
+        # works for reading and writing to s3 bucket
 
         
 
@@ -824,6 +824,20 @@ async def rank(context, action, roleArg):
 
     elif action.lower() == 'leave':
         await client.remove_roles(user, role)
+        bucket = 'user-profile-bucket-ex-raid-bot'
+        fileName = 'roleProfiles.csv'
+        
+        s3Resource.Object(bucket, fileName).download_file(fileName)
+        updatedList = []
+        with open(fileName, 'a') as f:
+            for row in f:
+                if row[0] != user.name:
+                    updatedList.append(row[0], row[1])
+        print('updatedList, should not contain user -> ' + updatedList)        
+
+
+        # s3Resource.Object(bucket, fileName).upload_file(fileName)
+        # print('upload complete')
         await client.say(user.mention + "you've been removed from " + str(role) + " :thumbsup:")
 
 
