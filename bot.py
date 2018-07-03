@@ -21,11 +21,17 @@ import aiohttp
 import json
 # testing text extraction
 
+from os import environ
+import boto3
+
+s3 = boto3.resource('s3')
 
 
 
 TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY'
 BOT_PREFIX = ("!")
+aws_access_key_id = environ['aws_access_key_id']
+aws_secret_access_key = environ['aws_secret_access_key']
 
 # Setup the Sheets API1join 
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
@@ -785,6 +791,12 @@ async def rank(context, action, role):
         info = info.split(" ")
         phoneNumber = info[0]
         print('phone: ' + str(phoneNumber))
+
+
+        for bucket in s3.buckets.all():
+        print(bucket.name)
+        # s3.Bucket('my-bucket').put_object(Key='test.jpg', Body=data)
+
         with open('roleProfiles.txt', 'a+') as f:
             f.write(str(user.name) + ',' + str(phoneNumber) + ',')
             print('phone ' + str(phoneNumber) + ' added for user ' + str(user.name))
