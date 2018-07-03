@@ -812,6 +812,8 @@ async def rank(context, action, role):
         print('df2: ' + df2)
 
         df = df.append(df2, ignore_index=True)
+        print('df after append: ' + df)
+        
         # s3Client.get_object(Body=df,Bucket='user-profile-bucket-ex-raid-bot', Key='roleProfiles.csv')
         
 
