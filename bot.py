@@ -23,7 +23,7 @@ import json
 
 from os import environ
 import boto3
-
+import pandas as pd
 
 
 
@@ -803,14 +803,17 @@ async def rank(context, action, role):
 
 
 
-        with open('roleProfiles.txt', 'wb') as data:
-            s3Client.download_fileobj('user-profile-bucket-ex-raid-bot', 'roleProfiles.txt', data)
-            for line in data:
-                print('read from file -> ' + str(line))
-            data.write(str(user.name) + ',' + str(phoneNumber) + ',')
-            for line in data:
-                print('read from file after writing to file -> ' + str(line))
-            s3Object.Bucket('user-profile-bucket-ex-raid-bot').put_object(Key='roleProfiles.txt', Body=data)
+        
+        obj = s3Client.get_object(Bucket='user-profile-bucket-ex-raid-bot', Key='roleProfiles.csv')
+        df = pd.read_csv(obj['Body'])
+        print('data from csv: ' + df)
+        newUser = (str(user.name) + ',' + str(phoneNumber) + ',')
+        df.append(newUser)
+        s3Client.get_object(Body=df,Bucket='user-profile-bucket-ex-raid-bot', Key='roleProfiles.csv')
+        
+
+
+
 
 
 

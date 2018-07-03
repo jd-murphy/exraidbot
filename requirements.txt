@@ -6,3 +6,4 @@ pytesseract
 Pillow
 aiohttp
 boto3
+pandas
