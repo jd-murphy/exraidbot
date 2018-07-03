@@ -797,12 +797,29 @@ async def rank(context, action, role):
         # for bucket in s3.buckets.all():
         #     print(bucket.name)
         
-        obj = s3.Bucket('user-profile-bucket-ex-raid-bot').Object('roleProfiles.txt')
-        with open(obj, 'a+') as f:
-            for line in f:
+        # obj = s3.Bucket('user-profile-bucket-ex-raid-bot').Object('roleProfiles.txt')
+
+
+
+
+        with open('roleProfiles.txt', 'wb') as data:
+            s3.download_fileobj('user-profile-bucket-ex-raid-bot', 'roleProfiles.txt', data)
+            for line in data:
                 print('read from file -> ' + str(line))
-            f.write(str(user.name) + ',' + str(phoneNumber) + ',')
-            s3.Bucket('user-profile-bucket-ex-raid-bot').put_object(Key='roleProfiles.txt', Body=f)
+            data.write(str(user.name) + ',' + str(phoneNumber) + ',')
+            for line in data:
+                print('read from file after writing to file -> ' + str(line))
+            s3.Bucket('user-profile-bucket-ex-raid-bot').put_object(Key='roleProfiles.txt', Body=data)
+
+
+
+
+
+        # with open(obj, 'a+') as f:
+        #     for line in f:
+        #         print('read from file -> ' + str(line))
+        #     f.write(str(user.name) + ',' + str(phoneNumber) + ',')
+        #     s3.Bucket('user-profile-bucket-ex-raid-bot').put_object(Key='roleProfiles.txt', Body=f)
 
        
         await client.send_message(user, 'your phone number ' + str(phoneNumber) + ' will be set for notifications. remove your number at any time by private messaging @ExRaidBot "!removePhone"')
