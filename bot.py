@@ -835,7 +835,9 @@ async def rank(context, action, roleArg):
             for row in data:
                 if row[0] != user.name:
                     updatedList.append(row[0], row[1])
-        print('updatedList, should not contain user -> ' + updatedList)        
+        print('updatedList, should not contain user -> ')        
+        for item in updatedList:
+            print(str(item))
 
 
         # s3Resource.Object(bucket, fileName).upload_file(fileName)
