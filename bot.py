@@ -851,7 +851,8 @@ async def testTwilio(context):
         to='15415148992'
     )
 
-    await 
+    print('message sent, message.sid -> ' + str(message.sid))
+
     await client.say(':thumbsup:')
 
 
