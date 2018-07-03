@@ -31,8 +31,8 @@ TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY'
 BOT_PREFIX = ("!")
 AWS_ACCESS_KEY_ID = environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = environ['AWS_SECRET_ACCESS_KEY']
-s3Client = boto3.client('s3')
-s3Object = boto3.resource('s3')
+# s3Client = boto3.client('s3')
+s3Resource = boto3.resource('s3')
 
 # Setup the Sheets API1join 
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
@@ -803,10 +803,11 @@ async def rank(context, action, role):
 
 
         
-        obj = s3Client.get_object(Bucket='user-profile-bucket-ex-raid-bot', Key='roleProfiles.csv')
-        reader = csv.reader(obj['Body'])
-        for row in reader:
-            print('row: ' + row)
+        obj = s3Resource.Object(Bucket='user-profile-bucket-ex-raid-bot', Key='roleProfiles.csv').download_file('roleProfiles.csv')
+        print('obj retrieved -> ' + obj)
+
+
+
      
         # s3Client.get_object(Body=df,Bucket='user-profile-bucket-ex-raid-bot', Key='roleProfiles.csv')
         
