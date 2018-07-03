@@ -775,13 +775,13 @@ async def discordVersion(context):
 
 
 @client.command(pass_context=True)
-async def rank(context, action, role):
+async def rank(context, action, roleArg):
 
     user = context.message.author
-    role = discord.utils.get(user.server.roles, name="testRole")
+    role = discord.utils.get(user.server.roles, name=roleArg)
     print('user: ' + user.name)
     print('action: ' + action)
-    print('role: ' + role)
+    print('role: ' + role.name)
 
     if action.lower() == 'join':    
         await client.add_roles(user, role)
