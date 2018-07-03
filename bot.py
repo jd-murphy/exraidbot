@@ -804,10 +804,11 @@ async def rank(context, action, role):
         fileName = 'roleProfiles.csv'
         
         s3Resource.Object(bucket, fileName).download_file(fileName)
-        with open(fileName, 'a+') as f:
-            f.write(user.name + ',' + str(phoneNumber) + ',')
+        with open(fileName, 'a') as f:
+            data = str(user.name + ',' + str(phoneNumber) + ',')
+            f.write(data)
             s3Resource.Bucket(bucket).upload_file(f.name,fileName)
-            print('upload complete')
+        print('upload complete')
 
 
 
