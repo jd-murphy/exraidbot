@@ -838,7 +838,7 @@ async def rank(context, action, roleArg):
         print('updatedList, should not contain user -> ')        
         for item in updatedList:
             print(str(item))
-        with open(fileName) as fNew:
+        with open(fileName, 'w') as fNew:
             for item in updatedList:
                 fNew.write(item)
 
