@@ -800,13 +800,13 @@ async def rank(context, action, role):
         # obj = s3.Bucket('user-profile-bucket-ex-raid-bot').Object('roleProfiles.txt')
 
 
-
-
+        bucket = 'user-profile-bucket-ex-raid-bot'
+        fileName = 'roleProfiles.csv'
         
-        s3Resource.Object('user-profile-bucket-ex-raid-bot', 'roleProfiles.csv').download_file('roleProfiles.csv')
-        with open('roleProfiles.csv', 'a') as f:
+        s3Resource.Object(bucket, fileName).download_file(fileName)
+        with open(fileName, 'a') as f:
             f.write(user.name + ',' + str(phoneNumber) + ',')
-            s3Resource.Bucket('user-profile-bucket-ex-raid-bot').upload_file(f,'roleProfiles.csv')
+            s3Resource.Bucket(bucket).upload_file(fileName,fileName)
             print('upload complete')
 
 
