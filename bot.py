@@ -803,8 +803,10 @@ async def rank(context, action, role):
 
 
         
-        obj = s3Resource.Object('user-profile-bucket-ex-raid-bot', 'roleProfiles.csv').download_file('roleProfiles.csv')
-        print('obj retrieved -> ' + str(obj['Body']))
+        s3Resource.Object('user-profile-bucket-ex-raid-bot', 'roleProfiles.csv').download_file('roleProfiles.csv')
+        with open('roleProfiles.csv', 'r+') as f:
+            for line in f:
+                print('This is from the bucket -> ' + line)
 
 
 
