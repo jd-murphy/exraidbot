@@ -24,14 +24,15 @@ import json
 from os import environ
 import boto3
 
-s3 = boto3.resource('s3')
+
 
 
 
 TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY'
 BOT_PREFIX = ("!")
-aws_access_key_id = environ['aws_access_key_id']
-aws_secret_access_key = environ['aws_secret_access_key']
+AWS_ACCESS_KEY_ID = environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = environ['AWS_SECRET_ACCESS_KEY']
+s3 = boto3.resource('s3')
 
 # Setup the Sheets API1join 
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
@@ -792,7 +793,7 @@ async def rank(context, action, role):
         phoneNumber = info[0]
         print('phone: ' + str(phoneNumber))
 
-
+        
         for bucket in s3.buckets.all():
             print(bucket.name)
         # s3.Bucket('my-bucket').put_object(Key='test.jpg', Body=data)
