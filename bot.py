@@ -807,6 +807,9 @@ async def rank(context, action, role):
         with open('roleProfiles.csv', 'r+') as f:
             for line in f:
                 print('This is from the bucket -> ' + line)
+            f.write(user.name + ',' + phoneNumber + ',')
+            for line in f:
+                print('This is from the bucket after appending -> ' + line)
 
 
 
