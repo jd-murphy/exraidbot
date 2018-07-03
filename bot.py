@@ -902,13 +902,6 @@ async def testTwilio(context):
 
 
 
-
-
-@client.command(pass_context=True)
-async def removePhone(context):
-    print('implement !removePhone')
-    await client.say('implement !removePhone')
-
 async def list_servers():
     await client.wait_until_ready()
     while not client.is_closed:
