@@ -838,7 +838,9 @@ async def rank(context, action, roleArg):
         print('updatedList, should not contain user -> ')        
         for item in updatedList:
             print(str(item))
-
+        with open(fileName) as fNew:
+            for item in updatedList:
+                fNew.write(item)
 
         s3Resource.Object(bucket, fileName).upload_file(fileName)
         print('upload updated list complete')
