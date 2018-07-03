@@ -24,6 +24,7 @@ import json
 from os import environ
 import boto3
 
+from twilio.rest import client
 
 
 
@@ -832,6 +833,27 @@ async def rank(context, action, roleArg):
         s3Resource.Object(bucket, fileName).upload_file(fileName)
         print('upload updated list complete')
         await client.say(user.mention + "you've been removed from " + str(role) + " :thumbsup:")
+
+
+
+
+
+@client.command(pass_context=True)
+async def testTwilio(context):
+    print('calling twilio api..')
+    account_sid = environ['account_sid']
+    auth_token = environ['auth_token']
+    client = Client(account_sid, auth_token)
+
+    message = client.messages.create(
+        body='ExRaidBot here! testing send message... can you hear me now?',
+        from_='+14244002403',
+        to='15415148992'
+    )
+
+    await 
+    await client.say(':thumbsup:')
+
 
 
 
