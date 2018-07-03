@@ -845,7 +845,7 @@ async def removePhone(context):
 
 
 
-async def deletePhoneNumber(user):
+def deletePhoneNumber(user):
     status = 'Not started'
     try:
         bucket = 'user-profile-bucket-ex-raid-bot'
