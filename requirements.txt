@@ -5,3 +5,4 @@ oauth2client
 pytesseract
 Pillow
 aiohttp
+boto3
