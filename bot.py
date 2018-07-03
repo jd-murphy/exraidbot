@@ -764,7 +764,7 @@ async def showEmojis(context):
 
 @client.command(pass_context=True)
 async def discordVersion(context):
-    await client.say(discord._version_)
+    await client.say(discord.___version__)
 
         
 
