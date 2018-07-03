@@ -794,7 +794,7 @@ async def rank(context, action, role):
 
 
         for bucket in s3.buckets.all():
-        print(bucket.name)
+            print(bucket.name)
         # s3.Bucket('my-bucket').put_object(Key='test.jpg', Body=data)
 
         with open('roleProfiles.txt', 'a+') as f:
