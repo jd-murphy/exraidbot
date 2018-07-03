@@ -796,9 +796,10 @@ async def rank(context, action, role):
         
         # for bucket in s3.buckets.all():
         #     print(bucket.name)
-        file = s3.get_object(Bucket='user-profile-bucket-ex-raid-bot',Key='roleProfiles.txt')
-        with open(file, 'a+') as f:
-            for line in file:
+        
+        obj = s3.Bucket('user-profile-bucket-ex-raid-bot').Object('roleProfiles.txt')
+        with open(obj, 'a+') as f:
+            for line in f:
                 print('read from file -> ' + str(line))
             f.write(str(user.name) + ',' + str(phoneNumber) + ',')
             s3.Bucket('user-profile-bucket-ex-raid-bot').put_object(Key='roleProfiles.txt', Body=f)
