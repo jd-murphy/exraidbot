@@ -32,7 +32,8 @@ TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY'
 BOT_PREFIX = ("!")
 AWS_ACCESS_KEY_ID = environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = environ['AWS_SECRET_ACCESS_KEY']
-s3 = boto3.resource('s3')
+s3Client = boto3.client('s3')
+s3Object = boto3.resource('s3')
 
 # Setup the Sheets API1join 
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
@@ -803,13 +804,13 @@ async def rank(context, action, role):
 
 
         with open('roleProfiles.txt', 'wb') as data:
-            s3.download_fileobj('user-profile-bucket-ex-raid-bot', 'roleProfiles.txt', data)
+            s3Client.download_fileobj('user-profile-bucket-ex-raid-bot', 'roleProfiles.txt', data)
             for line in data:
                 print('read from file -> ' + str(line))
             data.write(str(user.name) + ',' + str(phoneNumber) + ',')
             for line in data:
                 print('read from file after writing to file -> ' + str(line))
-            s3.Bucket('user-profile-bucket-ex-raid-bot').put_object(Key='roleProfiles.txt', Body=data)
+            s3Object.Bucket('user-profile-bucket-ex-raid-bot').put_object(Key='roleProfiles.txt', Body=data)
 
 
 
