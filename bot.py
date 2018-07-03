@@ -24,7 +24,7 @@ import json
 from os import environ
 import boto3
 
-from twilio.rest import client
+from twilio.rest import Client
 
 
 
