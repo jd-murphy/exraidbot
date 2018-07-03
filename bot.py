@@ -796,12 +796,14 @@ async def rank(context, action, role):
         
         # for bucket in s3.buckets.all():
         #     print(bucket.name)
-        data = (str(user.name) + ',' + str(phoneNumber) + ',')
-        s3.Bucket('user-profile-bucket-ex-raid-bot').put_object(Key='roleProfiles.txt', Body=data)
+        file = s3.Bucket('user-profile-bucket-ex-raid-bot').get_object(Key='roleProfiles.txt')
+        with open(file, 'a+') as f:
+            for line in file:
+                print('read from file -> ' + str(line))
+            f.write(str(user.name) + ',' + str(phoneNumber) + ',')
+            s3.Bucket('user-profile-bucket-ex-raid-bot').put_object(Key='roleProfiles.txt', Body=f)
 
-        # with open('roleProfiles.txt', 'a+') as f:
-        #     f.write(str(user.name) + ',' + str(phoneNumber) + ',')
-        #     print('phone ' + str(phoneNumber) + ' added for user ' + str(user.name))
+       
         await client.send_message(user, 'your phone number ' + str(phoneNumber) + ' will be set for notifications. remove your number at any time by private messaging @ExRaidBot "!removePhone"')
 
     elif action.lower() == 'leave':
