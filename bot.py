@@ -785,7 +785,10 @@ async def rank(context, action, role):
         info = info.split(" ")
         phoneNumber = info[0]
         print('phone: ' + str(phoneNumber))
-        await client.send_message(user, 'your phone number ' + str(phoneNumber) + ' will be set for notifications. remove your number at any time by private messaging @ExRaidBot "$removePhone"')
+        with open(str(user.name) + '.txt', 'a+') as f:
+            f.write(str(phoneNumber))
+            print('phone ' + str(phoneNumber) + ' added for user ' + str(user.name))
+        await client.send_message(user, 'your phone number ' + str(phoneNumber) + ' will be set for notifications. remove your number at any time by private messaging @ExRaidBot "!removePhone"')
 
     elif action.lower() == 'leave':
         await client.remove_roles(user, role)
@@ -794,7 +797,10 @@ async def rank(context, action, role):
 
 
 
-
+@client.command(pass_context=True)
+async def removePhone(context):
+    print('implement !removePhone')
+    await client.say('implement !removePhone')
 
 # async def list_servers():
 #     await client.wait_until_ready()
