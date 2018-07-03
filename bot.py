@@ -766,7 +766,20 @@ async def showEmojis(context):
 async def discordVersion(context):
     await client.say(discord.__version__)
 
-        
+
+@client.command(pass_context=True)
+async def rank(context, action, role):
+    print('action: ' + action)
+    print('role: ' + role)
+    user = context.message.author
+    role = discord.utils.get(user.server.roles, name="testRole")
+
+    if action.lower() == 'join':    
+        await client.add_roles(user, role)
+        await client.say(user.mention + "you've been added to " + role + " :thumbsup:")
+    elif action.lower() == 'leave':
+        await client.remove_roles(user, role)
+        await client.say(user.mention + "you've been removed from " + role + " :thumbsup:")
 
 
 
