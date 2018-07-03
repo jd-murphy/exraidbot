@@ -776,10 +776,10 @@ async def rank(context, action, role):
 
     if action.lower() == 'join':    
         await client.add_roles(user, role)
-        await client.say(user.mention + "you've been added to " + role + " :thumbsup:")
+        await client.say(user.mention + "you've been added to " + str(role) + " :thumbsup:")
     elif action.lower() == 'leave':
         await client.remove_roles(user, role)
-        await client.say(user.mention + "you've been removed from " + role + " :thumbsup:")
+        await client.say(user.mention + "you've been removed from " + str(role) + " :thumbsup:")
 
 
 
