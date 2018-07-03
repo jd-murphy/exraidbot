@@ -812,10 +812,47 @@ async def rank(context, action, roleArg):
 
     elif action.lower() == 'leave':
         await client.remove_roles(user, role)
+        # bucket = 'user-profile-bucket-ex-raid-bot'
+        # fileName = 'roleProfiles.csv'
+        
+        # s3Resource.Object(bucket, fileName).download_file(fileName)
+        # updatedList = []
+        # with open(fileName) as f:
+        #     reader = csv.reader(f)
+        #     data = [r for r in reader]
+        #     for row in data:
+        #         if row[0] != user.name:
+        #             updatedList.append(row[0], row[1])
+        # print('updatedList, should not contain user -> ')        
+        # for item in updatedList:
+        #     print(str(item))
+        # with open(fileName, 'w') as fNew:
+        #     for item in updatedList:
+        #         fNew.write(item)
+
+        # s3Resource.Object(bucket, fileName).upload_file(fileName)
+        # print('upload updated list complete')
+        deletePhoneNumber(user)
+        await client.say(user.mention + "you've been removed from " + str(role) + " :thumbsup:")
+
+
+
+
+@client.command(pass_context=True)
+async def removePhone(context):
+    await deletePhoneNumber(context.user)
+
+
+
+
+async def deletePhoneNumber(user):
+    status = 'Not started'
+    try:
         bucket = 'user-profile-bucket-ex-raid-bot'
         fileName = 'roleProfiles.csv'
         
         s3Resource.Object(bucket, fileName).download_file(fileName)
+        status = 'Retrieved'
         updatedList = []
         with open(fileName) as f:
             reader = csv.reader(f)
@@ -830,9 +867,17 @@ async def rank(context, action, roleArg):
             for item in updatedList:
                 fNew.write(item)
 
+        status = 'Updated'
         s3Resource.Object(bucket, fileName).upload_file(fileName)
+        status = 'Uploaded'
         print('upload updated list complete')
-        await client.say(user.mention + "you've been removed from " + str(role) + " :thumbsup:")
+    except Exception as e:
+        print('ERROR removing user ' + user.name + 'phone number! -> ' + str(e))
+    finally:
+        return 'Done: ' + status
+        
+
+
 
 
 
@@ -846,12 +891,12 @@ async def testTwilio(context):
     twilioClient = Client(account_sid, auth_token)
 
     twilioMessage = twilioClient.messages.create(
-        body='ExRaidBot here! testing send message... can you hear me now?',
+        body='ExRaidBot here! Testing send message... can you hear me now?',
         from_='+14244002403',
         to='15415148992'
     )
 
-    print('message sent, twilioMessage.sid -> ' + str(twilioMessage.sid))
+    print('message sent by ' + context.message.author.name + ', twilioMessage.sid -> ' + str(twilioMessage.sid))
 
     await client.say(':thumbsup:')
 
