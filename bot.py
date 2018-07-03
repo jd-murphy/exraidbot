@@ -776,10 +776,12 @@ async def discordVersion(context):
 
 @client.command(pass_context=True)
 async def rank(context, action, role):
-    print('action: ' + action)
-    print('role: ' + role)
+
     user = context.message.author
     role = discord.utils.get(user.server.roles, name="testRole")
+    print('user: ' + user.name)
+    print('action: ' + action)
+    print('role: ' + role)
 
     if action.lower() == 'join':    
         await client.add_roles(user, role)
@@ -793,11 +795,9 @@ async def rank(context, action, role):
         phoneNumber = info[0]
         print('phone: ' + str(phoneNumber))
 
-        
-        # for bucket in s3.buckets.all():
-        #     print(bucket.name)
-        
-        # obj = s3.Bucket('user-profile-bucket-ex-raid-bot').Object('roleProfiles.txt')
+    
+
+
 
 
         bucket = 'user-profile-bucket-ex-raid-bot'
@@ -805,33 +805,21 @@ async def rank(context, action, role):
         
         s3Resource.Object(bucket, fileName).download_file(fileName)
         with open(fileName, 'a') as f:
-            data = str(user.name + ',' + str(phoneNumber) + ',')
+            data = str(user.name + ',' + str(phoneNumber) + ',\n')
             f.write(data)
 
         s3Resource.Object(bucket, fileName).upload_file(fileName)
-            # s3Resource.Bucket(bucket).upload_file(f.name,fileName)
         print('upload complete')
 
 
-
-     
-        # s3Client.get_object(Body=df,Bucket='user-profile-bucket-ex-raid-bot', Key='roleProfiles.csv')
         
 
 
 
 
-
-
-
-
-        # with open(obj, 'a+') as f:
-        #     for line in f:
-        #         print('read from file -> ' + str(line))
-        #     f.write(str(user.name) + ',' + str(phoneNumber) + ',')
-        #     s3.Bucket('user-profile-bucket-ex-raid-bot').put_object(Key='roleProfiles.txt', Body=f)
-
        
+
+
         await client.send_message(user, 'your phone number ' + str(phoneNumber) + ' will be set for notifications. remove your number at any time by private messaging @ExRaidBot "!removePhone"')
 
     elif action.lower() == 'leave':
