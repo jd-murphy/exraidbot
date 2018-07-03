@@ -807,7 +807,8 @@ async def rank(context, action, role):
         with open(fileName, 'a') as f:
             data = str(user.name + ',' + str(phoneNumber) + ',')
             f.write(data)
-            s3Resource.Object(bucket, fileName).upload_file(f.name)
+
+        s3Resource.Object(bucket, fileName).upload_file(fileName)
             # s3Resource.Bucket(bucket).upload_file(f.name,fileName)
         print('upload complete')
 
