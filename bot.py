@@ -14,7 +14,7 @@ from oauth2client import file, client, tools
 
 
 # testing text extraction 
-import pytesseract
+import pytesseract    #   requires heroku buildpack!!!!!!!
 # from tesseract import image_to_string
 from PIL import Image
 import aiohttp
@@ -762,7 +762,9 @@ async def showEmojis(context):
 
    
 
-
+@client.command(pass_context=True)
+async def discordVersion(context):
+    await client.say(discord._version)
 
         
 
