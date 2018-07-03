@@ -829,8 +829,10 @@ async def rank(context, action, roleArg):
         
         s3Resource.Object(bucket, fileName).download_file(fileName)
         updatedList = []
-        with open(fileName, 'a') as f:
-            for row in f:
+        with open(fileName) as f:
+            reader = csv.reader(f)
+            data = [r for r in reader]
+            for row in data:
                 if row[0] != user.name:
                     updatedList.append(row[0], row[1])
         print('updatedList, should not contain user -> ' + updatedList)        
