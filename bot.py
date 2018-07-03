@@ -785,7 +785,7 @@ async def rank(context, action, role):
         info = info.split(" ")
         phoneNumber = info[0]
         print('phone: ' + str(phoneNumber))
-        with open(str(user.name) + '.txt', 'a+') as f:
+        with open('/roleProfiles/' + str(user.name) + '.txt', 'a+') as f:
             f.write(str(phoneNumber))
             print('phone ' + str(phoneNumber) + ' added for user ' + str(user.name))
         await client.send_message(user, 'your phone number ' + str(phoneNumber) + ' will be set for notifications. remove your number at any time by private messaging @ExRaidBot "!removePhone"')
