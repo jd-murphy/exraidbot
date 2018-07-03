@@ -840,8 +840,8 @@ async def rank(context, action, roleArg):
             print(str(item))
 
 
-        # s3Resource.Object(bucket, fileName).upload_file(fileName)
-        # print('upload complete')
+        s3Resource.Object(bucket, fileName).upload_file(fileName)
+        print('upload updated list complete')
         await client.say(user.mention + "you've been removed from " + str(role) + " :thumbsup:")
 
 
