@@ -780,6 +780,10 @@ async def on_message(message):
 
 
     twilioRole = discord.utils.get(message.server.roles, name='testRole')
+    if message.mentions:
+        print('There was a mention!')
+        for m in message.mentions:
+            print(m)
 
     if twilioRole.mention in message.mentions:
         print('on testRole.mention!')
