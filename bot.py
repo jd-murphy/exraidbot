@@ -938,6 +938,7 @@ def sendTwilioMessage(message):
         account_sid = environ['account_sid']
         auth_token = environ['auth_token']
         twilioClient = Client(account_sid, auth_token)
+        status = 'Connected'
         s3Resource.Object(bucket, fileName).download_file(fileName)
         status = 'Retrieved'
         with open(fileName) as f:
