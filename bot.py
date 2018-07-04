@@ -779,7 +779,7 @@ async def on_message(message):
 
 
 
-    twilioRole = discord.utils.get(discord.Server.roles, name='testRole')
+    twilioRole = discord.utils.get(discord.Guild.roles, name='testRole')
 
     if twilioRole in message.mentions:
         print('on testRole.mention!')
