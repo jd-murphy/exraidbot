@@ -949,8 +949,7 @@ def sendTwilioMessage(message):
                         from_='+14244002403',
                         to=row[1]
                     )
-
-        print('message sent by ' + message.author.name + ', content: ' + message.content + ' - twilioMessage.sid -> ' + str(twilioMessage.sid))
+                print('message sent by ' + message.author.name + ', content: ' + message.content + ' - twilioMessage.sid -> ' + str(twilioMessage.sid))
 
                 
 
