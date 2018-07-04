@@ -10,7 +10,6 @@ from discord import Game
 from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
-# this bot made for the bcs pogo community with love
 
 
 # testing text extraction 
@@ -28,12 +27,23 @@ from twilio.rest import Client
 
 
 
+
+
+
+
+
 TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY'
 BOT_PREFIX = ("!")
 AWS_ACCESS_KEY_ID = environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = environ['AWS_SECRET_ACCESS_KEY']
+
+
+
 # s3Client = boto3.client('s3')
 s3Resource = boto3.resource('s3')
+
+
+
 
 # Setup the Sheets API1join 
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
@@ -48,6 +58,10 @@ service = build('sheets', 'v4', http=creds.authorize(Http()))
 
 SPREADSHEET_ID = '15rbINq27Qt5lN-xl2FutRyzE93o4dH381mpStNGKCLc' #mine
 PIN_SPREADSHEET_ID = '1ocKnXUDbgy-9ty0tFE7gAx3PR1cY9dne5wfjPu9dymI'
+
+
+
+
 
 INSTINCT_EMOJI = "<:emoji_name:456205777389092895>" # <:emoji_name:456205777389092895> # instinct
 MYSTIC_EMOJI = "<:emoji_name:456205778022563851>" # <:emoji_name:456205778022563851> # mystic
@@ -169,6 +183,8 @@ async def help():
     await client.say(msg)
         
 
+
+
         
 
 @client.event
@@ -182,12 +198,16 @@ async def on_ready():
 
 
 
+
+
 def resetRaids():
     RAIDS.clear()
     sheet_metadata = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
     sheets = sheet_metadata.get('sheets', '')
     for sheet in sheets:
         RAIDS.append(sheet.get("properties", {}).get("title"))
+
+
 
 
 
@@ -213,6 +233,7 @@ async def raids():
 
 
 
+
 def printRaids():
     raidsString = ""
     raidsString = "Upcoming Ex Raids: " + "\n"
@@ -221,6 +242,8 @@ def printRaids():
         i+=1
         raidsString+= (str(i) + ".     " + str(key) + "\n")
     return raidsString
+
+
 
 
 
@@ -336,6 +359,8 @@ async def join(context, number):
         # await client.add_reaction(context.message, '\U0001F44D')
         await client.send_message(context.message.author, embed=embed)
 
+
+
                 
 
 
@@ -348,10 +373,15 @@ async def join(context, number):
 
 
 
+
+
 @client.command()
 async def share():
     link = "https://goo.gl/forms/gbTUkEkzaMxAbgFy1"
     await client.say("Copy and paste this sign up link to share with others who are not on Discord.\n" + link)
+
+
+
 
 
 
@@ -391,6 +421,11 @@ async def share():
 #         msg = "  (join - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
 #     await client.say(context.message.author.mention + msg)
    
+
+
+
+
+
 
 
 @client.command(pass_context=True,
@@ -462,6 +497,9 @@ async def leave(context, number):
 
 
 
+
+
+
 @client.command(pass_context=True,
                 description='Creates a new Ex Raid spreadsheet.', 
                 brief='Creates a new Ex Raid spreadsheet.')
@@ -487,6 +525,8 @@ async def createNewExRaid(context, gym_name):
     except Exception as e:
         msg = "  (createNewExRaid - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
     await client.say(context.message.author.mention + msg)
+
+
 
 
 
@@ -534,9 +574,12 @@ async def pin(context, gym_name):
 
 
 
+
 @client.command()
 async def signUp():    
     await client.say('Click this link to sign up for an upcoming EX Raid \n\n https://goo.gl/forms/BkIdUUvn8Hra9Z692')
+
+
 
 
 
@@ -552,6 +595,8 @@ def loadGyms():
             GYMS[k] = v
     print(GYMS['Dixie Chicken'])
     
+
+
 
 
 
@@ -727,17 +772,11 @@ async def on_message(message):
                     msg = "  (join - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
                 await client.send_message(message.channel, message.author.mention + msg)
 
-
-
                 # await client.add_reaction(message, '\U0001F44D') 
-       
         await processImage(url)
         # testing text extraction from image
 
 
-
-
-    
     if client.user in message.mentions:
         if 'fuck you' in message.content.lower() or 'fuck off' in message.content.lower():
             await client.send_message(message.channel, ("yo, chill tf out\n\n\n**Blacklist user:** " + message.author.mention))
@@ -761,6 +800,7 @@ async def on_message(message):
 
 
 
+
 @client.command(pass_context=True)
 async def showEmojis(context):    
     
@@ -768,11 +808,18 @@ async def showEmojis(context):
         print(x.id)
     await client.say("<:emoji_name:456205777389092895><:emoji_name:456205778022563851><:emoji_name:456205778395725834>")
 
+
+
+
    
 
 @client.command(pass_context=True)
 async def discordVersion(context):
     await client.say(discord.__version__)
+
+
+
+
 
 
 @client.command(pass_context=True)
@@ -812,28 +859,10 @@ async def rank(context, action, roleArg):
 
     elif action.lower() == 'leave':
         await client.remove_roles(user, role)
-        # bucket = 'user-profile-bucket-ex-raid-bot'
-        # fileName = 'roleProfiles.csv'
-        
-        # s3Resource.Object(bucket, fileName).download_file(fileName)
-        # updatedList = []
-        # with open(fileName) as f:
-        #     reader = csv.reader(f)
-        #     data = [r for r in reader]
-        #     for row in data:
-        #         if row[0] != user.name:
-        #             updatedList.append(row[0], row[1])
-        # print('updatedList, should not contain user -> ')        
-        # for item in updatedList:
-        #     print(str(item))
-        # with open(fileName, 'w') as fNew:
-        #     for item in updatedList:
-        #         fNew.write(item)
-
-        # s3Resource.Object(bucket, fileName).upload_file(fileName)
-        # print('upload updated list complete')
         deletePhoneNumber(user)
-        await client.say(user.mention + "you've been removed from " + str(role) + " :thumbsup:")
+        await client.say(user.mention + " you've been removed from " + str(role) + " :thumbsup:")
+
+
 
 
 
@@ -841,6 +870,8 @@ async def rank(context, action, roleArg):
 @client.command(pass_context=True)
 async def removePhone(context):
     await deletePhoneNumber(context.user)
+
+
 
 
 
@@ -902,6 +933,8 @@ async def testTwilio(context):
 
 
 
+
+
 async def list_servers():
     await client.wait_until_ready()
     while not client.is_closed:
@@ -909,6 +942,8 @@ async def list_servers():
         for server in client.servers:
             print(server.name)
         await asyncio.sleep(120)
+
+
 
 
 client.loop.create_task(list_servers())
