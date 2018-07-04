@@ -781,7 +781,7 @@ async def on_message(message):
 
     twilioRole = discord.utils.get(message.server.roles, name='testRole')
 
-    if twilioRole in message.mentions:
+    if twilioRole.mention in message.mentions:
         print('on testRole.mention!')
         await client.send_message(message.channel, 'The testRole @ tag was used! sweet...')
         
