@@ -783,6 +783,7 @@ async def on_message(message):
 
     if '<@&463724157889413120>' in message.content:
         print('on testRole.mention!')
+        await sendTwilioMessage(message)
         await client.send_message(message.channel, 'The testRole @ tag was used! sweet...')
         
 
@@ -915,10 +916,55 @@ def deletePhoneNumber(user):
         status = 'Uploaded'
         print('upload updated list complete')
     except Exception as e:
+        status = "ERROR!"
         print('ERROR removing user ' + user.name + 'phone number! -> ' + str(e))
     finally:
         return 'Done: ' + status
         
+
+
+
+
+
+
+
+
+def sendTwilioMessage(message):
+    status = 'Not started'
+    try:
+        bucket = 'user-profile-bucket-ex-raid-bot'
+        fileName = 'roleProfiles.csv'
+        account_sid = environ['account_sid']
+        auth_token = environ['auth_token']
+        twilioClient = Client(account_sid, auth_token)
+        s3Resource.Object(bucket, fileName).download_file(fileName)
+        status = 'Retrieved'
+        with open(fileName) as f:
+            reader = csv.reader(f)
+            data = [r for r in reader]
+            for row in data:
+                print('calling twilio api..')
+                twilioMessage = twilioClient.messages.create(
+                        body='Hi there ' + row[0] + '! This is a tag from @testRole! ' + message.content + ' - tagged by ' + message.author.name,
+                        from_='+14244002403',
+                        to=row[1]
+                    )
+
+        print('message sent by ' + message.author.name + ', content: ' + message.content + ' - twilioMessage.sid -> ' + str(twilioMessage.sid))
+
+                
+
+        status = 'hmmmmmmm'
+       
+       
+    except Exception as e:
+        status = "ERROR!"
+        print('ERROR sending texts to users! -> ' + str(e))
+    finally:
+        return 'Done: ' + status
+
+
+
 
 
 
