@@ -931,6 +931,7 @@ def deletePhoneNumber(user):
 
 def sendTwilioMessage(message):
     status = 'Not started'
+    totalMessagesSent = 0
     try:
         bucket = 'user-profile-bucket-ex-raid-bot'
         fileName = 'roleProfiles.csv'
@@ -949,11 +950,12 @@ def sendTwilioMessage(message):
                         from_='+14244002403',
                         to=row[1]
                     )
+                totalMessagesSent += 1
                 print('message sent by ' + message.author.name + ', content: ' + message.content + ' - twilioMessage.sid -> ' + str(twilioMessage.sid))
 
                 
 
-        status = 'hmmmmmmm'
+        status = 'Successfully sent ' + totalMessagesSent + ' messages.'
        
        
     except Exception as e:
