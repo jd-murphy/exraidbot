@@ -948,7 +948,7 @@ def sendTwilioMessage(message):
                 print('calling twilio api..')
                 messageBody = message.content.replace('<@&463724157889413120>', '@testRole')
                 twilioMessage = twilioClient.messages.create(
-                        body='Hi ' + row[0] + '! ' + messageBody + ' - tagged by ' + message.author.name,
+                        body='Hi ' + row[0] + '! ' + messageBody + ' - tagged by ' + message.author.name + ' in ' + message.channel,
                         from_='+14244002403',
                         to=row[1]
                     )
@@ -988,7 +988,7 @@ async def testTwilio(context):
         to='15415148992'
     )
 
-    await print('message sent by ' + context.message.author.name + ', twilioMessage.sid -> ' + str(twilioMessage.sid))
+    await print('message sent from testTwilio() by ' + context.message.author.name + ', twilioMessage.sid -> ' + str(twilioMessage.sid))
 
     await client.say(':thumbsup:')
 
