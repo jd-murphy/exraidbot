@@ -777,6 +777,18 @@ async def on_message(message):
         # testing text extraction from image
 
 
+
+
+    twilioRole = discord.utils.get(discord.Server.roles, name='testRole')
+
+    if twilioRole in message.mentions:
+        print('on testRole.mention!')
+        await client.send_message(message.channel, 'The testRole @ tag was used! sweet...')
+        
+
+
+
+
     if client.user in message.mentions:
         if 'fuck you' in message.content.lower() or 'fuck off' in message.content.lower():
             await client.send_message(message.channel, ("yo, chill tf out\n\n\n**Blacklist user:** " + message.author.mention))
