@@ -782,7 +782,8 @@ async def on_message(message):
 
     if '<@&463724157889413120>' in message.content:
         print('on testRole.mention!')
-        sendTwilioMessage(message)
+        status = sendTwilioMessage(message)
+        print('status from sendTwilioMessage: ' + status)
         await client.send_message(message.channel, 'The testRole @ tag was used! sweet...')
         
 
