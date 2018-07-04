@@ -948,7 +948,7 @@ def sendTwilioMessage(message):
                 print('calling twilio api..')
                 messageBody = message.content.replace('<@&463724157889413120>', '@testRole')
                 twilioMessage = twilioClient.messages.create(
-                        body='Hi ' + row[0] + '! ' + messageBody + ' - tagged by ' + message.author.name + ' in ' + message.channel,
+                        body='Hi ' + row[0] + '! ' + messageBody + ' - tagged by ' + message.author.name + ' in ' + message.channel.name,
                         from_='+14244002403',
                         to=row[1]
                     )
