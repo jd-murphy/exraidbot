@@ -779,7 +779,6 @@ async def on_message(message):
 
 
 
-    twilioRole = discord.utils.get(message.server.roles, name='testRole')
 
     if '<@&463724157889413120>' in message.content:
         print('on testRole.mention!')
@@ -945,17 +944,18 @@ def sendTwilioMessage(message):
             data = [r for r in reader]
             for row in data:
                 print('calling twilio api..')
+                messageBody = message.content.replace('<@&463724157889413120>', '@testRole')
                 twilioMessage = twilioClient.messages.create(
-                        body='Hi there ' + row[0] + '! This is a tag from @testRole! ' + message.content + ' - tagged by ' + message.author.name,
+                        body='Hi there ' + row[0] + '! This is a tag from @testRole! ' + messageBody + ' - tagged by ' + message.author.name,
                         from_='+14244002403',
                         to=row[1]
                     )
                 totalMessagesSent += 1
-                print('message sent by ' + message.author.name + ', content: ' + message.content + ' - twilioMessage.sid -> ' + str(twilioMessage.sid))
+                print('message sent by ' + message.author.name + ', content: ' + messageBody + ' - twilioMessage.sid -> ' + str(twilioMessage.sid))
 
                 
 
-        status = 'Successfully sent ' + totalMessagesSent + ' messages.'
+        status = 'Successfully sent ' + str(totalMessagesSent) + ' messages.'
        
        
     except Exception as e:
