@@ -784,7 +784,7 @@ async def on_message(message):
     print(message.mentions)
     print('\n\n')
 
-    if '<@&463724157889413120>' in message.mentions:
+    if '<@&463724157889413120>' in message:
         print('on testRole.mention!')
         await client.send_message(message.channel, 'The testRole @ tag was used! sweet...')
         
