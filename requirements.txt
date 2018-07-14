@@ -7,3 +7,4 @@ Pillow
 aiohttp
 boto3
 twilio
+pyrebase
