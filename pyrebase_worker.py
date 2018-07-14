@@ -40,6 +40,18 @@ def getData():
     print('finished!\nall_users ->')
     for item in all_users.val().items():
         print(item)
+
+
+def getByServer(server):
+    # users_by_score = db.child("users").order_by_child("score").equal_to(10).get()
+    print("connecting")
+    firebase = pyrebase.initialize_app(config)
+    db = firebase.database()
+    print("retrieving")
+    users_by_server = db.child("users").order_by_child("server").equal_to(server).get()
+    print('finished!\nusers_by_server: [' + server + ']  ->')
+    for item in users_by_server.val().items():
+        print(item)
  
 
 def remove(name):
