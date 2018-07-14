@@ -21,10 +21,8 @@ def push(name, phone, servers):
     if servers.lower() == "all":
         servers = ["bot-test-jordan", "BCS Pokemon Go", "Team Aqua's Hideout"]
     data = {
-            name : {
-                "phone": phone,
-                "servers": servers
-            }
+            "phone": phone,
+            "servers": servers
     }
     print("pushing...")
     results = db.child("users").child(name).push(data)
@@ -43,3 +41,13 @@ def getData():
     for item in all_users.val().items():
         print(item)
  
+
+def remove(name):
+    print("connecting")
+    firebase = pyrebase.initialize_app(config)
+    db = firebase.database()
+    print("deleting")
+    results = db.child("users").child(name).remove()
+    print("result from delete:")
+    print(results)
+    
