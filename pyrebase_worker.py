@@ -2,6 +2,7 @@
 import pyrebase
 import firebase_admin
 from firebase_admin import credentials
+import json
 
 config = {
     "apiKey": "AIzaSyAPuV0fCfbbi-V8BJFXmeApIWNvKZUpzn4",
@@ -53,12 +54,8 @@ def getByServer(server):
         for user in users.each():
             print(user.key())
             print(user.val())
-            for i, j, k, l, m in user.val():
-                print("i : " + i)
-                print("j : " + j)
-                print("k : " + k)
-                print("l : " + l)
-                print("m : " + m)
+            out = json.loads(user.val())
+            print("out: " + out)
         
                 
             
@@ -67,24 +64,20 @@ def getByServer(server):
         for user in users.each():
             print(user.key())
             print(user.val())
-            for i, j, k, l, m in user.val():
-                print("i : " + i)
-                print("j : " + j)
-                print("k : " + k)
-                print("l : " + l)
-                print("m : " + m)
+            out = json.loads(user.val())
+            print("out: " + out)
+        
+
         
 
     if server == "Team Aqua's Hideout":
         for user in users.each():
             print(user.key())
             print(user.val())
-            for i, j, k, l, m in user.val():
-                print("i : " + i)
-                print("j : " + j)
-                print("k : " + k)
-                print("l : " + l)
-                print("m : " + m)
+            out = json.loads(user.val())
+            print("out: " + out)
+
+
 
 
 
