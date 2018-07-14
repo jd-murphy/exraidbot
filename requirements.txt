@@ -8,3 +8,4 @@ aiohttp
 boto3
 twilio
 pyrebase
+firebase_admin
