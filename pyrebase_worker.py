@@ -48,7 +48,7 @@ def getByServer(server):
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()
     print("retrieving")
-    users_by_server = db.child("users").order_by_child("servers").equal_to(server).get()
+    users_by_server = db.child("users").child("$uid").order_by_child("phone").equal_to(server).get()
     print('finished!\nusers_by_server: [' + server + ']  ->')
     for item in users_by_server.val().items():
         print(item)
