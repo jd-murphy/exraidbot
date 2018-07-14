@@ -71,7 +71,5 @@ def getData():
     print("retrieving")
     all_users = db.child("users").get()
     print('finished!\nall_users ->')
-    for user in all_users.each():
-        print(user.key()) 
-        print(user.val())
+    print(all_users.val())
  
