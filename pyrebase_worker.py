@@ -14,17 +14,20 @@ config = {
   }
 
 
-def push(name, phone, servers):    
+def push(name, phone, bcspogo, btj, aqua):    
     print("connecting")
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()
-    if servers.lower() == "all":
-        servers = ["bot-test-jordan", "BCS Pokemon Go", "Team Aqua's Hideout"]
+
     data = {
-            "name": name,
-            "phone": phone,
-            "servers": servers
+        "name": name,
+        "phone": phone,
+        "BCS Pokemon Go": bcspogo,
+        "bot-test-jordan": btj,
+        "Team Aqua's Hideout": aqua
     }
+
+
     print("pushing...")
     results = db.child("users").push(data)
     print('finished!\nresults ->')
