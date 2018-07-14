@@ -54,8 +54,10 @@ def getByServer(server):
         for user in users.each():
             print(user.key())
             print(user.val())
-            out = json.loads(user.val())
-            print("out: " + out)
+            userDict = user.val()
+            
+            if "BCS Pokemon Go" in userDict:
+                print(userDict["BCS Pokemon Go"])
         
                 
             
@@ -64,18 +66,16 @@ def getByServer(server):
         for user in users.each():
             print(user.key())
             print(user.val())
-            out = json.loads(user.val())
-            print("out: " + out)
+            
         
 
-        
+
 
     if server == "Team Aqua's Hideout":
         for user in users.each():
             print(user.key())
             print(user.val())
-            out = json.loads(user.val())
-            print("out: " + out)
+            
 
 
 
