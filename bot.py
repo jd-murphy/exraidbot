@@ -27,7 +27,7 @@ from twilio.rest import Client
 
 
 
-
+import pyrebase_worker
 
 
 
@@ -969,6 +969,16 @@ def sendTwilioMessage(message):
 
 
 
+
+
+@client.command(pass_context=True)
+async def pyrebasePush(context):
+    pyrebase_worker.push()
+
+
+@client.command(pass_context=True)
+async def pyrebaseGet(context):
+    pyrebase_worker.getData()
 
 
 
