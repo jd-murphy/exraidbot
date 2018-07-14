@@ -51,22 +51,28 @@ def getByServer(server):
     users = getData()
     if server == "BCS Pokemon Go":
         for user in users.val().items():
-            if user["BCS Pokemon Go"] == True:
-                print("user belongs to BCS Pokemon Go:")
-                print(user.name)
-                print(user.phone)
+            print(user.key())
+            print(user.value())
+            # if user["BCS Pokemon Go"] == True:
+            #     print("user belongs to BCS Pokemon Go:")
+            #     print(user.name)
+            #     print(user.phone)
     if server == "bot-test-jordan":
         for user in users.val().items():
-            if user["bot-test-jordan"] == True:
-                print("user belongs to bot-test-jordan:")
-                print(user.name)
-                print(user.phone)
+            print(user.key())
+            print(user.value())
+            # if user["bot-test-jordan"] == True:
+            #     print("user belongs to bot-test-jordan:")
+            #     print(user.name)
+            #     print(user.phone)
     if server == "Team Aqua's Hideout":
         for user in users.val().items():
-            if user["Team Aqua's Hideout"] == True:
-                print("user belongs to Team Aqua's Hideout:")
-                print(user.name)
-                print(user.phone)
+            print(user.key())
+            print(user.value())
+            # if user["Team Aqua's Hideout"] == True:
+            #     print("user belongs to Team Aqua's Hideout:")
+            #     print(user.name)
+            #     print(user.phone)
 
 
 
