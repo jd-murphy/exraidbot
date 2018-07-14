@@ -52,20 +52,27 @@ def getByServer(server):
     users = getData()
     if server == "BCS Pokemon Go":
         for user in users.each():
-            print(user.key())
-            print(user.val())
+            # print(user.key())
+            # print(user.val())
             userDict = user.val()
-            
             if "BCS Pokemon Go" in userDict:
-                print(userDict["BCS Pokemon Go"])
+                print("userDict[\"name\"] -> " + userDict["name"])
+                print("userDict[\"phone\"] -> " + userDict["phone"])
+                print("userDict[\"BCS Pokemon Go\"] -> " + userDict["BCS Pokemon Go"])
         
                 
             
 
     if server == "bot-test-jordan":
         for user in users.each():
-            print(user.key())
-            print(user.val())
+           # print(user.key())
+            # print(user.val())
+            userDict = user.val()
+            if "bot-test-jordan" in userDict:
+                print("userDict[\"name\"] -> " + userDict["name"])
+                print("userDict[\"phone\"] -> " + userDict["phone"])
+                print("userDict[\"bot-test-jordan\"] -> " + userDict["bot-test-jordan"])
+        
             
         
 
@@ -73,8 +80,14 @@ def getByServer(server):
 
     if server == "Team Aqua's Hideout":
         for user in users.each():
-            print(user.key())
-            print(user.val())
+           # print(user.key())
+            # print(user.val())
+            userDict = user.val()
+            if "Team Aqua's Hideout" in userDict:
+                print("userDict[\"name\"] -> " + userDict["name"])
+                print("userDict[\"phone\"] -> " + userDict["phone"])
+                print("userDict[\"Team Aqua's Hideout\"] -> " + userDict["Team Aqua's Hideout"])
+        
             
 
 
