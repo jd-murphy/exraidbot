@@ -27,7 +27,7 @@ def push(name, phone, servers):
             }
     }
     print("pushing...")
-    results = db.child("users").push(data)
+    results = db.child("users").child(name).push(data)
     print('finished!\nresults ->')
     print(results)
 
