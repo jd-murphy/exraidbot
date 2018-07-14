@@ -40,24 +40,21 @@ def getData():
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()
     print("retrieving")
-    all_users = db.child("users").get()
+    users = db.child("users").get()
     print('finished!\nall_users ->')
-    for item in all_users.val().items():
-        print(item)
+    for user in users.val().items():
+        print(user)
+    return users
 
 
 def getByServer(server):
-    # users_by_score = db.child("users").order_by_child("score").equal_to(10).get()
-    print("connecting")
-    firebase = pyrebase.initialize_app(config)
-    db = firebase.database()
-    print("retrieving")
-    # users_by_server = db.child("users").child(server).get()
-    users_by_server = db.child("users").child(server).order_by_child('name').equal_to(True).get()
-    print('finished!\nusers_by_server: [' + server + ']  ->')
-    for item in users_by_server.val().items():
-        print(item)
- 
+    users = getData()
+    for item in users.val().items():
+        if item[server] == True:
+            print("This user belongs to " + server)
+            print(item)
+
+
 
 def remove(name):
     print("connecting")
