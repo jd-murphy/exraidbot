@@ -10,7 +10,7 @@ config = {
     "projectId": "twilio-bot-1601d",
     "storageBucket": "twilio-bot-1601d.appspot.com",
     "messagingSenderId": "933434061900",
-    "serviceAccount": "/twilio-bot-1601d-firebase-adminsdk-5bbb8-25331d6181.json"
+    "serviceAccount": "twilio-bot-1601d-firebase-adminsdk-5bbb8-25331d6181.json"
   }
 
 
