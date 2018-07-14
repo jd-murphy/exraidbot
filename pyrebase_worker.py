@@ -55,7 +55,7 @@ def getByServer(server):
             # print(user.key())
             # print(user.val())
             userDict = user.val()
-            if userDict["BCS Pokemon Go"] == True:
+            if userDict["BCS Pokemon Go"].lower() == 'true':  #  stored as strings in firebase
                 print("userDict[\"name\"] -> " + userDict["name"])
                 print("userDict[\"phone\"] -> " + userDict["phone"])
                 print("userDict[\"BCS Pokemon Go\"] -> " + userDict["BCS Pokemon Go"])
@@ -68,7 +68,7 @@ def getByServer(server):
            # print(user.key())
             # print(user.val())
             userDict = user.val()
-            if userDict["bot-test-jordan"] == True:
+            if userDict["bot-test-jordan"].lower() == 'true':  #  stored as strings in firebase
                 print("userDict[\"name\"] -> " + userDict["name"])
                 print("userDict[\"phone\"] -> " + userDict["phone"])
                 print("userDict[\"bot-test-jordan\"] -> " + userDict["bot-test-jordan"])
@@ -83,7 +83,7 @@ def getByServer(server):
            # print(user.key())
             # print(user.val())
             userDict = user.val()
-            if userDict["Team Aqua's Hideout"] == True:
+            if userDict["Team Aqua's Hideout"].lower() == 'true':  #  stored as strings in firebase
                 print("userDict[\"name\"] -> " + userDict["name"])
                 print("userDict[\"phone\"] -> " + userDict["phone"])
                 print("userDict[\"Team Aqua's Hideout\"] -> " + userDict["Team Aqua's Hideout"])
