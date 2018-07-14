@@ -50,20 +50,17 @@ def getData():
 def getByServer(server):
     users = getData()
     if server == "BCS Pokemon Go":
-        for user in users.val().items():
-            for key, value in user:
-                print(key)
-                print(value)
+        for user in users.each():
+            print(user.key())
+            print(user.val())
     if server == "bot-test-jordan":
-       for user in users.val().items():
-            for key, value in user:
-                print(key)
-                print(value)
+       for user in users.each():
+            print(user.key())
+            print(user.val())
     if server == "Team Aqua's Hideout":
-        for user in users.val().items():
-            for key, value in user:
-                print(key)
-                print(value)
+        for user in users.each():
+            print(user.key())
+            print(user.val())
 
 
 
