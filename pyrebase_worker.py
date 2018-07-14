@@ -50,7 +50,7 @@ def getData():
 def getByServer(server):
     users = getData()
     for item in users.val().items():
-        if item[server] == True:
+        if item.server == True:
             print("This user belongs to " + server)
             print(item)
 
