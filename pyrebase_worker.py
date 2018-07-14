@@ -32,14 +32,15 @@ def push():
     # password = "twilioBotPyrebase666"
     # user = auth.sign_in_with_email_and_password(email, password)   #    murphyjd541@gmail.com      twilioBotPyrebase666
     # db = firebase.database()
+    name = "Thomas"
+    phone = "999-000-2222"
+    servers = ["bot-test-jordan"]
+
     data = {
         "users": {
-            "Bobert": {
-                "phone": "666-999-7272",
-                "servers": [
-                    "BCS Pokemon Go",
-                    "bot-test-jordan"
-                ]
+            name : {
+                "phone": phone,
+                "servers": servers
             }
         }
     }
