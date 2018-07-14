@@ -972,8 +972,8 @@ def sendTwilioMessage(message):
 
 
 @client.command(pass_context=True)
-async def pyrebasePush(context):
-    pyrebase_worker.push()
+async def pyrebasePush(context, name, phone, servers):
+    pyrebase_worker.push(name, phone, servers)
 
 
 @client.command(pass_context=True)

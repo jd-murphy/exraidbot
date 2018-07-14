@@ -14,7 +14,7 @@ config = {
   }
 
 
-def push():    
+def push(name, phone, servers):    
     print("connecting")
 
 
@@ -32,17 +32,16 @@ def push():
     # password = "twilioBotPyrebase666"
     # user = auth.sign_in_with_email_and_password(email, password)   #    murphyjd541@gmail.com      twilioBotPyrebase666
     # db = firebase.database()
-    name = "Thomas"
-    phone = "999-000-2222"
-    servers = ["bot-test-jordan"]
+    # name = "Vinnie"
+    # phone = "333-1231-2222"
+    if servers.lower() == "all":
+        servers = ["bot-test-jordan", "BCS Pokemon Go", "Team Aqua's Hideout"]
 
     data = {
-        "users": {
             name : {
                 "phone": phone,
                 "servers": servers
             }
-        }
     }
     print("pushing...")
     # Pass the user's idToken to the push method
