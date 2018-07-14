@@ -53,31 +53,38 @@ def getByServer(server):
         for user in users.each():
             print(user.key())
             print(user.val())
-            for i, j in user.val():
-                print(i + " : " + j)
+            for i, j, k, l, m in user.val():
+                print("i : " + i)
+                print("j : " + j)
+                print("k : " + k)
+                print("l : " + l)
+                print("m : " + m)
         
                 
             
 
     if server == "bot-test-jordan":
-       for user in users.each():
+        for user in users.each():
             print(user.key())
             print(user.val())
-            for i, j in user.val():
-                print(i + " : " + j)
+            for i, j, k, l, m in user.val():
+                print("i : " + i)
+                print("j : " + j)
+                print("k : " + k)
+                print("l : " + l)
+                print("m : " + m)
         
 
     if server == "Team Aqua's Hideout":
-         for user in users.each():
+        for user in users.each():
             print(user.key())
             print(user.val())
-            for i, j in user.val():
-                print(i + " : " + j)
-        
-
-
-
-
+            for i, j, k, l, m in user.val():
+                print("i : " + i)
+                print("j : " + j)
+                print("k : " + k)
+                print("l : " + l)
+                print("m : " + m)
 
 
 
