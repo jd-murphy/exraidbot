@@ -980,6 +980,9 @@ async def pyrebasePush(context, name, phone, servers):
 async def pyrebaseGet(context):
     pyrebase_worker.getData()
 
+@client.command(pass_context=True)
+async def pyrebaseRemove(context, name):
+    pyrebase_worker.remove(name)
 
 
 
