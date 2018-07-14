@@ -55,7 +55,7 @@ def getByServer(server):
             # print(user.key())
             # print(user.val())
             userDict = user.val()
-            if "BCS Pokemon Go" in userDict:
+            if userDict["BCS Pokemon Go"] == True:
                 print("userDict[\"name\"] -> " + userDict["name"])
                 print("userDict[\"phone\"] -> " + userDict["phone"])
                 print("userDict[\"BCS Pokemon Go\"] -> " + userDict["BCS Pokemon Go"])
@@ -68,7 +68,7 @@ def getByServer(server):
            # print(user.key())
             # print(user.val())
             userDict = user.val()
-            if "bot-test-jordan" in userDict:
+            if userDict["bot-test-jordan"] == True:
                 print("userDict[\"name\"] -> " + userDict["name"])
                 print("userDict[\"phone\"] -> " + userDict["phone"])
                 print("userDict[\"bot-test-jordan\"] -> " + userDict["bot-test-jordan"])
@@ -83,7 +83,7 @@ def getByServer(server):
            # print(user.key())
             # print(user.val())
             userDict = user.val()
-            if "Team Aqua's Hideout" in userDict:
+            if userDict["Team Aqua's Hideout"] == True:
                 print("userDict[\"name\"] -> " + userDict["name"])
                 print("userDict[\"phone\"] -> " + userDict["phone"])
                 print("userDict[\"Team Aqua's Hideout\"] -> " + userDict["Team Aqua's Hideout"])
