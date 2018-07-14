@@ -40,5 +40,6 @@ def getData():
     print("retrieving")
     all_users = db.child("users").get()
     print('finished!\nall_users ->')
-    print(all_users.val())
+    for item in all_users.val().items():
+        print(item)
  
