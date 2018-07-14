@@ -21,11 +21,12 @@ def push(name, phone, servers):
     if servers.lower() == "all":
         servers = ["bot-test-jordan", "BCS Pokemon Go", "Team Aqua's Hideout"]
     data = {
+            "name": name,
             "phone": phone,
             "servers": servers
     }
     print("pushing...")
-    results = db.child("users").child(name).push(data)
+    results = db.child("users").push(data)
     print('finished!\nresults ->')
     print(results)
 
@@ -48,7 +49,7 @@ def getByServer(server):
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()
     print("retrieving")
-    users_by_server = db.child("users").child("$name").child("$uid").order_by_child("phone").equal_to(server).get()
+    users_by_server = db.child("users").child("$uid").order_by_child("phone").equal_to(server).get()
     print('finished!\nusers_by_server: [' + server + ']  ->')
     for item in users_by_server.val().items():
         print(item)
