@@ -27,10 +27,6 @@ from twilio.rest import Client
 
 
 
-# import pyrebase_worker
-
-
-
 
 TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY'
 BOT_PREFIX = ("!")
@@ -968,27 +964,6 @@ def sendTwilioMessage(message):
 
 
 
-
-
-
-# @client.command(pass_context=True)
-# async def pyrebasePush(context, name, phone, bcspogo, aqua):
-#     pyrebase_worker.push(name, phone, bcspogo, aqua)
-
-
-# @client.command(pass_context=True)
-# async def pyrebaseGet(context):
-#     pyrebase_worker.getData()
-
-
-# @client.command(pass_context=True)
-# async def pyrebaseGetByServer(context, server):
-#     pyrebase_worker.getByServer(context, server)    
-
-
-# @client.command(pass_context=True)
-# async def pyrebaseRemove(context, name):
-#     pyrebase_worker.remove(name)
 
 
 
