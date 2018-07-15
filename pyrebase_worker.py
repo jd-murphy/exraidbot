@@ -99,8 +99,21 @@ def remove(name):
     print("connecting")
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()
+    users = getData()
+    removeKey = "not set"
+    for user in users.each():
+        # print(user.key())
+        # print(user.val())
+        userDict = user.val()
+        if userDict["name"].lower() == name:  #  stored as strings in firebase
+            print("Deleting user -> " + userDict["name"])
+            print("user key -> " + user.key())
+            removeKey = user.key()
+
+
+
     print("deleting")
-    results = db.child("name").equal_to(name).remove()
+    results = db.child("users").child(removeKey).remove()
     
     print("result from delete:")
     print(results)
