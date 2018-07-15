@@ -105,7 +105,7 @@ def remove(name):
         # print(user.key())
         # print(user.val())
         userDict = user.val()
-        if userDict["name"].lower() == name:  #  stored as strings in firebase
+        if userDict["name"].lower() == name.lower():  #  stored as strings in firebase
             print("Deleting user -> " + userDict["name"])
             print("user key -> " + user.key())
             removeKey = user.key()
