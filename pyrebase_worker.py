@@ -100,7 +100,9 @@ def remove(name):
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()
     print("deleting")
-    results = db.child("users").child(name).remove()
+    # results = db.child("users").child("$uid").remove()
+    results = db.order_by_child("name").equal_to(name).remove()
+    
     print("result from delete:")
     print(results)
     
