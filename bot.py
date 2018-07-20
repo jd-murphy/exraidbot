@@ -996,6 +996,7 @@ async def testTwilio(context):
 
 @client.command(pass_context=True)
 async def getServerLink(context):
+    print("Getting embed with link")
     embed=discord.Embed(title="Download log", url="https://www.google.com")
     embed.set_author(name="Twilio Log Files ")
     await client.send_message(context.message.author, embed=embed)
