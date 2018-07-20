@@ -7,6 +7,6 @@ app.get('/', (req, res) => {
     res.send("This is my node server! Whoop!")
 });
 
-app.listen(3000, () => {
+app.listen(process.env.NODE_PORT, () => {
   console.log("node.js -> Listening on port 3000")
 });
