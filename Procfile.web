@@ -1,0 +1,2 @@
+worker: python bot.py
+node: node app.js --bind 127.0.0.1:$NODE_PORT

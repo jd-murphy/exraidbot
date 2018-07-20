@@ -1,1 +1,1 @@
-worker: python bot.py
+web: bin/runsvdir-dyno

@@ -992,6 +992,40 @@ async def testTwilio(context):
 
 
 
+
+
+@client.command(pass_context=True)
+async def getServerLink(context):
+    await client.say(':thumbsup:')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 async def list_servers():
     await client.wait_until_ready()
     while not client.is_closed:
