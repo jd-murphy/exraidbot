@@ -1,2 +1,2 @@
-python: python bot.py --bind 127.0.0.1:$PY_PORT
+python: python bot.py 
 node: node app.js 
