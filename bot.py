@@ -24,8 +24,11 @@ from os import environ
 import boto3
 
 from twilio.rest import Client
+import logging
 
 
+
+logging.basicConfig(filename="twilioLog.log")
 
 
 TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY'
@@ -985,6 +988,13 @@ async def testTwilio(context):
     await print('message sent from testTwilio() by ' + context.message.author.name + ', twilioMessage.sid -> ' + str(twilioMessage.sid))
 
     await client.say(':thumbsup:')
+
+
+
+
+@client.command(pass_context=True)
+async def testLog(context, message):
+    logging.info(message)
 
 
 
