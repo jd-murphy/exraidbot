@@ -190,8 +190,8 @@ async def on_ready():
     loadGyms()
     await client.change_presence(game=Game(name="Pokemon Go, duh"))
     print("Logged in as " + client.user.name)
-    print("Bot status ->  Status.online  = " + Status.online)
-    print("Bot status ->  Status.offline  = " + Status.offline)
+    print("Bot status ->  Status.online  = " + str(Status.online))
+    print("Bot status ->  Status.offline  = " + str(Status.offline))
     print("Printing connection info -> ")
     await print(str(client.connect()))
     
