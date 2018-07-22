@@ -1045,7 +1045,7 @@ async def emit():
         r = requests.get('https://node-bot-dashboard.herokuapp.com/api/bot-report', {"bot":"@ExRaidBot", "status":"online"})
         print("response")
         print(str(r))
-        await asyncio.sleep(3)
+        await asyncio.sleep(1)
     
 
 
