@@ -197,12 +197,12 @@ async def on_ready():
     
     
 
-@client.command()
-async def emit():
-    print("get request to /api/bot-report")
-    r = requests.get('https://node-bot-dashboard.herokuapp.com/api/bot-report')
-    print("response")
-    print(str(r))
+# @client.command()
+# async def emit():
+#     print("get request to /api/bot-report")
+#     r = requests.get('https://node-bot-dashboard.herokuapp.com/api/bot-report', {"bot":"@ExRaidBot", "status":"online"})
+#     print("response")
+#     print(str(r))
     
    
 
@@ -1038,6 +1038,15 @@ async def getServerLink(context):
 
 
 
+async def emit():
+    await client.wait_until_ready()
+    while not client.is_closed:
+        print("get request to /api/bot-report")
+        r = requests.get('https://node-bot-dashboard.herokuapp.com/api/bot-report', {"bot":"@ExRaidBot", "status":"online"})
+        print("response")
+        print(str(r))
+        await asyncio.sleep(3)
+    
 
 
 
@@ -1053,6 +1062,6 @@ async def list_servers():
 
 
 
-
+client.loop.create_task(emit())
 client.loop.create_task(list_servers())
 client.run(TOKEN)
