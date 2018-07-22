@@ -200,7 +200,7 @@ async def on_ready():
 @client.command()
 async def emit():
     print("get request to /api/botreport")
-    r = requests.get('https://node-bot-dashboard.herokuapp.com/api/botreport')
+    r = requests.get('https://node-bot-dashboard.herokuapp.com/botreport')
     print("response")
     print(str(r))
     
