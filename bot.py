@@ -26,7 +26,7 @@ import boto3
 from twilio.rest import Client
 from discord import Status
 from socketIO_client import SocketIO
-import socket
+import socketModule
 
 
 
@@ -193,7 +193,7 @@ async def on_ready():
     await client.change_presence(game=Game(name="Pokemon Go, duh"))
     print("Logged in as " + client.user.name)
     print("Calling socket.connect()")
-    socket.setup()
+    socketModule.setup()
 
     
     
@@ -201,7 +201,7 @@ async def on_ready():
 @client.command()
 async def emit():
     print("Calling socket.notify()")
-    socket.notify()
+    socketModule.notify()
    
 
 
