@@ -192,7 +192,7 @@ def on_reconnect():
 
 
 
-socketIO = SocketIO('https://node-bot-dashboard.herokuapp.com')
+socketIO = SocketIO('https://node-bot-dashboard.herokuapp.com/')
 socketIO.on('connect', on_connect)
 socketIO.on('disconnect', on_disconnect)
 socketIO.on('reconnect', on_reconnect)
