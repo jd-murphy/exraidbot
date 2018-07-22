@@ -25,8 +25,8 @@ import boto3
 
 from twilio.rest import Client
 from discord import Status
-from socketIO_client import SocketIO
-import socketModule
+
+
 
 
 
@@ -192,16 +192,18 @@ async def on_ready():
     loadGyms()
     await client.change_presence(game=Game(name="Pokemon Go, duh"))
     print("Logged in as " + client.user.name)
-    print("Calling socket.connect()")
-    socketModule.setup()
+   
 
     
     
 
 @client.command()
 async def emit():
-    print("Calling socket.notify()")
-    socketModule.notify()
+    print("get request to /api/bot-report")
+    r = requests.get('https://node-bot-dashboard.herokuapp.com/api/bot-websocket', auth=('bot', 'testing'))
+    print("response")
+    await print(str(r.status_code))
+    
    
 
 
