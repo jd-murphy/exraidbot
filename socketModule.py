@@ -3,19 +3,19 @@ from socketIO_client import SocketIO
 
 print("Hello from socket.py")
 print("attempting to connect...")
-socketIO = SocketIO('https://node-bot-dashboard.herokuapp.com/dashboard')
+socketIO = SocketIO('https://node-bot-dashboard.herokuapp.com/api/bot-websocket')
 
 
 
 
 def on_connect():
-    print('connected to https://node-bot-dashboard.herokuapp.com/dashboard')
+    print('connected to https://node-bot-dashboard.herokuapp.com/api/bot-websocket')
 
 def on_disconnect():
-    print('disconnect from https://node-bot-dashboard.herokuapp.com/dashboard')
+    print('disconnect from https://node-bot-dashboard.herokuapp.com/api/bot-websocket')
 
 def on_reconnect():
-    print('reconnected to https://node-bot-dashboard.herokuapp.com/dashboard')
+    print('reconnected to https://node-bot-dashboard.herokuapp.com/api/bot-websocket')
 
 def on_aaa_response(*args):
     print('on_aaa_response', args)
