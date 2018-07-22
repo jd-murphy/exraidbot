@@ -24,6 +24,7 @@ from os import environ
 import boto3
 
 from twilio.rest import Client
+from discord import Status
 
 
 
@@ -189,6 +190,11 @@ async def on_ready():
     loadGyms()
     await client.change_presence(game=Game(name="Pokemon Go, duh"))
     print("Logged in as " + client.user.name)
+    print("Bot status ->  Status.online  = " + Status.online)
+    print("Bot status ->  Status.offline  = " + Status.offline)
+    print("Printing connection info -> ")
+    await print(str(client.connect()))
+    
 
 
 
