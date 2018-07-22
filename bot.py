@@ -190,6 +190,9 @@ def on_disconnect():
 def on_reconnect():
     print('reconnected to https://node-bot-dashboard.herokuapp.com')
 
+def on_aaa_response(*args):
+    print('on_aaa_response', args)
+
 
 
 socketIO = SocketIO('https://node-bot-dashboard.herokuapp.com/')
@@ -197,16 +200,16 @@ socketIO.on('connect', on_connect)
 socketIO.on('disconnect', on_disconnect)
 socketIO.on('reconnect', on_reconnect)
 
-# # Listen
-# socketIO.on('aaa_response', on_aaa_response)
-# socketIO.emit('aaa')
-# socketIO.emit('aaa')
-# socketIO.wait(seconds=1)
+# Listen
+socketIO.on('aaa_response', on_aaa_response)
+socketIO.emit('aaa')
+socketIO.emit('aaa')
+socketIO.wait(seconds=1)
 
-# # Stop listening
-# socketIO.off('aaa_response')
-# socketIO.emit('aaa')
-# socketIO.wait(seconds=1)
+# Stop listening
+socketIO.off('aaa_response')
+socketIO.emit('aaa')
+socketIO.wait(seconds=1)
 
         
 
