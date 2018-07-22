@@ -25,6 +25,7 @@ import boto3
 
 from twilio.rest import Client
 from discord import Status
+from socketIO_client import SocketIO
 
 
 
@@ -180,7 +181,32 @@ async def help():
     await client.say(msg)
         
 
+def on_connect():
+    print('connected to https://node-bot-dashboard.herokuapp.com')
 
+def on_disconnect():
+    print('disconnect from https://node-bot-dashboard.herokuapp.com')
+
+def on_reconnect():
+    print('reconnected to https://node-bot-dashboard.herokuapp.com')
+
+
+
+socketIO = SocketIO('https://node-bot-dashboard.herokuapp.com')
+socketIO.on('connect', on_connect)
+socketIO.on('disconnect', on_disconnect)
+socketIO.on('reconnect', on_reconnect)
+
+# # Listen
+# socketIO.on('aaa_response', on_aaa_response)
+# socketIO.emit('aaa')
+# socketIO.emit('aaa')
+# socketIO.wait(seconds=1)
+
+# # Stop listening
+# socketIO.off('aaa_response')
+# socketIO.emit('aaa')
+# socketIO.wait(seconds=1)
 
         
 
@@ -190,13 +216,15 @@ async def on_ready():
     loadGyms()
     await client.change_presence(game=Game(name="Pokemon Go, duh"))
     print("Logged in as " + client.user.name)
-    print("Bot status ->  Status.online  = " + str(Status.online))
-    print("Bot status ->  Status.offline  = " + str(Status.offline))
-    print("Printing connection info -> ")
-    await print(str(client.connect()))
+    socketIO.emit('notify')
+   
     
 
-
+@client.command()
+async def emit():
+    print('emitting nofity from bot!')
+    socketIO.emit('notify')
+   
 
 
 
