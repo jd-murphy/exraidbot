@@ -200,7 +200,7 @@ async def on_ready():
 @client.command()
 async def emit():
     print("get request to /api/bot-report")
-    r = requests.get('https://node-bot-dashboard.herokuapp.com/api/bot-websocket', auth=('bot', 'testing'))
+    r = requests.get('https://node-bot-dashboard.herokuapp.com/api/bot-report', auth=('bot', 'testing'))
     print("response")
     await print(str(r.status_code))
     
