@@ -1037,8 +1037,9 @@ async def getServerLink(context):
 async def updateEmitInterval(context, num):
     emitInterval = int(num)
     print("emit interval updated: " + str(emitInterval) + ' seconds')
-    client.loop.stop(emit())
+    client.loop.stop()
     client.loop.create_task(emit())
+    client.loop.create_task(list_servers())
     await client.send_message(context.message.author, "emit interval updated: " + str(emitInterval) + ' seconds')
 
 
