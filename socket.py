@@ -1,7 +1,12 @@
 
 from socketIO_client import SocketIO
 
-SocketIO socketIO
+print("Hello from socket.py")
+print("attempting to connect...")
+socketIO = SocketIO('https://node-bot-dashboard.herokuapp.com/')
+
+
+
 
 def on_connect():
     print('connected to https://node-bot-dashboard.herokuapp.com')
@@ -17,10 +22,8 @@ def on_aaa_response(*args):
 
 
 
-def connect():
-    print("Hello from socket.py")
-    print("attempting to connect...")
-    socketIO = SocketIO('https://node-bot-dashboard.herokuapp.com/')
+def setup():
+    
     socketIO.on('connect', on_connect)
     socketIO.on('disconnect', on_disconnect)
     socketIO.on('reconnect', on_reconnect)

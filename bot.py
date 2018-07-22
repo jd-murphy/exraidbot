@@ -193,7 +193,7 @@ async def on_ready():
     await client.change_presence(game=Game(name="Pokemon Go, duh"))
     print("Logged in as " + client.user.name)
     print("Calling socket.connect()")
-    socket.connect()
+    socket.setup()
 
     
     
