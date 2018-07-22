@@ -194,8 +194,11 @@ def on_aaa_response(*args):
     print('on_aaa_response', args)
 
 
-
-
+socketIO = SocketIO('https://node-bot-dashboard.herokuapp.com/')
+socketIO.on('connect', on_connect)
+socketIO.on('disconnect', on_disconnect)
+socketIO.on('reconnect', on_reconnect)
+socketIO.on('aaa_response', on_aaa_response)
         
 
 @client.event
@@ -204,13 +207,10 @@ async def on_ready():
     loadGyms()
     await client.change_presence(game=Game(name="Pokemon Go, duh"))
     print("Logged in as " + client.user.name)
-    socketIO = SocketIO('https://node-bot-dashboard.herokuapp.com/')
-    socketIO.on('connect', on_connect)
-    socketIO.on('disconnect', on_disconnect)
-    socketIO.on('reconnect', on_reconnect)
-
+    # socketIO = SocketIO('https://node-bot-dashboard.herokuapp.com/')
+    
     # Listen
-    socketIO.on('aaa_response', on_aaa_response)
+   
     socketIO.emit('aaa')
     socketIO.emit('aaa')
     socketIO.wait(seconds=1)
