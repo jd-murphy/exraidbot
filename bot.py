@@ -28,6 +28,8 @@ from discord import Status
 
 
 
+emitInterval = 2
+
 
 
 TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY'
@@ -1031,8 +1033,10 @@ async def getServerLink(context):
 
 
 
-
-
+@client.command(pass_context=True)
+async def updateEmitInterval(context, num):
+    emitInterval = int(num)
+    print("emit interval updated: " + str(emitInterval) + ' seconds')
 
 
 
@@ -1045,7 +1049,7 @@ async def emit():
         r = requests.get('https://node-bot-dashboard.herokuapp.com/api/bot-report', {"bot":"@ExRaidBot", "status":"online"})
         print("response")
         print(str(r))
-        await asyncio.sleep(10)
+        await asyncio.sleep(emitInterval)
     
 
 
