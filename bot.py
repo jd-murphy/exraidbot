@@ -235,7 +235,7 @@ async def on_message(message):
                 
                 text = pytesseract.image_to_string(Image.open(r.raw))
 
-                 await client.send_message(message.channel, message.author.mention + "Here is the preprocessed image_to_string() result: \n\n" + text)
+                await client.send_message(message.channel, message.author.mention + "Here is the preprocessed image_to_string() result: \n\n" + text)
                
 
                 for month in months:
