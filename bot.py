@@ -189,7 +189,7 @@ async def help():
 
 @client.event
 async def on_ready():
-    resetRaids()
+    # resetRaids()
     loadGyms()
     await client.change_presence(game=Game(name="Pokemon Go, duh"))
     print("Logged in as " + client.user.name)
