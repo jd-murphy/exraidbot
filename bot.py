@@ -7,9 +7,9 @@ import csv
 import discord
 from discord.ext.commands import Bot
 from discord import Game
-from googleapiclient.discovery import build
-from httplib2 import Http
-from oauth2client import file, client, tools
+# from googleapiclient.discovery import build
+# from httplib2 import Http
+# from oauth2client import file, client, tools
 
 
 # testing text extraction 
@@ -21,7 +21,7 @@ import json
 # testing text extraction
 
 from os import environ
-import boto3
+# import boto3
 
 from twilio.rest import Client
 from discord import Status
@@ -31,32 +31,32 @@ from discord import Status
 
 
 
-TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY'
+TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY' # regenerate and move to environment variable
 BOT_PREFIX = ("!")
-AWS_ACCESS_KEY_ID = environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = environ['AWS_SECRET_ACCESS_KEY']
+# AWS_ACCESS_KEY_ID = environ['AWS_ACCESS_KEY_ID']
+# AWS_SECRET_ACCESS_KEY = environ['AWS_SECRET_ACCESS_KEY']
 
 
 
 # s3Client = boto3.client('s3')
-s3Resource = boto3.resource('s3')
+# s3Resource = boto3.resource('s3')
 
 
 
 
 # Setup the Sheets API1join 
-SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
-store = file.Storage('credentials.json')
-creds = store.get()
-if not creds or creds.invalid:
-    flow = client.flow_from_clientsecrets('client_secret.json', SCOPES)
-    creds = tools.run_flow(flow, store)
-service = build('sheets', 'v4', http=creds.authorize(Http()))
+# SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
+# store = file.Storage('credentials.json')
+# creds = store.get()
+# if not creds or creds.invalid:
+#     flow = client.flow_from_clientsecrets('client_secret.json', SCOPES)
+#     creds = tools.run_flow(flow, store)
+# service = build('sheets', 'v4', http=creds.authorize(Http()))
 
-# Call the Sheets API
+# # Call the Sheets API
 
-SPREADSHEET_ID = '15rbINq27Qt5lN-xl2FutRyzE93o4dH381mpStNGKCLc' #mine
-PIN_SPREADSHEET_ID = '1ocKnXUDbgy-9ty0tFE7gAx3PR1cY9dne5wfjPu9dymI'
+# SPREADSHEET_ID = '15rbINq27Qt5lN-xl2FutRyzE93o4dH381mpStNGKCLc' #mine
+# PIN_SPREADSHEET_ID = '1ocKnXUDbgy-9ty0tFE7gAx3PR1cY9dne5wfjPu9dymI'
 
 
 
@@ -211,12 +211,12 @@ async def on_ready():
 
 
 
-def resetRaids():
-    RAIDS.clear()
-    sheet_metadata = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
-    sheets = sheet_metadata.get('sheets', '')
-    for sheet in sheets:
-        RAIDS.append(sheet.get("properties", {}).get("title"))
+# def resetRaids():
+#     RAIDS.clear()
+#     sheet_metadata = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
+#     sheets = sheet_metadata.get('sheets', '')
+#     for sheet in sheets:
+#         RAIDS.append(sheet.get("properties", {}).get("title"))
 
 
 
@@ -224,21 +224,21 @@ def resetRaids():
 
 
 
-@client.command(description='Returns a list of all current EX Raids.', 
-                brief='Returns a list of all current EX Raids.')
-async def raids():
-    RAIDS.clear()
-    try:
-        sheet_metadata = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
-        sheets = sheet_metadata.get('sheets', '')
-        for sheet in sheets:
-            RAIDS.append(sheet.get("properties", {}).get("title"))
-            # sheet.get("properties", {}).get("title") 
-            # sheet.get("properties", {}).get("sheetId")     # need str() to print this out
-        msg = printRaids()
-    except Exception as e:
-        msg = "  (raids - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
-    await client.say(msg)
+# @client.command(description='Returns a list of all current EX Raids.', 
+#                 brief='Returns a list of all current EX Raids.')
+# async def raids():
+#     # RAIDS.clear()
+#     try:
+#         sheet_metadata = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
+#         sheets = sheet_metadata.get('sheets', '')
+#         for sheet in sheets:
+#             RAIDS.append(sheet.get("properties", {}).get("title"))
+#             # sheet.get("properties", {}).get("title") 
+#             # sheet.get("properties", {}).get("sheetId")     # need str() to print this out
+#         msg = printRaids()
+#     except Exception as e:
+#         msg = "  (raids - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
+#     await client.say(msg)
 
 
 
@@ -260,82 +260,82 @@ def printRaids():
 
 
 
-@client.command(pass_context=True, 
-                description='Lists all trainers that are signed up for a Raid.', 
-                brief='Lists all trainers that are signed up for a Raid.')
-async def raiders(context, number):
-    resetRaids()
-    try: 
-        num = int(number)
-        if (0 < num) and (num <= len(RAIDS)):
-            if (RAIDS[num-1]) == 'Form Responses':
-                RANGE_NAME = RAIDS[num-1] + "!C3:F100"
-            else:
-                RANGE_NAME = RAIDS[num-1] + "!A3:D100"
+# @client.command(pass_context=True, 
+#                 description='Lists all trainers that are signed up for a Raid.', 
+#                 brief='Lists all trainers that are signed up for a Raid.')
+# async def raiders(context, number):
+#     resetRaids()
+#     try: 
+#         num = int(number)
+#         if (0 < num) and (num <= len(RAIDS)):
+#             if (RAIDS[num-1]) == 'Form Responses':
+#                 RANGE_NAME = RAIDS[num-1] + "!C3:F100"
+#             else:
+#                 RANGE_NAME = RAIDS[num-1] + "!A3:D100"
 
-            result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
-            values = result.get('values', [])
-            if not values:
-                msg = 'No data found.'
-                print('No data found.')
-            else:
-                msg = ''
-                # msg = 'Trainers attending ' + RAIDS[num-1] + ": \n"
-                for cell in values:
-                    if cell[0]:
-                        try:
-                            msg += (cell[0] + "\t")
-                        except:
-                            pass
-                    else:
-                        try:
-                            msg += (cell[1] + "\t")
-                        except:
-                            pass
+#             result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
+#             values = result.get('values', [])
+#             if not values:
+#                 msg = 'No data found.'
+#                 print('No data found.')
+#             else:
+#                 msg = ''
+#                 # msg = 'Trainers attending ' + RAIDS[num-1] + ": \n"
+#                 for cell in values:
+#                     if cell[0]:
+#                         try:
+#                             msg += (cell[0] + "\t")
+#                         except:
+#                             pass
+#                     else:
+#                         try:
+#                             msg += (cell[1] + "\t")
+#                         except:
+#                             pass
 
-                    try:
-                        msg += (cell[2] + "\t")
-                    except:
-                        pass
-                    try:
-                        if cell[3]:
-                            team = cell[3].lower()
-                            if team == 'instinct':
-                                msg += INSTINCT_EMOJI
-                            if team == 'mystic':
-                                msg += MYSTIC_EMOJI
-                            if team == 'valor':
-                                msg += VALOR_EMOJI
-                    except:
-                        pass
+#                     try:
+#                         msg += (cell[2] + "\t")
+#                     except:
+#                         pass
+#                     try:
+#                         if cell[3]:
+#                             team = cell[3].lower()
+#                             if team == 'instinct':
+#                                 msg += INSTINCT_EMOJI
+#                             if team == 'mystic':
+#                                 msg += MYSTIC_EMOJI
+#                             if team == 'valor':
+#                                 msg += VALOR_EMOJI
+#                     except:
+#                         pass
                 
-                    msg += "\r\n"
+#                     msg += "\r\n"
 
 
 
-                    # # pin = getPinForGym(gym_name) this needs to replace the hardcoded link below     ***********************
-                    # for key, value in GYMS.items():
-                    #     if (RAIDS[num-1]).lower() in key.lower():
-                    #         gymPin = value
+#                     # # pin = getPinForGym(gym_name) this needs to replace the hardcoded link below     ***********************
+#                     # for key, value in GYMS.items():
+#                     #     if (RAIDS[num-1]).lower() in key.lower():
+#                     #         gymPin = value
 
 
-                    gymPin = "https://www.google.com/maps?q=30.616412,-96.3463220"
+#                     gymPin = "https://www.google.com/maps?q=30.616412,-96.3463220"
 
 
 
-                    raidersString = msg
-                    embed=discord.Embed(title="GPS pin for the gym", url=gymPin, color=0x2af8f6)
-                    embed.set_author(name=(RAIDS[num-1]))
-                    embed.add_field(name='Trainers signed up for this raid: ', value=raidersString, inline=True)
+#                     raidersString = msg
+#                     embed=discord.Embed(title="GPS pin for the gym", url=gymPin, color=0x2af8f6)
+#                     embed.set_author(name=(RAIDS[num-1]))
+#                     embed.add_field(name='Trainers signed up for this raid: ', value=raidersString, inline=True)
                     
 
 
 
-        else:
-            msg = "Try entering a number between 1 and " + str(len(RAIDS))
-    except Exception as e:
-        msg = "  (raiders - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
-    await client.say(embed=embed)
+#         else:
+#             msg = "Try entering a number between 1 and " + str(len(RAIDS))
+#     except Exception as e:
+#         msg = "  (raiders - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
+#     await client.say(embed=embed)
 
 
 
@@ -347,28 +347,28 @@ async def raiders(context, number):
 
 
 
-# new join
-@client.command(pass_context=True, 
-                description='Adds your name to the spreadsheet for a Raid.', 
-                brief='Adds your name to the spreadsheet for a Raid.')
-async def join(context, number):
-    resetRaids()
-    num = int(number)
-    if (0 < num) and (num <= len(RAIDS)):
-        # context.message.author.name
-        raid = RAIDS[num-1]
-        encodedRaid = raid.replace(' ', '+')
-        encodedDiscordUserName =  context.message.author.name.replace(' ', '+')
-        link = "https://docs.google.com/forms/d/e/1FAIpQLSe91_7jTnj2HDFO7FchoFNBgaGnSrtRa72jTs9Fck4XmeP2wA/viewform?usp=pp_url&entry.854648901=" + encodedRaid + "&entry.498196543=" + encodedDiscordUserName
-        print('\n\n\nHere is the link ->\n', link)
-        print('\nhere is the context.message.author.name -> ', context.message.author.name)
-        # msg = ' Here is your link to sign up for ' + raid + "\n" + link
-        embed=discord.Embed(title="Click here to sign up!", url=link, color=0x00ccf1)
-        embed.set_author(name="Follow this link to sign up for your raid.\nThis link is for " + context.message.author.name + " only.")
+# # OLD   -     NEW join
+# @client.command(pass_context=True, 
+#                 description='Adds your name to the spreadsheet for a Raid.', 
+#                 brief='Adds your name to the spreadsheet for a Raid.')
+# async def join(context, number):
+#     resetRaids()
+#     num = int(number)
+#     if (0 < num) and (num <= len(RAIDS)):
+#         # context.message.author.name
+#         raid = RAIDS[num-1]
+#         encodedRaid = raid.replace(' ', '+')
+#         encodedDiscordUserName =  context.message.author.name.replace(' ', '+')
+#         link = "https://docs.google.com/forms/d/e/1FAIpQLSe91_7jTnj2HDFO7FchoFNBgaGnSrtRa72jTs9Fck4XmeP2wA/viewform?usp=pp_url&entry.854648901=" + encodedRaid + "&entry.498196543=" + encodedDiscordUserName
+#         print('\n\n\nHere is the link ->\n', link)
+#         print('\nhere is the context.message.author.name -> ', context.message.author.name)
+#         # msg = ' Here is your link to sign up for ' + raid + "\n" + link
+#         embed=discord.Embed(title="Click here to sign up!", url=link, color=0x00ccf1)
+#         embed.set_author(name="Follow this link to sign up for your raid.\nThis link is for " + context.message.author.name + " only.")
  
-        await client.send_message(context.message.channel, "Check yo DMs " + context.message.author.mention)
-        # await client.add_reaction(context.message, '\U0001F44D')
-        await client.send_message(context.message.author, embed=embed)
+#         await client.send_message(context.message.channel, "Check yo DMs " + context.message.author.mention)
+#         # await client.add_reaction(context.message, '\U0001F44D')
+#         await client.send_message(context.message.author, embed=embed)
 
 
 
@@ -388,7 +388,7 @@ async def join(context, number):
 
 @client.command()
 async def share():
-    link = "https://goo.gl/forms/gbTUkEkzaMxAbgFy1"
+    link = "https://goo.gl/forms/gbTUkEkzaMxAbgFy1" # change this so not google sheets
     await client.say("Copy and paste this sign up link to share with others who are not on Discord.\n" + link)
 
 
@@ -396,7 +396,7 @@ async def share():
 
 
 
-# old join 
+# OLD OLD old join 
 # @client.command(pass_context=True, 
 #                 description='Adds your name to the spreadsheet for a Raid.', 
 #                 brief='Adds your name to the spreadsheet for a Raid.')
@@ -439,69 +439,69 @@ async def share():
 
 
 
-@client.command(pass_context=True,
-                description='Removes your name from the spreadsheet for a Raid.', 
-                brief='Removes your name from the spreadsheet for a Raid.')
-async def leave(context, number):
-    resetRaids()
-    try: 
-        num = int(number)
-        if (0 < num) and (num <= len(RAIDS)):
-            sheetRange = RAIDS[num-1] + "!A1:A"
-            result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,range=sheetRange).execute()
-            sheet_metadata = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
-            sheets = sheet_metadata.get('sheets', '')
-            print("\n\nsheets")
-            print(sheets)
-            title = sheets[num-1].get("properties", {}).get("title")
-            print("\n\ntitle")
-            print(title)
-            sheet_id = sheets[num-1].get("properties", {}).get("sheetId")
-            print("\n\nsheet_id")
-            print(sheet_id)
-            deleteItem = context.message.author.name
+# @client.command(pass_context=True,
+#                 description='Removes your name from the spreadsheet for a Raid.', 
+#                 brief='Removes your name from the spreadsheet for a Raid.')
+# async def leave(context, number):
+#     resetRaids()
+#     try: 
+#         num = int(number)
+#         if (0 < num) and (num <= len(RAIDS)):
+#             sheetRange = RAIDS[num-1] + "!A1:A"
+#             result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,range=sheetRange).execute()
+#             sheet_metadata = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
+#             sheets = sheet_metadata.get('sheets', '')
+#             print("\n\nsheets")
+#             print(sheets)
+#             title = sheets[num-1].get("properties", {}).get("title")
+#             print("\n\ntitle")
+#             print(title)
+#             sheet_id = sheets[num-1].get("properties", {}).get("sheetId")
+#             print("\n\nsheet_id")
+#             print(sheet_id)
+#             deleteItem = context.message.author.name
 
-            rows = result.get('values')
-            j=0
-            for i in rows:
-                j+=1
-                print(i)
-                try:
-                    if i[0]:
-                        print('found something! '+ i[0])
+#             rows = result.get('values')
+#             j=0
+#             for i in rows:
+#                 j+=1
+#                 print(i)
+#                 try:
+#                     if i[0]:
+#                         print('found something! '+ i[0])
 
-                        if i[0] == deleteItem:
-                            print("\n\nGONNA DELETE THIS MOFUCKA: " + i[0])
-                            print('row ' + str(j))
+#                         if i[0] == deleteItem:
+#                             print("\n\nGONNA DELETE THIS MOFUCKA: " + i[0])
+#                             print('row ' + str(j))
                             
                             
-                            body = {
-                                    "requests": [{
-                                        "deleteDimension": {
-                                            "range": {
-                                            "sheetId": sheet_id,
-                                            "dimension": "ROWS",
-                                            "startIndex": j - 1,
-                                            "endIndex": j
-                                            }
-                                        }
-                                    }]
-                                }
+#                             body = {
+#                                     "requests": [{
+#                                         "deleteDimension": {
+#                                             "range": {
+#                                             "sheetId": sheet_id,
+#                                             "dimension": "ROWS",
+#                                             "startIndex": j - 1,
+#                                             "endIndex": j
+#                                             }
+#                                         }
+#                                     }]
+#                                 }
 
 
-                            service.spreadsheets().batchUpdate(spreadsheetId=SPREADSHEET_ID, body=body).execute()
-                            msg = ", you have been removed from " + RAIDS[num-1] + " :thumbsup:"
-                        else:
-                            msg = ", it doesn't look like you were signed up for that raid. Your name is not on the list. :thinking:"
+#                             service.spreadsheets().batchUpdate(spreadsheetId=SPREADSHEET_ID, body=body).execute()
+#                             msg = ", you have been removed from " + RAIDS[num-1] + " :thumbsup:"
+#                         else:
+#                             msg = ", it doesn't look like you were signed up for that raid. Your name is not on the list. :thinking:"
 
-                except Exception as e:
-                     print(str(e))
+#                 except Exception as e:
+#                      print(str(e))
                 
-        else:
-            msg = "Try entering a number between 1 and " + str(len(RAIDS))
-    except Exception as e:
-        msg = "  (leave - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
-    await client.say(context.message.author.mention + msg)
+#         else:
+#             msg = "Try entering a number between 1 and " + str(len(RAIDS))
+#     except Exception as e:
+#         msg = "  (leave - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
+#     await client.say(context.message.author.mention + msg)
 
 
 
@@ -511,31 +511,31 @@ async def leave(context, number):
 
 
 
-@client.command(pass_context=True,
-                description='Creates a new Ex Raid spreadsheet.', 
-                brief='Creates a new Ex Raid spreadsheet.')
-async def createNewExRaid(context, gym_name):
-    resetRaids()
-    try: 
-        msg = "Would you like to create a new raid called " + gym_name + "?"
+# @client.command(pass_context=True,
+#                 description='Creates a new Ex Raid spreadsheet.', 
+#                 brief='Creates a new Ex Raid spreadsheet.')
+# async def createNewExRaid(context, gym_name):
+#     resetRaids()
+#     try: 
+#         msg = "Would you like to create a new raid called " + gym_name + "?"
 
-# need to add code to actually CREATE the NEW EX RAID SHEET
-# 
-# 
-# 
-# 
-#           to do
-# 
-# 
-# 
-# 
-# 
-# need to add code to actually CREATE the NEW EX RAID SHEET
+# # need to add code to actually CREATE the NEW EX RAID SHEET
+# # 
+# # 
+# # 
+# # 
+# #           to do
+# # 
+# # 
+# # 
+# # 
+# # 
+# # need to add code to actually CREATE the NEW EX RAID SHEET
 
-        msg = ", you have created a new raid called " + gym_name + " :thumbsup:   :clap: :clap: :clap:"
-    except Exception as e:
-        msg = "  (createNewExRaid - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
-    await client.say(context.message.author.mention + msg)
+#         msg = ", you have created a new raid called " + gym_name + " :thumbsup:   :clap: :clap: :clap:"
+#     except Exception as e:
+#         msg = "  (createNewExRaid - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
+#     await client.say(context.message.author.mention + msg)
 
 
 
@@ -586,9 +586,9 @@ async def pin(context, gym_name):
 
 
 
-@client.command()
-async def signUp():    
-    await client.say('Click this link to sign up for an upcoming EX Raid \n\n https://goo.gl/forms/BkIdUUvn8Hra9Z692')
+# @client.command()
+# async def signUp():    
+#     await client.say('Click this link to sign up for an upcoming EX Raid \n\n https://goo.gl/forms/BkIdUUvn8Hra9Z692')
 
 
 
@@ -625,7 +625,7 @@ async def on_message(message):
             print(x['url'])
             url = x['url']
             async def processImage(_url):
-                SHEET_ID = "1ST_WxLsxyocBmhLn58PqsFvN98cTn36l1pJIm1IQoqs"
+                # SHEET_ID = "1ST_WxLsxyocBmhLn58PqsFvN98cTn36l1pJIm1IQoqs"
 
                 r = requests.get(_url, stream = True)
                 
@@ -656,7 +656,7 @@ async def on_message(message):
                 raidTime = (raidTime[0] + ' ' + raidTime[1] + ' ' + raidTime[2] + ' ' + raidTime[3])
                 ##########################
 
-                await client.send_message(message.channel, message.author.mention + " Your pass for \n**" + raidLocation + "**\n**" + raidTime + "** was uploaded. " + random.choice(emoji) + "\n Type **$set [desired start time] [team name]** to finish signing up. \nFor example: \n    **$set hatch mystic**\n    **$set noon valor**\n    **$set 1:30 instinct**")
+                await client.send_message(message.channel, message.author.mention + " Your pass for \n**" + raidLocation + "**\n**" + raidTime + "** was uploaded. " + random.choice(emoji) + "\n Type **$set [desired start time]** to finish signing up. \nFor example: \n    **$set hatch**\n    **$set noon**\n    **$set 1:30**")
                 
                 def setInfo(msg):
                     return msg.content.startswith('$set')
@@ -667,121 +667,125 @@ async def on_message(message):
                
                 info = info.split(" ")
                 startTime = info[0]
-                team = info[1]
 
 
-                try: 
-                    sheetName = ''
-                    writeRange = ''
-                    values = ''
-                    resource = ''
+
+                await client.send_message(message.channel, message.author.mention + " Your information:\nRaid location -> " + raidLocation + "\nRaid time -> " + raidTime + "\nDesired start time -> " + startTime)
+                # team = info[1]
 
 
-                    values = [
-                        [
-                            message.author.name,
-                            # trainerName,
-                            startTime,
-                            team
-                        ]
-                    ]
-                    resource = {
-                        "majorDimension": "ROWS",
-                        "values": values
-                        }
+                # try: 
+                #     sheetName = ''
+                #     writeRange = ''
+                #     values = ''
+                #     resource = ''
 
-                    sheetName = (output[1] + " " + output[0])
+
+                #     values = [
+                #         [
+                #             message.author.name,
+                #             # trainerName,
+                #             startTime,
+                #             team
+                #         ]
+                #     ]
+                #     resource = {
+                #         "majorDimension": "ROWS",
+                #         "values": values
+                #         }
+
+                #     sheetName = (output[1] + " " + output[0])
                     
-                    writeRange = (sheetName + "!A1:D")
+                #     writeRange = (sheetName + "!A1:D")
                     
 
-                    try:
+                #     try:
 
-                        writeRange = ("'" + sheetName + "'!A:D")
-                        # body = {
-                        #         'values': values
-                        #     }
+                #         writeRange = ("'" + sheetName + "'!A:D")
+                #         # body = {
+                #         #         'values': values
+                #         #     }
                         
-                        ####
-                        result = service.spreadsheets().values().get(spreadsheetId=SHEET_ID, range=writeRange).execute()
-                        retrievedValues = result.get('values', [])
-                        print('retrievedValues -> ')
-                        print(retrievedValues)
-                        print('printing elements .... ')
-                        newValues = []
-                        for element in retrievedValues:
-                            print(element)
-                            newValues.append(element)
+                #         ####
+                #         result = service.spreadsheets().values().get(spreadsheetId=SHEET_ID, range=writeRange).execute()
+                #         retrievedValues = result.get('values', [])
+                #         print('retrievedValues -> ')
+                #         print(retrievedValues)
+                #         print('printing elements .... ')
+                #         newValues = []
+                #         for element in retrievedValues:
+                #             print(element)
+                #             newValues.append(element)
                         
-                        newValues.append([
-                            message.author.name,
-                            startTime,
-                            team
-                        ])
-                        print('newValues -> ')
-                        print(newValues)
+                #         newValues.append([
+                #             message.author.name,
+                #             startTime,
+                #             team
+                #         ])
+                #         print('newValues -> ')
+                #         print(newValues)
 
 
-                        ####
-                        body = {
-                                'values': newValues
-                            }
-                        result = service.spreadsheets().values().update(
-                            spreadsheetId=SHEET_ID, range=writeRange,
-                            valueInputOption="USER_ENTERED", body=body).execute()
+                #         ####
+                #         body = {
+                #                 'values': newValues
+                #             }
+                #         result = service.spreadsheets().values().update(
+                #             spreadsheetId=SHEET_ID, range=writeRange,
+                #             valueInputOption="USER_ENTERED", body=body).execute()
 
 
 
-                        msg = " you were added successfully!"
+                #         msg = " you were added successfully!"
 
-                    except Exception as e:
-                        print("PROBLEM")
-                        print('Attempt to create sheet')
+                #     except Exception as e:
+                #         print("PROBLEM")
+                #         print('Attempt to create sheet')
 
             
-                        writeRange = ("'" + str(sheetName) + "'!A1:D10")
-                        body = {
-                            "requests": [
-                                {
-                                "addSheet": {
-                                    "properties": {
-                                    "title": sheetName
-                                        }
-                                    }
-                                },
-                                # {
-                                # "append": {
-                                #     "properties": {
-                                #     "title": sheetName
-                                #         }
-                                #     }
-                                # },
+                #         writeRange = ("'" + str(sheetName) + "'!A1:D10")
+                #         body = {
+                #             "requests": [
+                #                 {
+                #                 "addSheet": {
+                #                     "properties": {
+                #                     "title": sheetName
+                #                         }
+                #                     }
+                #                 },
+                #                 # {
+                #                 # "append": {
+                #                 #     "properties": {
+                #                 #     "title": sheetName
+                #                 #         }
+                #                 #     }
+                #                 # },
 
-                            ]
-                        }
+                #             ]
+                #         }
 
-                        service.spreadsheets().batchUpdate(spreadsheetId=SHEET_ID, body=body).execute()  
-                        print('sheet created')
-                        print('adding first user')
+                #         service.spreadsheets().batchUpdate(spreadsheetId=SHEET_ID, body=body).execute()  
+                #         print('sheet created')
+                #         print('adding first user')
                      
 
-                        try:
-                            writeRange = ("'" + sheetName + "'!A1:D")
-                            body = {
-                                    'values': values
-                                }
-                            result = service.spreadsheets().values().update(
-                                spreadsheetId=SHEET_ID, range=writeRange,
-                                valueInputOption="USER_ENTERED", body=body).execute()
+                #         try:
+                #             writeRange = ("'" + sheetName + "'!A1:D")
+                #             body = {
+                #                     'values': values
+                #                 }
+                #             result = service.spreadsheets().values().update(
+                #                 spreadsheetId=SHEET_ID, range=writeRange,
+                #                 valueInputOption="USER_ENTERED", body=body).execute()
 
-                            msg = " you were added successfully!"
-                        except Exception as e:
-                            print('something isnt working right .........' + str(e))
+                #             msg = " you were added successfully!"
+                #         except Exception as e:
+                #             print('something isnt working right .........' + str(e))
 
                 
-                except Exception as e:
-                    msg = "  (join - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
-                await client.send_message(message.channel, message.author.mention + msg)
+                # except Exception as e:
+                #     msg = "  (join - Exception) " + str(e) + " \nHang on, we'll get this taken care of.\n\n <@361223731986825218>  HAAAALLLLPPPP!!!"
+                # await client.send_message(message.channel, message.author.mention + msg)
 
                 # await client.add_reaction(message, '\U0001F44D') 
         await processImage(url)
@@ -791,30 +795,26 @@ async def on_message(message):
 
 
 
-    if '<@&463724157889413120>' in message.content:
-        print('on testRole.mention!')
-        status = sendTwilioMessage(message)
-        print('status from sendTwilioMessage: ' + status)
-        await client.send_message(message.channel, 'The testRole @ tag was used! sweet...')
+    # if '<@&463724157889413120>' in message.content:
+    #     print('on testRole.mention!')
+    #     status = sendTwilioMessage(message)
+    #     print('status from sendTwilioMessage: ' + status)
+    #     await client.send_message(message.channel, 'The testRole @ tag was used! sweet...')
         
 
 
 
 
     if client.user in message.mentions:
-        if 'fuck you' in message.content.lower() or 'fuck off' in message.content.lower():
-            await client.send_message(message.channel, ("yo, chill tf out\n\n\n**Blacklist user:** " + message.author.mention))
-        elif 'you suck' in message.content.lower():
-            await client.send_message(message.channel, ("okay, then don't ask me to do anything for you\n\n\n**Blacklist user:** " + message.author.mention + "\nbye, felicia   :nail_care:"))
-        elif 'thanks' in message.content.lower() or 'thank you' in message.content.lower():
+        if 'thanks' in message.content.lower() or 'thank you' in message.content.lower():
             await client.send_message(message.channel, "Anything for you kid.")
         else:
             await client.send_message(message.channel, (random.choice(mentionResponses)))
 
-    if 'bad bot' in message.content.lower():
-        await client.send_message(message.channel, "I will try to behave.")
-    elif 'good bot' in message.content.lower():
-        await client.send_message(message.channel, ":heart_eyes::heart_eyes::heart_eyes:")
+    # if 'bad bot' in message.content.lower():
+    #     await client.send_message(message.channel, "I will try to behave.")
+    # elif 'good bot' in message.content.lower():
+    #     await client.send_message(message.channel, ":heart_eyes::heart_eyes::heart_eyes:")
     
 
     await client.process_commands(message)
@@ -825,112 +825,112 @@ async def on_message(message):
 
 
 
-@client.command(pass_context=True)
-async def showEmojis(context):    
+# @client.command(pass_context=True)
+# async def showEmojis(context):    
     
-    for x in client.get_all_emojis():
-        print(x.id)
-    await client.say("<:emoji_name:456205777389092895><:emoji_name:456205778022563851><:emoji_name:456205778395725834>")
+#     for x in client.get_all_emojis():
+#         print(x.id)
+#     await client.say("<:emoji_name:456205777389092895><:emoji_name:456205778022563851><:emoji_name:456205778395725834>")
 
 
 
 
    
 
-@client.command(pass_context=True)
-async def discordVersion(context):
-    await client.say(discord.__version__)
+# @client.command(pass_context=True)
+# async def discordVersion(context):
+#     await client.say(discord.__version__)
 
 
 
 
 
 
-@client.command(pass_context=True)
-async def rank(context, action, roleArg):
+# @client.command(pass_context=True)
+# async def rank(context, action, roleArg):
 
-    user = context.message.author
-    role = discord.utils.get(user.server.roles, name=roleArg)
-    print('user: ' + user.name)
-    print('action: ' + action)
-    print('role: ' + role.name)
+#     user = context.message.author
+#     role = discord.utils.get(user.server.roles, name=roleArg)
+#     print('user: ' + user.name)
+#     print('action: ' + action)
+#     print('role: ' + role.name)
 
-    if action.lower() == 'join':    
-        await client.add_roles(user, role)
-        await client.send_message(context.message.channel, "you've been added to " + str(role) + " :thumbsup:" + user.mention)
-        await client.send_message(user, 'To add a phone number for text notifications for your role, type: **!set [cell-phone-number]**  \njust like this -> **!set 555-123-1234** ')
-        def setInfo(msg):
-            return msg.content.startswith('!set')
-        msg = await client.wait_for_message(author=user, check=setInfo)
-        info = msg.content[len('$set'):].strip()       
-        info = info.split(" ")
-        phoneNumber = info[0]
-        print('phone: ' + str(phoneNumber))
+#     if action.lower() == 'join':    
+#         await client.add_roles(user, role)
+#         await client.send_message(context.message.channel, "you've been added to " + str(role) + " :thumbsup:" + user.mention)
+#         await client.send_message(user, 'To add a phone number for text notifications for your role, type: **!set [cell-phone-number]**  \njust like this -> **!set 555-123-1234** ')
+#         def setInfo(msg):
+#             return msg.content.startswith('!set')
+#         msg = await client.wait_for_message(author=user, check=setInfo)
+#         info = msg.content[len('$set'):].strip()       
+#         info = info.split(" ")
+#         phoneNumber = info[0]
+#         print('phone: ' + str(phoneNumber))
 
 
-        bucket = 'user-profile-bucket-ex-raid-bot'
-        fileName = 'roleProfiles.csv'
+#         bucket = 'user-profile-bucket-ex-raid-bot'
+#         fileName = 'roleProfiles.csv'
         
-        s3Resource.Object(bucket, fileName).download_file(fileName)
-        with open(fileName, 'a') as f:
-            data = str(user.name + ',' + str(phoneNumber) + ',\n')
-            f.write(data)
+#         s3Resource.Object(bucket, fileName).download_file(fileName)
+#         with open(fileName, 'a') as f:
+#             data = str(user.name + ',' + str(phoneNumber) + ',\n')
+#             f.write(data)
 
-        s3Resource.Object(bucket, fileName).upload_file(fileName)
-        print('upload complete')
+#         s3Resource.Object(bucket, fileName).upload_file(fileName)
+#         print('upload complete')
        
-        await client.send_message(user, 'your phone number ' + str(phoneNumber) + ' will be set for notifications. remove your number at any time by private messaging @ExRaidBot "!removePhone"')
+#         await client.send_message(user, 'your phone number ' + str(phoneNumber) + ' will be set for notifications. remove your number at any time by private messaging @ExRaidBot "!removePhone"')
 
-    elif action.lower() == 'leave':
-        await client.remove_roles(user, role)
-        deletePhoneNumber(user)
-        await client.say(user.mention + " you've been removed from " + str(role) + " :thumbsup:")
-
-
-
-
-
-
-@client.command(pass_context=True)
-async def removePhone(context):
-    await deletePhoneNumber(context.user)
+#     elif action.lower() == 'leave':
+#         await client.remove_roles(user, role)
+#         deletePhoneNumber(user)
+#         await client.say(user.mention + " you've been removed from " + str(role) + " :thumbsup:")
 
 
 
 
 
 
-def deletePhoneNumber(user):
-    status = 'Not started'
-    try:
-        bucket = 'user-profile-bucket-ex-raid-bot'
-        fileName = 'roleProfiles.csv'
+# @client.command(pass_context=True)
+# async def removePhone(context):
+#     await deletePhoneNumber(context.user)
+
+
+
+
+
+
+# def deletePhoneNumber(user):
+#     status = 'Not started'
+#     try:
+#         bucket = 'user-profile-bucket-ex-raid-bot'
+#         fileName = 'roleProfiles.csv'
         
-        s3Resource.Object(bucket, fileName).download_file(fileName)
-        status = 'Retrieved'
-        updatedList = []
-        with open(fileName) as f:
-            reader = csv.reader(f)
-            data = [r for r in reader]
-            for row in data:
-                if row[0] != user.name:
-                    updatedList.append(row[0], row[1])
-        print('updatedList, should not contain user -> ')        
-        for item in updatedList:
-            print(str(item))
-        with open(fileName, 'w') as fNew:
-            for item in updatedList:
-                fNew.write(item)
+#         s3Resource.Object(bucket, fileName).download_file(fileName)
+#         status = 'Retrieved'
+#         updatedList = []
+#         with open(fileName) as f:
+#             reader = csv.reader(f)
+#             data = [r for r in reader]
+#             for row in data:
+#                 if row[0] != user.name:
+#                     updatedList.append(row[0], row[1])
+#         print('updatedList, should not contain user -> ')        
+#         for item in updatedList:
+#             print(str(item))
+#         with open(fileName, 'w') as fNew:
+#             for item in updatedList:
+#                 fNew.write(item)
 
-        status = 'Updated'
-        s3Resource.Object(bucket, fileName).upload_file(fileName)
-        status = 'Uploaded'
-        print('upload updated list complete')
-    except Exception as e:
-        status = "ERROR!"
-        print('ERROR removing user ' + user.name + 'phone number! -> ' + str(e))
-    finally:
-        return 'Done: ' + status
+#         status = 'Updated'
+#         s3Resource.Object(bucket, fileName).upload_file(fileName)
+#         status = 'Uploaded'
+#         print('upload updated list complete')
+#     except Exception as e:
+#         status = "ERROR!"
+#         print('ERROR removing user ' + user.name + 'phone number! -> ' + str(e))
+#     finally:
+#         return 'Done: ' + status
         
 
 
@@ -940,42 +940,42 @@ def deletePhoneNumber(user):
 
 
 
-def sendTwilioMessage(message):
-    status = 'Not started'
-    totalMessagesSent = 0
-    try:
-        bucket = 'user-profile-bucket-ex-raid-bot'
-        fileName = 'roleProfiles.csv'
-        account_sid = environ['account_sid']
-        auth_token = environ['auth_token']
-        twilioClient = Client(account_sid, auth_token)
-        status = 'Connected'
-        s3Resource.Object(bucket, fileName).download_file(fileName)
-        status = 'Retrieved'
-        with open(fileName) as f:
-            reader = csv.reader(f)
-            data = [r for r in reader]
-            for row in data:
-                print('calling twilio api..')
-                messageBody = message.content.replace('<@&463724157889413120>', '@testRole')
-                twilioMessage = twilioClient.messages.create(
-                        body='Hi ' + row[0] + '! ' + messageBody + '\n- tagged by ' + message.author.name + ' in #' + message.channel.name,
-                        from_='+14244002403',
-                        to=row[1]
-                    )
-                totalMessagesSent += 1
-                print('message sent by ' + message.author.name + ', content: ' + messageBody + ' - twilioMessage.sid -> ' + str(twilioMessage.sid))
+# def sendTwilioMessage(message):
+#     status = 'Not started'
+#     totalMessagesSent = 0
+#     try:
+#         bucket = 'user-profile-bucket-ex-raid-bot'
+#         fileName = 'roleProfiles.csv'
+#         account_sid = environ['account_sid']
+#         auth_token = environ['auth_token']
+#         twilioClient = Client(account_sid, auth_token)
+#         status = 'Connected'
+#         s3Resource.Object(bucket, fileName).download_file(fileName)
+#         status = 'Retrieved'
+#         with open(fileName) as f:
+#             reader = csv.reader(f)
+#             data = [r for r in reader]
+#             for row in data:
+#                 print('calling twilio api..')
+#                 messageBody = message.content.replace('<@&463724157889413120>', '@testRole')
+#                 twilioMessage = twilioClient.messages.create(
+#                         body='Hi ' + row[0] + '! ' + messageBody + '\n- tagged by ' + message.author.name + ' in #' + message.channel.name,
+#                         from_='+14244002403',
+#                         to=row[1]
+#                     )
+#                 totalMessagesSent += 1
+#                 print('message sent by ' + message.author.name + ', content: ' + messageBody + ' - twilioMessage.sid -> ' + str(twilioMessage.sid))
 
                 
 
-        status = 'Successfully sent ' + str(totalMessagesSent) + ' messages.'
+#         status = 'Successfully sent ' + str(totalMessagesSent) + ' messages.'
        
        
-    except Exception as e:
-        status = "ERROR!"
-        print('ERROR sending texts to users! -> ' + str(e))
-    finally:
-        return 'Done: ' + status
+#     except Exception as e:
+#         status = "ERROR!"
+#         print('ERROR sending texts to users! -> ' + str(e))
+#     finally:
+#         return 'Done: ' + status
 
 
 
@@ -984,24 +984,22 @@ def sendTwilioMessage(message):
 
 
 
-@client.command(pass_context=True)
-async def testTwilio(context):
-    print('calling twilio api..')
-    account_sid = environ['account_sid']
-    auth_token = environ['auth_token']
-    twilioClient = Client(account_sid, auth_token)
+# @client.command(pass_context=True)
+# async def testTwilio(context):
+#     print('calling twilio api..')
+#     account_sid = environ['account_sid']
+#     auth_token = environ['auth_token']
+#     twilioClient = Client(account_sid, auth_token)
 
-    twilioMessage = twilioClient.messages.create(
-        body='ExRaidBot here! Testing send message... can you hear me now?',
-        from_='+14244002403',
-        to='15415148992'
-    )
+#     twilioMessage = twilioClient.messages.create(
+#         body='ExRaidBot here! Testing send message... can you hear me now?',
+#         from_='+14244002403',
+#         to='15415148992'
+#     )
 
-    await print('message sent from testTwilio() by ' + context.message.author.name + ', twilioMessage.sid -> ' + str(twilioMessage.sid))
+#     await print('message sent from testTwilio() by ' + context.message.author.name + ', twilioMessage.sid -> ' + str(twilioMessage.sid))
 
-    await client.say(':thumbsup:')
-
-
+#     await client.say(':thumbsup:')
 
 
 
@@ -1009,12 +1007,14 @@ async def testTwilio(context):
 
 
 
-@client.command(pass_context=True)
-async def getServerLink(context):
-    print("Getting embed with link")
-    embed=discord.Embed(title="Download log", url="https://www.google.com")
-    embed.set_author(name="Twilio Log Files ")
-    await client.send_message(context.message.author, embed=embed)
+
+
+# @client.command(pass_context=True)
+# async def getServerLink(context):
+#     print("Getting embed with link")
+#     embed=discord.Embed(title="Download log", url="https://www.google.com")
+#     embed.set_author(name="Twilio Log Files ")
+#     await client.send_message(context.message.author, embed=embed)
 
 
 
@@ -1056,6 +1056,6 @@ async def list_servers():
 
 
 
-client.loop.create_task(emit())
+# client.loop.create_task(emit())
 client.loop.create_task(list_servers())
 client.run(TOKEN)
