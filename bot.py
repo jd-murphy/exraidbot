@@ -20,7 +20,7 @@ from discord import Status
 
 
 
-TOKEN = 'NDM5OTQxODU5MTQyNDAyMDU4.Df2S-Q.m1JHaVAljyyosk6eF0Eoe2GM9IY' # regenerate and move to environment variable
+TOKEN = environ["TOKEN"] 
 BOT_PREFIX = ("!")
 
 INSTINCT_EMOJI = "<:emoji_name:456205777389092895>" # <:emoji_name:456205777389092895> # instinct
