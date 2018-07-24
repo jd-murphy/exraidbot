@@ -132,7 +132,11 @@ async def on_message(message):
                 }
                 
                 pyrebase_worker.upload(newSS)
-                await client.add_reaction(message, "\U0001F44D")
+                # await client.add_reaction(message, "\U0001F44D")
+
+
+
+
 
                 #  This allows user input        ---------        Do Not Delete        ---------        just commented out for testing
                 # def setInfo(msg):
