@@ -237,8 +237,8 @@ async def on_message(message):
 
                 r = requests.get(_url, stream = True)
                 
-                text = pytesseract.image_to_string(Image.open(r.raw))
-
+                rawText = pytesseract.image_to_string(Image.open(r.raw))
+                text = rawText
                 # await client.send_message(message.channel, message.author.mention + "Here is the preprocessed image_to_string() result: \n\n" + text)
                
                 # for month in months:
@@ -283,27 +283,23 @@ async def on_message(message):
                 extracted_gym_name = extracted_gym_name.replace("!", "")
                 extracted_gym_name = extracted_gym_name.replace("\n", " ")
 
+                text = text.replace('|', 'l')
+                extractedDate = "not set"
                 for month in months:
                     if month in text:
-                        text = (text[text.find(month):text.find('Get directions')])
+                        extractedDate = (text[text.find(month):text.find('\n')])
                         break
+        
 
-                text = text.split('\n')
-                output = []
-                for chunk in text:
-                    if not chunk.isspace() and chunk is not '' and chunk is not None:
-                        output.append(chunk)
-
-                extractedDate = output[0]
-
+                
                
 
                 newSS = {
                     "discord_name": message.author.name,
                     "team": userTeam,
                     "gym_name": extracted_gym_name.strip(),
-                    "date_extraced": extractedDate,
-                    "unprocessed_image_to_string": text,
+                    "date_extraced": extractedDate.strip(),
+                    "unprocessed_image_to_string": rawText,
                     "image_url": url
                 }
 
