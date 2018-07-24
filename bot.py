@@ -301,7 +301,7 @@ async def on_message(message):
                 newSS = {
                     "discord_name": message.author.name,
                     "team": userTeam,
-                    "gym_name": extracted_gym_name,
+                    "gym_name": extracted_gym_name.strip(),
                     "date_extraced": extractedDate,
                     "unprocessed_image_to_string": text,
                     "image_url": url
@@ -372,9 +372,13 @@ async def on_message(message):
 
 
 @client.command(pass_context=True)
-async def pyrebaseGet(context):
+async def pyrebaseGetOCR(context):
+    print("pyrebaseGetOCR")
     if context.message.author.id == environ['adminID']:
+        print("admin id confirmed")
+        print("calling pyrebase_worker.getData()....")
         data = pyrebase_worker.getData()
+       
         items = ""
         for item in data.each():
             itemDict = item.val()
