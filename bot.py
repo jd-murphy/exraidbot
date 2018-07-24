@@ -278,7 +278,7 @@ async def on_message(message):
                         userTeam = "Instinct"
                         print('set team: ' + role.name)
 
-                extracted_gym_name = (text[text.find('a previous victory at'):text.find('Please visit the Gym')])
+                extracted_gym_name = (text[(text.find('a previous victory at')+21):text.find('Please visit the Gym')])
 
                 extracted_gym_name = extracted_gym_name.replace("!", "")
                 extracted_gym_name = extracted_gym_name.replace("\n", " ")
