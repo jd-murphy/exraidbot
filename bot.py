@@ -63,7 +63,7 @@ client = Bot(command_prefix=BOT_PREFIX)
 client.remove_command('help')
 @client.command()
 async def help():
-    msg = ("This bot is in testing. Look forward to some awesome Ex Raid features coming soon! " + random.choice(emoji))
+    msg = ("This bot is in testing. Look forward to some awesome Ex Raid features coming soon! :robot:")
     await client.say(msg)
         
 
@@ -132,7 +132,7 @@ async def on_message(message):
                 }
                 
                 pyrebase_worker.upload(newSS)
-                await client.add_reaction(message, random.choice(emoji))
+                await client.add_reaction(message, ":thumbsup:")
 
                 #  This allows user input        ---------        Do Not Delete        ---------        just commented out for testing
                 # def setInfo(msg):
@@ -155,7 +155,7 @@ async def on_message(message):
         if 'thanks' in message.content.lower() or 'thank you' in message.content.lower():
             await client.send_message(message.channel, "Anything for you kid.")
         else:
-            await client.send_message(message.channel, (random.choice(emoji)))
+            await client.send_message(message.channel, ":thumbsup:")
 
 
 
