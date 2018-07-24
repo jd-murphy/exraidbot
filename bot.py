@@ -377,12 +377,11 @@ async def pyrebaseGetOCR(context):
         items = ""
         for item in data.each():
             itemDict = item.val()
-            userInfo = ""
-            userInfo += ("``` " + itemDict["dateUploaded"] + " \n " + itemDict["discord_name"] + "   - Team " + itemDict["team"] + \
-                        " \n Extracted gym name: " + itemDict["gym_name"] + " Extracted date: " + itemDict["date_extraced"] + " \n Unprocessed text from image_to_string: \n" + itemDict["unprocessed_image_to_string"] + "\nImage URL: "  + itemDict["image_url"] + " \n ")
-            userInfo += " ```"
+            userInfo = "```"
+            userInfo += ("Date Uploaded -> " + itemDict["dateUploaded"] + "\nUser's Discord Name -> " + itemDict["discord_name"] + "\nUser's Team -> " + itemDict["team"] + \
+                        "\nExtracted gym name -> " + itemDict["gym_name"] + "\nExtracted date -> " + itemDict["date_extraced"] + "\nUnprocessed text from image_to_string ->\n" + itemDict["unprocessed_image_to_string"] + "\nImage URL -> "  + itemDict["image_url"] + "```")
             items += userInfo
-        await client.send_message(context.message.author, ' Here is the list of ocr data ->\n' + items)
+        await client.send_message(context.message.author, " Here is the list of ocr data ->\n" + items)
 
 
 
