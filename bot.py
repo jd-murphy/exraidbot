@@ -133,7 +133,7 @@ async def on_message(message):
                 }
 
                 pyrebase_worker.upload(newSS)
-                client.add_reaction(message, random.choice(emoji)))
+                client.add_reaction(message, random.choice(emoji))
 
                 #  This allows user input        ---------        Do Not Delete        ---------        just commented out for testing
                 # def setInfo(msg):
