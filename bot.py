@@ -130,7 +130,7 @@ client = Bot(command_prefix=BOT_PREFIX)
 client.remove_command('help')
 @client.command()
 async def help():
-    msg = ("implement help command ya dummy")
+    msg = ("This bot is in testing. Look forward to some awesome Ex Raid features coming soon!")
     await client.say(msg)
         
 
@@ -138,66 +138,65 @@ async def help():
 
 @client.event
 async def on_ready():
-    loadGyms()
     await client.change_presence(game=Game(name="Pokemon Go, duh"))
     print("Logged in as " + client.user.name)
    
 
 
 
-@client.command()
-async def share():
-    link = "https://goo.gl/forms/gbTUkEkzaMxAbgFy1" # change this so not google sheets
-    await client.say("Copy and paste this sign up link to share with others who are not on Discord.\n" + link)
+# @client.command()
+# async def share():
+#     link = "https://goo.gl/forms/gbTUkEkzaMxAbgFy1" # change this so not google sheets
+#     await client.say("Copy and paste this sign up link to share with others who are not on Discord.\n" + link)
 
 
 
 
-@client.command(pass_context=True,
-                description='Get a location pin for the gym.', 
-                brief='Get a location pin for the gym.')
-async def pin(context, gym_name):    
-    matches = []
-    for key, value in GYMS.items():
-        if gym_name.lower() in key.lower():
-            name = key
-            gym = value
-            matches.append([name, gym])
+# @client.command(pass_context=True,
+#                 description='Get a location pin for the gym.', 
+#                 brief='Get a location pin for the gym.')
+# async def pin(context, gym_name):    
+#     matches = []
+#     for key, value in GYMS.items():
+#         if gym_name.lower() in key.lower():
+#             name = key
+#             gym = value
+#             matches.append([name, gym])
 
-    print('matches contains ' + str(len(matches)) + ' results')
-    if len(matches) > 1:
+#     print('matches contains ' + str(len(matches)) + ' results')
+#     if len(matches) > 1:
         
-        gymsString = ''
-        i = 1
-        print("matching gyms: \n")
-        for k in matches:
-            print(k[0] + " " + k[1])
-            gymsString += (str(i) + ".  " + k[0] + "\n")
-            i+=1
+#         gymsString = ''
+#         i = 1
+#         print("matching gyms: \n")
+#         for k in matches:
+#             print(k[0] + " " + k[1])
+#             gymsString += (str(i) + ".  " + k[0] + "\n")
+#             i+=1
         
-        await client.send_message(context.message.channel, 'Were you looking for one of these gyms?\n' + gymsString + "\nType **$pin [number]** to get your pin")
+#         await client.send_message(context.message.channel, 'Were you looking for one of these gyms?\n' + gymsString + "\nType **$pin [number]** to get your pin")
 
-        def check(msg):
-            return msg.content.startswith('$pin')
+#         def check(msg):
+#             return msg.content.startswith('$pin')
 
-        message = await client.wait_for_message(author=context.message.author, check=check)
-        num = message.content[len('$pin'):].strip()
-        print('num: ' + str(num))
-        await client.send_message(message.channel, matches[int(num)-1][0] + "\n" + matches[int(num)-1][1])
-    else:        
-        await client.say(matches[0][0] + "\n" + matches[0][1])
+#         message = await client.wait_for_message(author=context.message.author, check=check)
+#         num = message.content[len('$pin'):].strip()
+#         print('num: ' + str(num))
+#         await client.send_message(message.channel, matches[int(num)-1][0] + "\n" + matches[int(num)-1][1])
+#     else:        
+#         await client.say(matches[0][0] + "\n" + matches[0][1])
  
 
 
 
-def loadGyms():
-    with open("gyms.txt", mode="r") as infile:
-        reader = csv.reader(infile)
-        for row in reader:
-            k = row[0]
-            v = row[2]
-            GYMS[k] = v
-    print(GYMS['Dixie Chicken'])
+# def loadGyms():
+#     with open("gyms.txt", mode="r") as infile:
+#         reader = csv.reader(infile)
+#         for row in reader:
+#             k = row[0]
+#             v = row[2]
+#             GYMS[k] = v
+#     print(GYMS['Dixie Chicken'])
     
 
 
