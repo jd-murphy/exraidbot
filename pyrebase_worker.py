@@ -119,12 +119,12 @@ def upload(data):
     db = firebase.database()
     uploadPacket = {
         "dateUploaded": str(datetime.now()),
-        "discord_name": data.discord_name,
-        "team": data.team,
-        "gym_name": data.gym_name,
-        "date_extraced": data.date_extraced,
-        "unprocessed_image_to_string": data.unprocessed_image_to_string,
-        "image_url": data.image_url
+        "discord_name": data["discord_name"],
+        "team": data["team"],
+        "gym_name": data["gym_name"],
+        "date_extraced": data["date_extraced"],
+        "unprocessed_image_to_string": data["unprocessed_image_to_string"],
+        "image_url": data["image_url"]
     }
     print("pushing...")
     results = db.child("ex_ocr_testing").push(uploadPacket)
