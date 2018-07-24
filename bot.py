@@ -96,7 +96,6 @@ async def on_message(message):
                 rawText = pytesseract.image_to_string(Image.open(r.raw))
 
                 text = rawText
-                rawText = rawText.split("\n")
                 userTeam = "not set"
 
                 for role in message.author.roles:
@@ -131,9 +130,9 @@ async def on_message(message):
                     "unprocessed_image_to_string": rawText,
                     "image_url": url
                 }
-
+                
                 pyrebase_worker.upload(newSS)
-                client.add_reaction(message, random.choice(emoji))
+                await client.add_reaction(message, random.choice(emoji))
 
                 #  This allows user input        ---------        Do Not Delete        ---------        just commented out for testing
                 # def setInfo(msg):
