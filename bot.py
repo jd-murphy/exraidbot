@@ -378,7 +378,7 @@ async def pyrebaseGetOCR(context):
         for item in data.each():
             itemDict = item.val()
             userInfo = ""
-            userInfo += ("``` " + itemDict["date"] + " \n " + itemDict["discord_name"] + "   - Team " + itemDict["team"] + \
+            userInfo += ("``` " + itemDict["dateUploaded"] + " \n " + itemDict["discord_name"] + "   - Team " + itemDict["team"] + \
                         " \n Extracted gym name: " + itemDict["gym_name"] + " Extracted date: " + itemDict["date_extraced"] + " \n Unprocessed text from image_to_string: \n" + itemDict["unprocessed_image_to_string"] + "\nImage URL: "  + itemDict["image_url"] + " \n ")
             itemDict += " ```"
             items += itemDict
