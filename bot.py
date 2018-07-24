@@ -14,7 +14,7 @@ import json
 from os import environ
 from twilio.rest import Client
 from discord import Status
-
+import pyrebase_worker
 
 
 
@@ -26,6 +26,10 @@ BOT_PREFIX = ("!")
 INSTINCT_EMOJI = "<:emoji_name:456205777389092895>" # <:emoji_name:456205777389092895> # instinct
 MYSTIC_EMOJI = "<:emoji_name:456205778022563851>" # <:emoji_name:456205778022563851> # mystic
 VALOR_EMOJI = "<:emoji_name:456205778395725834>" # <:emoji_name:456205778395725834> # valor
+
+MYSTIC_ROLE_ID = "276922105441026048"
+VALOR_ROLE_ID = "276922104169889794"
+INSTINCT_ROLE_ID = "276922106107658241"
 
 months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
@@ -220,7 +224,7 @@ async def on_message(message):
 
     if message.attachments:
         print('message with attachment from:')
-        print(message.author)
+        print(message.author.name)
         print('message.attachments:')
         print(message.attachments)
 
@@ -235,8 +239,49 @@ async def on_message(message):
                 
                 text = pytesseract.image_to_string(Image.open(r.raw))
 
-                await client.send_message(message.channel, message.author.mention + "Here is the preprocessed image_to_string() result: \n\n" + text)
+                # await client.send_message(message.channel, message.author.mention + "Here is the preprocessed image_to_string() result: \n\n" + text)
                
+                # for month in months:
+                #     if month in text:
+                #         text = (text[text.find(month):text.find('Get directions')])
+                #         break
+
+                # text = text.split('\n')
+                # output = []
+                # for chunk in text:
+                #     if not chunk.isspace() and chunk is not '' and chunk is not None:
+                #         output.append(chunk)
+
+                # print('\n\n----- output -----')
+                # print(message.author)
+                # print("Date: " + output[0])
+                # print("Gym: " + output[1])
+                # print("\n\n")
+
+                # raidLocation = output[1]
+                # raidTime = output[0]
+                # raidTime = raidTime.split(' ')
+                # raidTime = (raidTime[0] + ' ' + raidTime[1] + ' ' + raidTime[2] + ' ' + raidTime[3])
+                ##########################
+
+                userTeam = "not set"
+
+                for role in message.author.roles:
+                    print('Role: ' + role.name + "   ID: " + role.id)
+                    if role.id == MYSTIC_ROLE_ID:
+                        userTeam = "Mystic"
+                        print('set team: ' + role.name)
+                    if role.id == VALOR_ROLE_ID:
+                        userTeam = "Valor"
+                        print('set team: ' + role.name)
+                    if role.id == INSTINCT_ROLE_ID:
+                        userTeam = "Instinct"
+                        print('set team: ' + role.name)
+
+                extracted_gym_name = (text[text.find('a previous victory at'):text.find('Please visit the Gym')])
+
+                extracted_gym_name = extracted_gym_name.replace("!", "")
+                extracted_gym_name = extracted_gym_name.replace("\n", " ")
 
                 for month in months:
                     if month in text:
@@ -249,20 +294,29 @@ async def on_message(message):
                     if not chunk.isspace() and chunk is not '' and chunk is not None:
                         output.append(chunk)
 
-                print('\n\n----- output -----')
-                print(message.author)
-                print("Date: " + output[0])
-                print("Gym: " + output[1])
-                print("\n\n")
+                extractedDate = output[0]
+
+               
+
+                newSS = {
+                    "discord_name": message.author.name,
+                    "team": userTeam,
+                    "gym_name": extracted_gym_name,
+                    "date_extraced": extractedDate,
+                    "unprocessed_image_to_string": text,
+                    "image_url": url
+                }
 
 
-                raidLocation = output[1]
-                raidTime = output[0]
-                raidTime = raidTime.split(' ')
-                raidTime = (raidTime[0] + ' ' + raidTime[1] + ' ' + raidTime[2] + ' ' + raidTime[3])
-                ##########################
 
-                await client.send_message(message.channel, message.author.mention + " Your pass for \n**" + raidLocation + "**\n**" + raidTime + "** was uploaded. " + random.choice(emoji) )
+
+
+                pyrebase_worker.upload(newSS)
+
+
+
+
+                # await client.send_message(message.channel, message.author.mention + " Your pass for \n**" + raidLocation + "**\n**" + raidTime + "** was uploaded. " + random.choice(emoji) )
 
 
 
@@ -317,11 +371,19 @@ async def on_message(message):
 
 
 
-
-
-
-
-
+@client.command(pass_context=True)
+async def pyrebaseGet(context):
+    if context.message.author.id == environ['adminID']:
+        data = pyrebase_worker.getData()
+        items = ""
+        for item in data.each():
+            itemDict = item.val()
+            userInfo = ""
+            userInfo += ("``` " + itemDict["date"] + " \n " + itemDict["discord_name"] + "   - Team " + itemDict["team"] + \
+                        " \n Extracted gym name: " + itemDict["gym_name"] + " Extracted date: " + itemDict["date_extraced"] + " \n Unprocessed text from image_to_string: \n" + itemDict["unprocessed_image_to_string"] + "\nImage URL: "  + itemDict["image_url"] + " \n ")
+            itemDict += " ```"
+            items += itemDict
+        await client.send_message(context.message.author, ' Here is the list of ocr data ->\n' + items)
 
 
 

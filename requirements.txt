@@ -4,3 +4,5 @@ pytesseract
 Pillow
 aiohttp
 twilio
+pyrebase
+firebase_admin
