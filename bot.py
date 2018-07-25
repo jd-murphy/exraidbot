@@ -81,89 +81,92 @@ async def on_ready():
 async def on_message(message):
 
     if message.attachments:
-        print('message with attachment from:')
-        print(message.author.name)
-        print('message.attachments:')
-        print(message.attachments)
+        if message.channel.id == "355402329899401217" or message.channel.id == "276921948058025984":
+            print('message with attachment from:')
+            print(message.author.name)
+            print('in channel:')
+            print(message.channel.name)
+            print('message.attachments:')
+            print(message.attachments)
 
-        for x in message.attachments:
-            print('url found in message.attachments:')
-            print(x['url'])
-            url = x['url']
-            async def processImage(_url):
-                
-                r = requests.get(_url, stream = True)
-                rawText = pytesseract.image_to_string(Image.open(r.raw))
+            for x in message.attachments:
+                print('url found in message.attachments:')
+                print(x['url'])
+                url = x['url']
+                async def processImage(_url):
+                    
+                    r = requests.get(_url, stream = True)
+                    rawText = pytesseract.image_to_string(Image.open(r.raw))
 
-                text = rawText
-                userTeam = "not set"
+                    text = rawText
+                    userTeam = "not set"
 
-                for role in message.author.roles:
-                    print('Role: ' + role.name + "   ID: " + role.id)
-                    if role.id == MYSTIC_ROLE_ID:
-                        userTeam = "Mystic"
-                        print('set team: ' + role.name)
-                    if role.id == VALOR_ROLE_ID:
-                        userTeam = "Valor"
-                        print('set team: ' + role.name)
-                    if role.id == INSTINCT_ROLE_ID:
-                        userTeam = "Instinct"
-                        print('set team: ' + role.name)
+                    for role in message.author.roles:
+                        print('Role: ' + role.name + "   ID: " + role.id)
+                        if role.id == MYSTIC_ROLE_ID:
+                            userTeam = "Mystic"
+                            print('set team: ' + role.name)
+                        if role.id == VALOR_ROLE_ID:
+                            userTeam = "Valor"
+                            print('set team: ' + role.name)
+                        if role.id == INSTINCT_ROLE_ID:
+                            userTeam = "Instinct"
+                            print('set team: ' + role.name)
 
-                extracted_gym_name = (text[(text.find('a previous victory at')+21):text.find('Please visit the Gym')])
+                    extracted_gym_name = (text[(text.find('a previous victory at')+21):text.find('Please visit the Gym')])
 
-                extracted_gym_name = extracted_gym_name.replace("!", "")
-                extracted_gym_name = extracted_gym_name.replace("\n", " ")
+                    extracted_gym_name = extracted_gym_name.replace("!", "")
+                    extracted_gym_name = extracted_gym_name.replace("\n", " ")
 
-                text = text.replace('|', 'l')
-                extractedDate = "not set"
-                for month in months:
-                    if month in text:
-                        extractedDate = (text[text.find(month):text.find('\n')])
-                        break
+                    text = text.replace('|', 'l')
+                    extractedDate = "not set"
+                    for month in months:
+                        if month in text:
+                            extractedDate = (text[text.find(month):text.find('\n')])
+                            break
+            
+                    newSS = {
+                        "discord_name": message.author.name,
+                        "team": userTeam,
+                        "gym_name": extracted_gym_name.strip(),
+                        "date_extraced": extractedDate.strip(),
+                        "unprocessed_image_to_string": rawText,
+                        "image_url": url
+                    }
+                    
+                    pyrebase_worker.upload(newSS)
+                    await client.add_reaction(message, "\U0001F44D")
+
+
+
+
+
+                    #  This allows user input        ---------        Do Not Delete        ---------        just commented out for testing
+                    # def setInfo(msg):
+                    #     return msg.content.startswith('$set')
+                    # msg = await client.wait_for_message(author=message.author, check=setInfo)
+                    # await client.add_reaction(msg, '\U0001F44D') 
+                    # info = msg.content[len('$set'):].strip()
+                    # info = info.split(" ")
+                    # startTime = info[0]
+                    # await client.send_message(message.channel, message.author.mention + " Your information:\nRaid location -> " + raidLocation + "\nRaid time -> " + raidTime + "\nDesired start time -> " + startTime)
+                    #  This allows user input        ---------        Do Not Delete        ---------        just commented out for testing
+
+            
+            await processImage(url)
         
-                newSS = {
-                    "discord_name": message.author.name,
-                    "team": userTeam,
-                    "gym_name": extracted_gym_name.strip(),
-                    "date_extraced": extractedDate.strip(),
-                    "unprocessed_image_to_string": rawText,
-                    "image_url": url
-                }
-                
-                pyrebase_worker.upload(newSS)
-                # await client.add_reaction(message, "\U0001F44D")
 
 
 
-
-
-                #  This allows user input        ---------        Do Not Delete        ---------        just commented out for testing
-                # def setInfo(msg):
-                #     return msg.content.startswith('$set')
-                # msg = await client.wait_for_message(author=message.author, check=setInfo)
-                # await client.add_reaction(msg, '\U0001F44D') 
-                # info = msg.content[len('$set'):].strip()
-                # info = info.split(" ")
-                # startTime = info[0]
-                # await client.send_message(message.channel, message.author.mention + " Your information:\nRaid location -> " + raidLocation + "\nRaid time -> " + raidTime + "\nDesired start time -> " + startTime)
-                #  This allows user input        ---------        Do Not Delete        ---------        just commented out for testing
-
-           
-        await processImage(url)
-       
+        if client.user in message.mentions:
+            if 'thanks' in message.content.lower() or 'thank you' in message.content.lower():
+                await client.send_message(message.channel, "Anything for you kid.")
+            else:
+                await client.send_message(message.channel, random.choice(emoji))
 
 
 
-    if client.user in message.mentions:
-        if 'thanks' in message.content.lower() or 'thank you' in message.content.lower():
-            await client.send_message(message.channel, "Anything for you kid.")
-        else:
-            await client.send_message(message.channel, random.choice(emoji))
-
-
-
-    await client.process_commands(message)
+        await client.process_commands(message)
         
 
 
