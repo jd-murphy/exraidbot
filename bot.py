@@ -127,9 +127,11 @@ async def on_message(message):
                     extractedDate = "not set"
                     for month in months:
                         print(text.find(month))
-                        extractedDate = text[text.find(month):text.find(month)+len(month)+25]
-                        print(extractedDate)
-                        print("extracted this for date ->    " + extractedDate)
+                        if text.find(month) > 0:
+                            extractedDate = text[text.find(month):text.find(month)+len(month)+25]
+                            print(extractedDate)
+                            print("extracted this for date ->    " + extractedDate)
+                            break
                         
         
                     newSS = {
