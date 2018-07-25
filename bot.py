@@ -198,6 +198,23 @@ async def pyrebaseGetOCR(context):
 
 
 
+@client.command(pass_context=True)
+async def raiders(context):
+    print("raiders")
+    print("calling pyrebase_worker.getData()....")
+    data = pyrebase_worker.getData()
+    
+    items = ""
+    for item in data.each():
+        itemDict = item.val()
+        userInfo = "``` "
+        userInfo += ("\nUser's Discord Name -> " + itemDict["discord_name"] + "\nUser's Team -> " + itemDict["team"] + \
+                    "\nExtracted gym name -> " + itemDict["gym_name"] + "\nExtracted date -> " + itemDict["date_extraced"] + "\n ```")
+        items += userInfo
+    await client.send_message(context.message.channel, " Here is the list of raiders ->\n" + items)
+
+
+
 
 
 
