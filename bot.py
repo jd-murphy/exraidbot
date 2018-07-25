@@ -217,6 +217,7 @@ async def pyrebaseGetOCR(context):
 async def raiders(context, gym):
     if gym is None or gym == "":
         await client.send_message(context.message.channel, "Please type **!raiders [gym_name]**")
+        return True
     print("raiders")
     print("calling pyrebase_worker.getData()....")
     data = pyrebase_worker.getData()
