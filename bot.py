@@ -121,11 +121,12 @@ async def on_message(message):
                     text = text.replace('|', 'l')
                     extractedDate = "not set"
                     for month in months:
-                        if (-1 < text.find(month)):
-                            extractedDate = (text[text.find(month):text.find('\n')])
-                            print("extracted this for date ->    " + extractedDate)
-                            break
-            
+                        print(text.find(month))
+                        extractedDate = text[text.find(month):text.find(month)+len(month)+25]
+                        print(extractedDate)
+                        print("extracted this for date ->    " + extractedDate)
+                        break
+        
                     newSS = {
                         "discord_name": message.author.name,
                         "team": userTeam,
