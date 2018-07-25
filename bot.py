@@ -123,6 +123,7 @@ async def on_message(message):
                     for month in months:
                         if (-1 < text.find(month)):
                             extractedDate = (text[text.find(month):text.find('\n')])
+                            print("extracted this for date ->    " + extractedDate)
                             break
             
                     newSS = {
