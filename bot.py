@@ -129,7 +129,7 @@ async def on_message(message):
                         "discord_name": message.author.name,
                         "team": userTeam,
                         "gym_name": extracted_gym_name.strip(),
-                        "date_extraced": extractedDate.strip(),
+                        "date_extracted": extractedDate.strip(),
                         "unprocessed_image_to_string": rawText,
                         "image_url": url
                     }
@@ -191,7 +191,7 @@ async def pyrebaseGetOCR(context):
             itemDict = item.val()
             userInfo = "``` "
             userInfo += ("\nDate Uploaded -> " + itemDict["dateUploaded"] + "\nUser's Discord Name -> " + itemDict["discord_name"] + "\nUser's Team -> " + itemDict["team"] + \
-                        "\nExtracted gym name -> " + itemDict["gym_name"] + "\nExtracted date -> " + itemDict["date_extraced"] + "\nUnprocessed text from image_to_string ->\n" + itemDict["unprocessed_image_to_string"] + "\n\nImage URL -> "  + itemDict["image_url"] + "\n ```")
+                        "\nExtracted gym name -> " + itemDict["gym_name"] + "\nExtracted date -> " + itemDict["date_extracted"] + "\nUnprocessed text from image_to_string ->\n" + itemDict["unprocessed_image_to_string"] + "\n\nImage URL -> "  + itemDict["image_url"] + "\n ```")
             items += userInfo
         await client.send_message(context.message.author, " Here is the list of ocr data ->\n" + items)
 
@@ -209,7 +209,7 @@ async def raiders(context):
         itemDict = item.val()
         userInfo = "``` "
         userInfo += ("\n" + itemDict["discord_name"] + "    " + itemDict["team"] + \
-                    "\n" + itemDict["gym_name"] + "    " + itemDict["date_extraced"] + "\n ```")
+                    "\n" + itemDict["gym_name"] + "    " + itemDict["date_extracted"] + "\n ```")
         items += userInfo
     await client.send_message(context.message.channel, " Here is the list of raiders ->\n" + items)
 

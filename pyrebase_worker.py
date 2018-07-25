@@ -122,7 +122,7 @@ def upload(data):
         "discord_name": data["discord_name"],
         "team": data["team"],
         "gym_name": data["gym_name"],
-        "date_extraced": data["date_extraced"],
+        "date_extraced": data["date_extracted"],
         "unprocessed_image_to_string": data["unprocessed_image_to_string"],
         "image_url": data["image_url"]
     }
