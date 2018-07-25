@@ -237,14 +237,6 @@ async def raiders(context, gym):
 
 
 
-@client.command(pass_context=True)
-async def clickMe(context):
-    print('testing click me button in embed')
-    embed=discord.Embed(description="<button id='myButton' onclick='alert('hi');'>Click me</button> ")
-    await client.send_message(context.message.channel, embed=embed)
-
-
-
 
 
 
