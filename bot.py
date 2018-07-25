@@ -233,7 +233,8 @@ async def raiders(context):
         raidGroup += startingEntry
         for entry in items:
             if entry[0] == startingEntry[0]:
-                raidGroup += (items.pop(items.index(entry)))
+                individual =  (items.pop(items.index(entry)))
+                raidGroup += individual[1]
         await client.send_message(context.message.channel, " Here is the list of raiders ->\n" + raidGroup)
 
 
