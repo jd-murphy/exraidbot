@@ -121,7 +121,7 @@ async def on_message(message):
                     text = text.replace('|', 'l')
                     extractedDate = "not set"
                     for month in months:
-                        if month in text:
+                        if (-1 < text.find(month)):
                             extractedDate = (text[text.find(month):text.find('\n')])
                             break
             
