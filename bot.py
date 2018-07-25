@@ -228,12 +228,12 @@ async def raiders(context):
         items.append([itemDict["gym_name"], userInfo])
     
     for item in items:
-        raidGroup = []
+        raidGroup = ""
         startingEntry = items.pop()
-        raidGroup.append(startingEntry)
+        raidGroup += startingEntry
         for entry in items:
             if entry[0] == startingEntry[0]:
-                raidGroup.append(items.pop(items.index(entry)))
+                raidGroup += (items.pop(items.index(entry)))
         await client.send_message(context.message.channel, " Here is the list of raiders ->\n" + raidGroup)
 
 
@@ -268,7 +268,7 @@ async def list_servers():
         print("Current servers:")
         for server in client.servers:
             print(server.name)
-        await asyncio.sleep(120)
+        await asyncio.sleep(600)
 
 
 
