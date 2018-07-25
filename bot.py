@@ -230,7 +230,7 @@ async def raiders(context):
     for item in items:
         raidGroup = ""
         startingEntry = items.pop()
-        raidGroup += startingEntry
+        raidGroup += startingEntry[1]
         for entry in items:
             if entry[0] == startingEntry[0]:
                 individual =  (items.pop(items.index(entry)))
