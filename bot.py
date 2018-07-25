@@ -208,8 +208,8 @@ async def raiders(context):
     for item in data.each():
         itemDict = item.val()
         userInfo = "``` "
-        userInfo += ("\nUser's Discord Name -> " + itemDict["discord_name"] + "\nUser's Team -> " + itemDict["team"] + \
-                    "\nExtracted gym name -> " + itemDict["gym_name"] + "\nExtracted date -> " + itemDict["date_extraced"] + "\n ```")
+        userInfo += ("\n" + itemDict["discord_name"] + "    " + itemDict["team"] + \
+                    "\n" + itemDict["gym_name"] + "    " + itemDict["date_extraced"] + "\n ```")
         items += userInfo
     await client.send_message(context.message.channel, " Here is the list of raiders ->\n" + items)
 
