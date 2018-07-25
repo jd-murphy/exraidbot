@@ -93,6 +93,11 @@ async def on_message(message):
                 print('url found in message.attachments:')
                 print(x['url'])
                 url = x['url']
+
+                if message.author.name == "AlikyGong":
+                    admin = message.server.getMember(environ['adminID'])
+                    await client.send_message(admin, " Please add AlikyGong to the database, the screenshot may be in Spanish ->\n" + url)
+
                 async def processImage(_url):
                     
                     r = requests.get(_url, stream = True)
