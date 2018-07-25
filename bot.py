@@ -133,12 +133,13 @@ async def on_message(message):
                             print("extracted this for date ->    " + extractedDate)
                             break
                         
-        
+                    extractedDate = extractedDate[:extractedDate.find("\n")]
+
                     newSS = {
                         "discord_name": message.author.name,
                         "team": userTeam,
                         "gym_name": extracted_gym_name.strip(),
-                        "date_extracted": extractedDate.strip(),
+                        "date_extracted": extractedDate,
                         "unprocessed_image_to_string": rawText,
                         "image_url": url
                     }
