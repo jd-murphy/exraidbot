@@ -141,7 +141,7 @@ def getData():
     db = firebase.database()
     print("retrieving")
     ocr_data = db.child("ex_ocr_testing").get()
-    print('finished!\ocr_data ->')
+    print('finished!\nocr_data ->')
     for item in ocr_data.val().items():
         print(item)
     return ocr_data
