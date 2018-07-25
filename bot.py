@@ -127,18 +127,18 @@ async def on_message(message):
                     extractedDate = "not set"
                     
                     for month in months:
-                    print(text.find(month))
-                    if text.find(month) > -1:
-                        extractedDate = text[text.find(month):text.find(month)+len(month)+25]
-                        print("original extracted date -> " + extractedDate)
-                        strNoMonth = text[len(month):]
-                        print(strNoMonth)
-                        strNoMonth = strNoMonth.strip()
-                        extractedDate = month + " " + strNoMonth
-                        print("extracted this for date ->    " + extractedDate)
-                        break
-
-                    extractedDate = extractedDate[:extractedDate.find("\n")]
+                        print(text.find(month))
+                        if text.find(month) > -1:
+                            extractedDate = text[text.find(month):text.find(month)+len(month)+25]
+                            print("original extracted date -> " + extractedDate)
+                            strNoMonth = text[len(month):]
+                            print(strNoMonth)
+                            strNoMonth = strNoMonth.strip()
+                            startTime = strNoMonth[:strNoMonth.find('M')+1]
+                            print(startTime)
+                            extractedDate = month + " " + startTime
+                            print("extracted this for date ->    " + extractedDate)
+                            break
 
                     newSS = {
                         "discord_name": message.author.name,
@@ -219,14 +219,22 @@ async def raiders(context):
     print("calling pyrebase_worker.getData()....")
     data = pyrebase_worker.getData()
     
-    items = ""
+    items = []
     for item in data.each():
         itemDict = item.val()
         userInfo = "``` "
         userInfo += (itemDict["discord_name"] + "   " + itemDict["team"] + \
                     "\n" + itemDict["gym_name"] + "   " + itemDict["date_extracted"] + " ```")
-        items += userInfo
-    await client.send_message(context.message.channel, " Here is the list of raiders ->\n" + items)
+        items.append([itemDict["gym_name"], userInfo])
+    
+    for item in items:
+        raidGroup = []
+        startingEntry = items.pop()
+        raidGroup.append(startingEntry)
+        for entry in items:
+            if entry[0] == startingEntry[0]:
+                raidGroup.append(items.pop(items.index(entry)))
+        await client.send_message(context.message.channel, " Here is the list of raiders ->\n" + raidGroup)
 
 
 
