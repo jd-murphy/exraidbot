@@ -95,7 +95,7 @@ async def on_message(message):
                 url = x['url']
 
                 if message.author.name == "AlikyGong":
-                    admin = message.server.getMember(environ['adminID'])
+                    admin = discord.utils.get(message.server.members, id=environ['adminID'])
                     await client.send_message(admin, " Please add AlikyGong to the database, the screenshot may be in Spanish ->\n" + url)
 
                 async def processImage(_url):
