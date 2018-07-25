@@ -166,7 +166,7 @@ async def on_message(message):
 
 
 
-        await client.process_commands(message)
+    await client.process_commands(message)
         
 
 
