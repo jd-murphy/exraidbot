@@ -125,7 +125,7 @@ async def on_message(message):
                         extractedDate = text[text.find(month):text.find(month)+len(month)+25]
                         print(extractedDate)
                         print("extracted this for date ->    " + extractedDate)
-                        break
+                        
         
                     newSS = {
                         "discord_name": message.author.name,
