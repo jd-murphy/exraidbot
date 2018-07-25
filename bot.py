@@ -131,7 +131,7 @@ async def on_message(message):
                         if text.find(month) > -1:
                             extractedDate = text[text.find(month):text.find(month)+len(month)+25]
                             print("original extracted date -> " + extractedDate)
-                            strNoMonth = text[len(month):]
+                            strNoMonth = extractedDate[len(month):]
                             print(strNoMonth)
                             strNoMonth = strNoMonth.strip()
                             startTime = strNoMonth[:strNoMonth.find('M')+1]
