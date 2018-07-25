@@ -17,6 +17,8 @@ from discord import Status
 import pyrebase_worker
 
 
+# ExRaidBot for BCS Pokemon Go - developed with love for this awesome community by  @Aydenandjordan  7/25/2018 
+# developer: *slaps roof of this file* this bad boy could fit so much f*@%king documentation in it..
 
 
 
