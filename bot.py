@@ -125,14 +125,19 @@ async def on_message(message):
 
                     text = text.replace('|', 'l')
                     extractedDate = "not set"
+                    
                     for month in months:
-                        print(text.find(month))
-                        if text.find(month) > -1:
-                            extractedDate = text[text.find(month):text.find(month)+len(month)+25]
-                            print(extractedDate)
-                            print("extracted this for date ->    " + extractedDate)
-                            break
-                        
+                    print(text.find(month))
+                    if text.find(month) > -1:
+                        extractedDate = text[text.find(month):text.find(month)+len(month)+25]
+                        print("original extracted date -> " + extractedDate)
+                        strNoMonth = text[len(month):]
+                        print(strNoMonth)
+                        strNoMonth = strNoMonth.strip()
+                        extractedDate = month + " " + strNoMonth
+                        print("extracted this for date ->    " + extractedDate)
+                        break
+
                     extractedDate = extractedDate[:extractedDate.find("\n")]
 
                     newSS = {
@@ -218,8 +223,8 @@ async def raiders(context):
     for item in data.each():
         itemDict = item.val()
         userInfo = "``` "
-        userInfo += ("\n" + itemDict["discord_name"] + "    " + itemDict["team"] + \
-                    "\n" + itemDict["gym_name"] + "    " + itemDict["date_extracted"] + "\n ```")
+        userInfo += (itemDict["discord_name"] + "   " + itemDict["team"] + \
+                    "\n" + itemDict["gym_name"] + "   " + itemDict["date_extracted"] + " ```")
         items += userInfo
     await client.send_message(context.message.channel, " Here is the list of raiders ->\n" + items)
 
