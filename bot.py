@@ -96,9 +96,9 @@ async def on_message(message):
                 print(x['url'])
                 url = x['url']
 
-                if message.author.name == "AlikyGong":
+                if message.author.name == "AlikyGong" or message.author.name == "DaddysLittleGirl":
                     admin = discord.utils.get(message.server.members, id=environ['adminID'])
-                    await client.send_message(admin, " Please add AlikyGong to the database, the screenshot may be in Spanish ->\n" + url)
+                    await client.send_message(admin, " Please add " + message.author.name + " to the database, the screenshot may be in another language ->\n" + url)
 
                 async def processImage(_url):
                     
