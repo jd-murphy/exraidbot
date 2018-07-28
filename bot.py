@@ -253,7 +253,7 @@ async def raiders(context, gym):
     for item in items:
         if gym.lower() in item[0].lower():
             if gymName == "not set":
-                gymName = item[0]["gym_name"]
+                gymName = item[0]
             output += item[1] + "\n"
 
     embed=discord.Embed(color=0x00a6dd)
