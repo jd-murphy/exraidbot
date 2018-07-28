@@ -105,7 +105,7 @@ async def on_message(message):
                     
                     r = requests.get(_url, stream = True)
                     # rawText = pytesseract.image_to_string(Image.open(r.raw))
-                    result = ocr_op.processScreenshot(r)
+                    result = ocr_op.processScreenshot(r.raw)
 
                     # return {"status": "success", "date": _DATE, "gym": _GYM, "rawText": raw }
                     if result["status"] == "success":
