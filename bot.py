@@ -258,9 +258,17 @@ async def raiders(context, gym):
 
 
 
-
-
-
+@client.command(pass_context=True)
+async def restartBot(context, gym):
+    if context.message.author.id == environ['adminID']:
+        print("admin id confirmed")
+        print("Restarting ExRaidBot.")
+        admin = discord.utils.get(context.message.server.members, id=environ['adminID'])
+        await client.send_message(admin, "Restarting ExRaidBot.")
+        client.logout()
+        await asyncio.sleep(10)
+        client.loop.create_task(list_servers())
+        client.run(TOKEN)
 
 
 
