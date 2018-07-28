@@ -249,7 +249,7 @@ async def raiders(context, gym):
             if gym.lower() in itemDict["gym_name"].lower():
                 _gymName = itemDict["gym_name"]
 
-        userInfo += (itemDict["discord_name"] + "   " + itemDict["team"] + "   " +  itemDict["gym_name"])
+        userInfo += (itemDict["discord_name"] + "   " + itemDict["team"])
 
 
 
@@ -261,15 +261,17 @@ async def raiders(context, gym):
         if gym.lower() in item[0].lower():
             output += item[1]
 
-
-    output = output.replace(_gymName, "\n")
-
+            if len(output) > 1000:
+                embed=discord.Embed(color=0x00a6dd)
+                embed.set_author(name=_gymName)
+                embed.add_field(name="", value=output, inline=True)
+                await  client.send_message(context.message.channel, embed=embed)
+                output = ""
 
 
     embed=discord.Embed(color=0x00a6dd)
     embed.set_author(name=_gymName)
     # embed.set_thumbnail(url='https://www.iconurlhere.com')
-    
     embed.add_field(name="", value=output, inline=True)
     await  client.send_message(context.message.channel, embed=embed)
 
