@@ -241,6 +241,7 @@ async def raiders(context, gym):
    
     items = []
     _gymName = "not set"
+    _date = "not set"
 
     for item in data.each():
         itemDict = item.val()
@@ -248,6 +249,7 @@ async def raiders(context, gym):
         if _gymName == "not set":
             if gym.lower() in itemDict["gym_name"].lower():
                 _gymName = itemDict["gym_name"]
+                _date = itemDict["date_extracted"]
 
         userInfo += (itemDict["discord_name"] + "   " + itemDict["team"])
 
@@ -255,24 +257,18 @@ async def raiders(context, gym):
 
         items.append([itemDict["gym_name"], userInfo])
 
-    output = ""
 
-    for item in items:
-        if gym.lower() in item[0].lower():
-            output += item[1]
 
-            if len(output) > 1000:
-                embed=discord.Embed(color=0x00a6dd)
-                embed.set_author(name=_gymName)
-                embed.add_field(name="", value=output, inline=True)
-                await  client.send_message(context.message.channel, embed=embed)
-                output = ""
 
 
     embed=discord.Embed(color=0x00a6dd)
-    embed.set_author(name=_gymName)
-    # embed.set_thumbnail(url='https://www.iconurlhere.com')
-    embed.add_field(name="", value=output, inline=True)
+    embed.set_author(name=(_gymName + "  " + _date))
+
+    for item in items:
+        if gym.lower() in item[0].lower():
+            
+            embed.add_field(name="", value=item[1], inline=True)
+            
     await  client.send_message(context.message.channel, embed=embed)
 
     
