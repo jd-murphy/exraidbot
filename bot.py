@@ -34,10 +34,10 @@ MYSTIC_ROLE_ID = "276922105441026048"
 VALOR_ROLE_ID = "276922104169889794"
 INSTINCT_ROLE_ID = "276922106107658241"
 
-months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+# months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+# GYMS = {}
 
 RAIDS = ['Empty list']
-GYMS = {}
 emoji = [
         ':100:',
         ':ok_hand:',
