@@ -267,7 +267,6 @@ async def restartBot(context, gym):
         await client.send_message(admin, "Restarting ExRaidBot.")
         client.logout()
         await asyncio.sleep(10)
-        client.loop.create_task(list_servers())
         client.run(TOKEN)
 
 
