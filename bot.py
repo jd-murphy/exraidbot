@@ -19,7 +19,7 @@ import ocr_op
 
 
 # ExRaidBot for BCS Pokemon Go - developed with love for this awesome community by  @Aydenandjordan  7/25/2018 
-# developer: *slaps roof of this file* this bad boy could fit so much f*@%king documentation in it..
+# developer: *slaps roof of this file* this bad boy could fit so much more f*@%king documentation in it..
 
 
 
@@ -34,8 +34,7 @@ MYSTIC_ROLE_ID = "276922105441026048"
 VALOR_ROLE_ID = "276922104169889794"
 INSTINCT_ROLE_ID = "276922106107658241"
 
-# months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-# GYMS = {}
+
 
 RAIDS = ['Empty list']
 emoji = [
@@ -113,7 +112,9 @@ async def on_message(message):
                         print(result["status"])
                         print(result["date"])
                         print(result["gym"])
-
+                    else:
+                        admin = discord.utils.get(message.server.members, id=environ['adminID'])
+                        await client.send_message(admin, " Trouble processing screenshot correctly from " + message.author.name + " Results are -> " + str(result) + " ->\n" + url)
 
 
                     # text = rawText

@@ -82,15 +82,6 @@ def cropAndContrast(image):
     y2 = (originalHeight-(oneQuarterHeight*2))
     cropped = image.crop((x1, y1, x2, y2))
     cropped.save('cropped.png')    
-
-    # try:
-    #     with open('cropped.png', 'r') as cropped:
-    #         cropped.save(environ['serviceAccount'])
-    # except IOError:
-    #     with open(environ["sapath"], 'w') as f:
-    #         f.write(environ['serviceAccount'])
-
-
     print("finished cropping")
     img = cv2.imread('cropped.png', 1)
     lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
