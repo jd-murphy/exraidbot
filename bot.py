@@ -239,21 +239,31 @@ async def raiders(context, gym):
     data = pyrebase_worker.getData()
     
     items = []
+    gymName = "not set"
+
     for item in data.each():
         itemDict = item.val()
-        userInfo = "``` "
+        userInfo = ""
         userInfo += (itemDict["discord_name"] + "   " + itemDict["team"] + \
-                    "\n" + itemDict["gym_name"] + "   " + itemDict["date_extracted"] + " ```")
+                    "\n" + itemDict["gym_name"])
         items.append([itemDict["gym_name"], userInfo])
     
     output = ""
 
     for item in items:
         if gym.lower() in item[0].lower():
-            output += item[1]
+            if gymName == "not set":
+                gymName = item[0]["gym_name"]
+            output += item[1] + "\n"
 
-    await client.send_message(context.message.channel, " Here is the list of raiders ->\n" + output)
+    embed=discord.Embed(color=0x00a6dd)
+    embed.set_author(name=gymName)
+    # embed.set_thumbnail(url='https://www.iconurlhere.com')
+    
+    embed.add_field(name="", value=output, inline=True)
+    await  client.send_message(context.message.channel, embed=embed)
 
+    
 
 
 
