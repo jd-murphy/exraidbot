@@ -267,7 +267,7 @@ async def raiders(context, gym):
     for item in items:
         if gym.lower() in item[0].lower():
             
-            embed.add_field(name="", value=item[1], inline=True)
+            embed.add_field(name="Raider:", value=item[1], inline=True)
             
     await  client.send_message(context.message.channel, embed=embed)
 
