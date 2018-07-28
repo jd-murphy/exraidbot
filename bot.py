@@ -247,9 +247,9 @@ async def raiders(context, gym):
         userInfo = ""
         if _gymName == "not set":
             if gym.lower() in itemDict["gym_name"].lower():
-                _gymName = itemDict["gym_name"
+                _gymName = itemDict["gym_name"]
 
-        userInfo += (itemDict["discord_name"] + "   " + itemDict["team"] + itemDict["gym_name"])
+        userInfo += (itemDict["discord_name"] + "   " + itemDict["team"] + "   " +  itemDict["gym_name"])
 
 
 
