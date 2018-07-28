@@ -6,3 +6,5 @@ aiohttp
 twilio
 pyrebase
 firebase_admin
+PIL
+cv2

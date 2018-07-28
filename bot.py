@@ -15,6 +15,7 @@ from os import environ
 from twilio.rest import Client
 from discord import Status
 import pyrebase_worker
+import ocr_op
 
 
 # ExRaidBot for BCS Pokemon Go - developed with love for this awesome community by  @Aydenandjordan  7/25/2018 
@@ -98,14 +99,24 @@ async def on_message(message):
 
                 if message.author.name == "AlikyGong" or message.author.name == "DaddysLittleGirl":
                     admin = discord.utils.get(message.server.members, id=environ['adminID'])
-                    await client.send_message(admin, " Please add " + message.author.name + " to the database, the screenshot may be in another language ->\n" + url)
+                    await client.send_message(admin, " Check if screenshot was uploaded correctly from " + message.author.name + ". screenshot may be in another language ->\n" + url)
 
                 async def processImage(_url):
                     
                     r = requests.get(_url, stream = True)
-                    rawText = pytesseract.image_to_string(Image.open(r.raw))
+                    # rawText = pytesseract.image_to_string(Image.open(r.raw))
+                    result = ocr_op.processScreenshot(r)
 
-                    text = rawText
+                    # return {"status": "success", "date": _DATE, "gym": _GYM, "rawText": raw }
+                    if result["status"] == "success":
+                        print("successfully processed screenshot")
+                        print(result["status"])
+                        print(result["date"])
+                        print(result["gym"])
+
+
+
+                    # text = rawText
                     userTeam = "not set"
 
                     for role in message.author.roles:
@@ -120,34 +131,34 @@ async def on_message(message):
                             userTeam = "Instinct"
                             print('set team: ' + role.name)
 
-                    extracted_gym_name = (text[(text.find('a previous victory at')+21):text.find('Please visit the Gym')])
+                    # extracted_gym_name = (text[(text.find('a previous victory at')+21):text.find('Please visit the Gym')])
 
-                    extracted_gym_name = extracted_gym_name.replace("!", "")
-                    extracted_gym_name = extracted_gym_name.replace("\n", " ")
+                    # extracted_gym_name = extracted_gym_name.replace("!", "")
+                    # extracted_gym_name = extracted_gym_name.replace("\n", " ")
 
-                    text = text.replace('|', 'l')
-                    extractedDate = "not set"
+                    # text = text.replace('|', 'l')
+                    # extractedDate = "not set"
                     
-                    for month in months:
-                        print(text.find(month))
-                        if text.find(month) > -1:
-                            extractedDate = text[text.find(month):text.find(month)+len(month)+25]
-                            print("original extracted date -> " + extractedDate)
-                            strNoMonth = extractedDate[len(month):]
-                            print(strNoMonth)
-                            strNoMonth = strNoMonth.strip()
-                            startTime = strNoMonth[:strNoMonth.find('M')+1]
-                            print(startTime)
-                            extractedDate = month + " " + startTime
-                            print("extracted this for date ->    " + extractedDate)
-                            break
+                    # for month in months:
+                    #     print(text.find(month))
+                    #     if text.find(month) > -1:
+                    #         extractedDate = text[text.find(month):text.find(month)+len(month)+25]
+                    #         print("original extracted date -> " + extractedDate)
+                    #         strNoMonth = extractedDate[len(month):]
+                    #         print(strNoMonth)
+                    #         strNoMonth = strNoMonth.strip()
+                    #         startTime = strNoMonth[:strNoMonth.find('M')+1]
+                    #         print(startTime)
+                    #         extractedDate = month + " " + startTime
+                    #         print("extracted this for date ->    " + extractedDate)
+                    #         break
 
                     newSS = {
                         "discord_name": message.author.name,
                         "team": userTeam,
-                        "gym_name": extracted_gym_name.strip(),
-                        "date_extracted": extractedDate,
-                        "unprocessed_image_to_string": rawText,
+                        "gym_name": result["gym"],
+                        "date_extracted": result["date"],
+                        "unprocessed_image_to_string": result["rawText"],
                         "image_url": url
                     }
                     
