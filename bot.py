@@ -267,7 +267,7 @@ async def raiders(context, gym):
 
 
     embed=discord.Embed(color=0x00a6dd)
-    embed.set_author(name=gymName)
+    embed.set_author(name=_gymName)
     # embed.set_thumbnail(url='https://www.iconurlhere.com')
     
     embed.add_field(name="", value=output, inline=True)
