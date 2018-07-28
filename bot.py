@@ -262,7 +262,6 @@ async def raiders(context, gym):
             output += item[1]
 
 
-
     output = output.replace(_gymName, "\n")
 
 
