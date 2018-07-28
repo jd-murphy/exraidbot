@@ -81,9 +81,18 @@ def cropAndContrast(image):
     x2 = (originalWidth-oneTenthWidth)
     y2 = (originalHeight-(oneQuarterHeight*2))
     cropped = image.crop((x1, y1, x2, y2))
-    cropped.save('/Users/MurphDogg/Desktop/cropped.png')         # need to delete this i think after finished
+    cropped.save('cropped.png')    
+
+    # try:
+    #     with open('cropped.png', 'r') as cropped:
+    #         cropped.save(environ['serviceAccount'])
+    # except IOError:
+    #     with open(environ["sapath"], 'w') as f:
+    #         f.write(environ['serviceAccount'])
+
+
     print("finished cropping")
-    img = cv2.imread('/Users/MurphDogg/Desktop/cropped.png', 1)
+    img = cv2.imread('cropped.png', 1)
     lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
     # cv2.imshow("lab",lab)
     l, a, b = cv2.split(lab)
