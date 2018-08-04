@@ -258,21 +258,53 @@ async def raiders(context, gym):
             
     await  client.send_message(context.message.channel, embed=embed)
 
+
+
+
+
+
+@client.command(pass_context=True)
+async def raids(context):
+    print("raids")
+    print("calling pyrebase_worker.getData()....")
+    data = pyrebase_worker.getData()
+    
+   
+    upcomingRaids = []
+    _gymName = "not set"
+    _date = "not set"
+
+    for item in data.each():
+        itemDict = item.val()
+        raidInfo = ""
+     
+        raidInfo += itemDict["gym_name"] + "  "
+        raidInfo += itemDict["date_extracted"]
+
+        upcomingRaids.append(raidInfo)
+
+    raidsSet = set(upcomingRaids)
+    upcomingRaids = list(raidsSet)
+
+
+
+    embed=discord.Embed(color=0x00a6dd)
+    embed.set_author(name=("Upcoming EX Raids currently in the database"))
+
+    for raid in upcomingRaids:
+        embed.add_field(name="Raid:", value=raid, inline=True)
+            
+    await  client.send_message(context.message.channel, embed=embed)
+
+
     
 
 
 
 
 @client.command(pass_context=True)
-async def restartBot(context, gym):
-    if context.message.author.id == environ['adminID']:
-        print("admin id confirmed")
-        print("Restarting ExRaidBot.")
-        admin = discord.utils.get(context.message.server.members, id=environ['adminID'])
-        await client.send_message(admin, "Restarting ExRaidBot.")
-        client.logout()
-        await asyncio.sleep(10)
-        client.run(TOKEN)
+async def share(context):
+    await  client.send_message(context.message.channel, "Here is a link you can share for signing up for EX Raids.\n http://bit.ly/EXRaidsBCS")
 
 
 
