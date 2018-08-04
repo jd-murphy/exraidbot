@@ -148,25 +148,16 @@ async def on_message(message):
                             print("Hook boi posted screenshot. here is the trainer info from the webhook -> ")
                             print(trainerInfo)
 
-                        
-                        if "Mystic" in trainerInfo:
-                            userTeam = "Mystic"
-                            print('set team: ' + role.name)
-                        if "Valor" in trainerInfo:
-                            userTeam = "Valor"
-                            print('set team: ' + role.name)
-                        if "Instinct" in trainerInfo:
-                            userTeam = "Instinct"
-                            print('set team: ' + role.name)
+                            info = trainerInfo.split(":")
 
-                        newSS = {
-                            "discord_name": trainerInfo["trainerName"],
-                            "team": userTeam,
-                            "gym_name": result["gym"],
-                            "date_extracted": result["date"],
-                            "unprocessed_image_to_string": result["rawText"],
-                            "image_url": url
-                        }
+                            newSS = {
+                                "discord_name": info[1],
+                                "team": info[3],
+                                "gym_name": result["gym"],
+                                "date_extracted": result["date"],
+                                "unprocessed_image_to_string": result["rawText"],
+                                "image_url": url
+                            }
 
 
 
