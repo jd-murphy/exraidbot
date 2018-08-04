@@ -98,7 +98,7 @@ async def on_message(message):
                 print(x['url'])
                 url = x['url']
 
-                if message.author.name == "AlikyGong" or message.author.name == "DaddysLittleGirl":
+                if message.author.name == "AlikyGong" or message.author.name == "GongAliky" or message.author.name == "DaddysLittleGirl":
                     admin = discord.utils.get(message.server.members, id=environ['adminID'])
                     await client.send_message(admin, " Check if screenshot was uploaded correctly from " + message.author.name + ". screenshot may be in another language ->\n" + url)
 
