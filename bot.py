@@ -65,7 +65,13 @@ client = Bot(command_prefix=BOT_PREFIX)
 client.remove_command('help')
 @client.command()
 async def help():
-    msg = ("This bot is in testing. Look forward to some awesome Ex Raid features coming soon! " + random.choice(emoji))
+    msg = ("Hey there, Trainer! This bot allows you to sign up for your EX Raid. Just take a screenshot \
+    of your EX Raid pass and upload it in #ex_raids and I'll take care of the rest. If you want \
+    to see all the upcoming raids just type **!raids** and if you want to see who is signed up for \
+    your raid type **!raiders [gym name]** for example if you are hava a pass for Winged Elm you can \
+    type **!raiders winged** and get a list of all the people who are signed up. You can also share a \
+    link to help people sign up if they aren't on this discord server. Just use the command **!share**\
+     to get the link! Good luck with your raid, Trainer! " + random.choice(emoji))
     await client.say(msg)
         
 
