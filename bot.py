@@ -142,7 +142,7 @@ async def on_message(message):
                         }
                     
                     except Exception as e: 
-                        print("Exception (Most likely by design, Hook boi screenshot upload) -> " str(e))
+                        print("Exception (Most likely by design, Hook boi screenshot upload) -> " + str(e))
                         if message.author.name == "Hook boi":
                             trainerInfo = message.content
                             print("Hook boi posted screenshot. here is the trainer info from the webhook -> ")
