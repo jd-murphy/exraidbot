@@ -100,13 +100,13 @@ async def on_message(message):
                     admin = discord.utils.get(message.server.members, id=environ['adminID'])
                     await client.send_message(admin, " Check if screenshot was uploaded correctly from " + message.author.name + ". screenshot may be in another language ->\n" + url)
 
+
                 async def processImage(_url):
                     
                     r = requests.get(_url, stream = True)
-                    # rawText = pytesseract.image_to_string(Image.open(r.raw))
+                   
                     result = ocr_op.processScreenshot(r.raw)
-
-                    # return {"status": "success", "date": _DATE, "gym": _GYM, "rawText": raw }
+                  
                     if result["status"] == "success":
                         print("successfully processed screenshot")
                         print(result["status"])
@@ -115,71 +115,67 @@ async def on_message(message):
                     else:
                         admin = discord.utils.get(message.server.members, id=environ['adminID'])
                         await client.send_message(admin, " Trouble processing screenshot correctly from " + message.author.name + " Results are -> " + str(result) + " ->\n" + url)
-
-
-                    # text = rawText
+                   
                     userTeam = "not set"
+                    newSS = {}
 
-                    for role in message.author.roles:
-                        print('Role: ' + role.name + "   ID: " + role.id)
-                        if role.id == MYSTIC_ROLE_ID:
+                    try:
+                        for role in message.author.roles:
+                            print('Role: ' + role.name + "   ID: " + role.id)
+                            if role.id == MYSTIC_ROLE_ID:
+                                userTeam = "Mystic"
+                                print('set team: ' + role.name)
+                            if role.id == VALOR_ROLE_ID:
+                                userTeam = "Valor"
+                                print('set team: ' + role.name)
+                            if role.id == INSTINCT_ROLE_ID:
+                                userTeam = "Instinct"
+                                print('set team: ' + role.name)
+
+                        newSS = {
+                            "discord_name": message.author.name,
+                            "team": userTeam,
+                            "gym_name": result["gym"],
+                            "date_extracted": result["date"],
+                            "unprocessed_image_to_string": result["rawText"],
+                            "image_url": url
+                        }
+                    
+                    except Exception as e: 
+                        print("Exception (Most likely by design, Hook boi screenshot upload) -> " str(e))
+                        if message.author.name == "Hook boi":
+                            trainerInfo = message.content
+                            print("Hook boi posted screenshot. here is the trainer info from the webhook -> ")
+                            print(trainerInfo)
+
+                        
+                        if "Mystic" in trainerInfo:
                             userTeam = "Mystic"
                             print('set team: ' + role.name)
-                        if role.id == VALOR_ROLE_ID:
+                        if "Valor" in trainerInfo:
                             userTeam = "Valor"
                             print('set team: ' + role.name)
-                        if role.id == INSTINCT_ROLE_ID:
+                        if "Instinct" in trainerInfo:
                             userTeam = "Instinct"
                             print('set team: ' + role.name)
 
-                    # extracted_gym_name = (text[(text.find('a previous victory at')+21):text.find('Please visit the Gym')])
+                        newSS = {
+                            "discord_name": trainerInfo["trainerName"],
+                            "team": userTeam,
+                            "gym_name": result["gym"],
+                            "date_extracted": result["date"],
+                            "unprocessed_image_to_string": result["rawText"],
+                            "image_url": url
+                        }
 
-                    # extracted_gym_name = extracted_gym_name.replace("!", "")
-                    # extracted_gym_name = extracted_gym_name.replace("\n", " ")
 
-                    # text = text.replace('|', 'l')
-                    # extractedDate = "not set"
-                    
-                    # for month in months:
-                    #     print(text.find(month))
-                    #     if text.find(month) > -1:
-                    #         extractedDate = text[text.find(month):text.find(month)+len(month)+25]
-                    #         print("original extracted date -> " + extractedDate)
-                    #         strNoMonth = extractedDate[len(month):]
-                    #         print(strNoMonth)
-                    #         strNoMonth = strNoMonth.strip()
-                    #         startTime = strNoMonth[:strNoMonth.find('M')+1]
-                    #         print(startTime)
-                    #         extractedDate = month + " " + startTime
-                    #         print("extracted this for date ->    " + extractedDate)
-                    #         break
 
-                    newSS = {
-                        "discord_name": message.author.name,
-                        "team": userTeam,
-                        "gym_name": result["gym"],
-                        "date_extracted": result["date"],
-                        "unprocessed_image_to_string": result["rawText"],
-                        "image_url": url
-                    }
-                    
+
                     pyrebase_worker.upload(newSS)
                     await client.add_reaction(message, "\U0001F44D")
 
 
 
-
-
-                    #  This allows user input        ---------        Do Not Delete        ---------        just commented out for testing
-                    # def setInfo(msg):
-                    #     return msg.content.startswith('$set')
-                    # msg = await client.wait_for_message(author=message.author, check=setInfo)
-                    # await client.add_reaction(msg, '\U0001F44D') 
-                    # info = msg.content[len('$set'):].strip()
-                    # info = info.split(" ")
-                    # startTime = info[0]
-                    # await client.send_message(message.channel, message.author.mention + " Your information:\nRaid location -> " + raidLocation + "\nRaid time -> " + raidTime + "\nDesired start time -> " + startTime)
-                    #  This allows user input        ---------        Do Not Delete        ---------        just commented out for testing
 
             
             await processImage(url)
