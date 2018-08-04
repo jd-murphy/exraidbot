@@ -26,7 +26,7 @@ import ocr_op
 TOKEN = environ['TOKEN'] 
 BOT_PREFIX = ("!")
 
-INSTINCT_EMOJI = "<:emoji_name:456205777389092895>" # <:emoji_name:456205777389092895> # instinct
+INSTINCT_EMOJI = "<:emoji_name:456205777389092895>" # <:emoji_name:456205777389092895> # instinct    These are the wrong emoji ids. get ids for 3ts
 MYSTIC_EMOJI = "<:emoji_name:456205778022563851>" # <:emoji_name:456205778022563851> # mystic
 VALOR_EMOJI = "<:emoji_name:456205778395725834>" # <:emoji_name:456205778395725834> # valor
 
@@ -67,7 +67,7 @@ client.remove_command('help')
 async def help():
     msg = ("Hey there, Trainer! \nThis bot allows you to sign up for your EX Raid. Just take a screenshot of your EX Raid pass and upload it in #ex_raids and I'll take care of the rest. " + \
     "If you want to see all the upcoming raids just type   **!raids**   To see who all is signed up for a specific raid, type   **!raiders [gym name]**   For example, if you are hava a pass for Winged Elm you can type   **!raiders winged**   and get a list of all the people who are signed up. "  + \
-    "You can also share a link to help people sign up if they aren't on this discord server. Just use the command   **!share**   to get the link! \nGood luck at your raid, Trainer!  " + random.choice(emoji))
+    "You can also share a link to help people sign up if they aren't on this discord server. You can just use the command   **!share**   to get the link! \nGood luck at your raid, Trainer!  " + random.choice(emoji))
     await client.say(msg)
         
 
