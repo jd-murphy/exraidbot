@@ -283,11 +283,11 @@ async def raids(context):
     for item in data.each():
         itemDict = item.val()
         raidInfo = ""
-     
-        raidInfo += itemDict["gym_name"] + "  "
-        raidInfo += itemDict["date_extracted"]
 
-        upcomingRaids.append(raidInfo)
+        if itemDict["gym_name"] != "not found":
+            raidInfo += itemDict["gym_name"] + "  "
+            raidInfo += itemDict["date_extracted"]
+            upcomingRaids.append(raidInfo)
 
     raidsSet = set(upcomingRaids)
     upcomingRaids = list(raidsSet)
