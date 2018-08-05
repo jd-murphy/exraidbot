@@ -259,7 +259,7 @@ async def raiders(context, gym):
             embed.add_field(name="Raider:", value=item[1], inline=True)
             
     await  client.send_message(context.message.channel, embed=embed)
-
+    await  client.send_message(context.message.channel, "You can also view all raids and all raiders at this link! \n http://bit.ly/ViewRaids")
 
 
 
@@ -297,6 +297,7 @@ async def raids(context):
         embed.add_field(name="Raid:", value=raid, inline=True)
             
     await  client.send_message(context.message.channel, embed=embed)
+    await  client.send_message(context.message.channel, "You can also view all raids and all raiders at this link! \n http://bit.ly/ViewRaids")
 
 
     
