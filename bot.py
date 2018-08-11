@@ -288,8 +288,11 @@ async def rollcall(context, gym):
             
             try:
                 discordName = item[1].split('?')
+                print("discordName = " + discordName)
                 user = discord.utils.get(context.message.server.members, name=discordName[0])
-                print("Roll call: " + user.name)
+                print("user")
+                print(str(user))
+                print("Roll call: " + user)
             except Exception as e:
                 print("member not found: " + item[1] + " Error -> " + str(e)) 
             
