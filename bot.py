@@ -227,7 +227,6 @@ async def raiders(context, gym):
     print("calling pyrebase_worker.getData()....")
     data = pyrebase_worker.getData()
     
-   
     items = []
     _gymName = "not set"
     _date = "not set"
@@ -242,12 +241,7 @@ async def raiders(context, gym):
 
         userInfo += (itemDict["discord_name"] + "   " + itemDict["team"])
 
-
-
         items.append([itemDict["gym_name"], userInfo])
-
-
-
 
 
     embed=discord.Embed(color=0x00a6dd)
@@ -260,6 +254,50 @@ async def raiders(context, gym):
             
     await  client.send_message(context.message.channel, embed=embed)
     await  client.send_message(context.message.channel, "You can also view all raids and all raiders at this link! \n http://bit.ly/ViewRaids")
+
+
+
+
+
+@client.command(pass_context=True)
+async def rollcall(context, gym):
+    print("rollcall")
+    print("calling pyrebase_worker.getData()....")
+    data = pyrebase_worker.getData()
+    
+    items = []
+    _gymName = "not set"
+    _date = "not set"
+
+    for item in data.each():
+        itemDict = item.val()
+        userInfo = ""
+        if _gymName == "not set":
+            if gym.lower() in itemDict["gym_name"].lower():
+                _gymName = itemDict["gym_name"]
+                _date = itemDict["date_extracted"]
+
+        userInfo += (itemDict["discord_name"] + "   " + itemDict["team"])
+
+        items.append([itemDict["gym_name"], userInfo])
+
+
+
+    for item in items:
+        if gym.lower() in item[0].lower():
+            
+            try:
+                user = discord.utils.get(context.message.server.members, name=item[1])
+                print("Roll call: " + user.name)
+            except Exception as e:
+                print("member not found: " + item[1] + " Error -> " + str(e)) 
+            
+    admin = discord.utils.get(context.message.server.members, id=environ['adminID'])
+    # await  client.send_message(context.message.channel, "You can also view all raids and all raiders at this link! \n http://bit.ly/ViewRaids")
+    await client.send_message(admin, "Roll call for " + gym + " was called!")
+
+
+
 
 
 
