@@ -288,7 +288,7 @@ async def rollcall(context, gym):
             
             try:
                 discordName = item[1].split('?')
-                print("discordName = " + discordName)
+                print("discordName = " + discordName[0])
                 user = discord.utils.get(context.message.server.members, name=discordName[0])
                 print("user")
                 print(str(user))
