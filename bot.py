@@ -260,7 +260,7 @@ async def raiders(context, gym):
 
 
 @client.command(pass_context=True)
-async def rollcall(context, gym):
+async def rollcall(context, *gym):
     print("rollcall")
     print("calling pyrebase_worker.getData()....")
     data = pyrebase_worker.getData()
