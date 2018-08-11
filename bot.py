@@ -264,8 +264,8 @@ async def rollcall(context, *gym):
     print("rollcall")
     print("calling pyrebase_worker.getData()....")
     data = pyrebase_worker.getData()
-
-    gymNameArray = gym.lower().split(" ")
+    gymString = " ".join(gym)
+    gymNameArray = gymString.lower().split(" ")
     print("Gym name: ")
     print(gym)
     if "the" in gymNameArray: gymNameArray.remove("the")
