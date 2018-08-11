@@ -293,11 +293,11 @@ async def rollcall(context, gym):
                 print("user")
                 print(str(user))
                 print("Roll call: " + user.name)
-                await client.send_message(user.mention, " testing !rollcall for " + gym)
+                await client.send_message(context.message.channel, user.mention, " testing out !rollcall for raid: " + gym)
             except Exception as e:
                 print("member not found: " + item[1] + " Error -> " + str(e)) 
             
-    admin = discord.utils.get(context.message.channel, context.message.server.members, id=environ['adminID'])
+    admin = discord.utils.get(context.message.server.members, id=environ['adminID'])
     # await  client.send_message(context.message.channel, "You can also view all raids and all raiders at this link! \n http://bit.ly/ViewRaids")
     await client.send_message(admin, "Roll call for " + gym + " was called!")
 
