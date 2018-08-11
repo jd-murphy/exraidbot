@@ -293,7 +293,7 @@ async def rollcall(context, gym):
                 print("user")
                 print(str(user))
                 print("Roll call: " + user.name)
-                await client.send_message(context.message.channel, user.mention, " testing out !rollcall for raid: " + gym)
+                await client.send_message(context.message.channel, user.mention + " testing out !rollcall for raid: " + gym)
             except Exception as e:
                 print("member not found: " + item[1] + " Error -> " + str(e)) 
             
