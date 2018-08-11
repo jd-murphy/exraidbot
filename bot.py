@@ -277,7 +277,7 @@ async def rollcall(context, gym):
                 _gymName = itemDict["gym_name"]
                 _date = itemDict["date_extracted"]
 
-        userInfo += (itemDict["discord_name"] + "   " + itemDict["team"])
+        userInfo += (itemDict["discord_name"] + "?" + itemDict["team"])
 
         items.append([itemDict["gym_name"], userInfo])
 
@@ -287,7 +287,8 @@ async def rollcall(context, gym):
         if gym.lower() in item[0].lower():
             
             try:
-                user = discord.utils.get(context.message.server.members, name=item[1])
+                discordName = item[1].split('?')
+                user = discord.utils.get(context.message.server.members, name=discordName[0])
                 print("Roll call: " + user.name)
             except Exception as e:
                 print("member not found: " + item[1] + " Error -> " + str(e)) 
