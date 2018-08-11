@@ -312,7 +312,7 @@ async def rollcall(context, gym):
         # await  client.send_message(context.message.channel, "You can also view all raids and all raiders at this link! \n http://bit.ly/ViewRaids")
         await client.send_message(admin, "Roll call for " + gym + " was called!")
     else:
-        client.send_message(context.message.author, " Hmmm, I couldn't find a gym result. try searching without the words 'the', 'park', or 'church' ")
+        client.send_message(context.message.channel, context.message.author.mention + " Hmmm, I couldn't find a gym result. try searching without the words 'the', 'park', or 'church' ")
 
 
 
