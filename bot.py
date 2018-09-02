@@ -224,95 +224,95 @@ async def pyrebaseGetOCR(context):
 @client.command(pass_context=True)
 async def raiders(context, gym):
     print("raiders")
-    print("calling pyrebase_worker.getData()....")
-    data = pyrebase_worker.getData()
+    # print("calling pyrebase_worker.getData()....")
+    # data = pyrebase_worker.getData()
     
-    items = []
-    _gymName = "not set"
-    _date = "not set"
+    # items = []
+    # _gymName = "not set"
+    # _date = "not set"
 
-    for item in data.each():
-        itemDict = item.val()
-        userInfo = ""
-        if _gymName == "not set":
-            if gym.lower() in itemDict["gym_name"].lower():
-                _gymName = itemDict["gym_name"]
-                _date = itemDict["date_extracted"]
+    # for item in data.each():
+    #     itemDict = item.val()
+    #     userInfo = ""
+    #     if _gymName == "not set":
+    #         if gym.lower() in itemDict["gym_name"].lower():
+    #             _gymName = itemDict["gym_name"]
+    #             _date = itemDict["date_extracted"]
 
-        userInfo += (itemDict["discord_name"] + "   " + itemDict["team"])
+    #     userInfo += (itemDict["discord_name"] + "   " + itemDict["team"])
 
-        items.append([itemDict["gym_name"], userInfo])
+    #     items.append([itemDict["gym_name"], userInfo])
 
 
-    embed=discord.Embed(color=0x00a6dd)
-    embed.set_author(name=(_gymName + "  " + _date))
+    # embed=discord.Embed(color=0x00a6dd)
+    # embed.set_author(name=(_gymName + "  " + _date))
 
-    for item in items:
-        if gym.lower() in item[0].lower():
+    # for item in items:
+    #     if gym.lower() in item[0].lower():
             
-            embed.add_field(name="Raider:", value=item[1], inline=True)
+    #         embed.add_field(name="Raider:", value=item[1], inline=True)
             
-    await  client.send_message(context.message.channel, embed=embed)
-    await  client.send_message(context.message.channel, "You can also view all raids and all raiders at this link! \n http://bit.ly/ViewRaids")
+    # await  client.send_message(context.message.channel, embed=embed)
+    await  client.send_message(context.message.channel, "You can view all raids and all raiders at this link! \n http://bit.ly/ViewRaids")
 
 
 
 
 
-@client.command(pass_context=True)
-async def rollcall(context, *gym):
-    print("rollcall")
-    print("calling pyrebase_worker.getData()....")
-    data = pyrebase_worker.getData()
-    gymString = " ".join(gym)
-    gymNameArray = gymString.lower().split(" ")
-    print("Gym name: ")
-    print(gym)
-    if "the" in gymNameArray: gymNameArray.remove("the")
-    if "park" in gymNameArray: gymNameArray.remove("park")
-    if "church" in gymNameArray: gymNameArray.remove("church")
-    print("Gym name filtered: ")
-    gym = " ".join(gymNameArray)
-    print(gym)
-    if len(gym) > 0:
+# @client.command(pass_context=True)
+# async def rollcall(context, *gym):
+#     print("rollcall")
+#     print("calling pyrebase_worker.getData()....")
+#     data = pyrebase_worker.getData()
+#     gymString = " ".join(gym)
+#     gymNameArray = gymString.lower().split(" ")
+#     print("Gym name: ")
+#     print(gym)
+#     if "the" in gymNameArray: gymNameArray.remove("the")
+#     if "park" in gymNameArray: gymNameArray.remove("park")
+#     if "church" in gymNameArray: gymNameArray.remove("church")
+#     print("Gym name filtered: ")
+#     gym = " ".join(gymNameArray)
+#     print(gym)
+#     if len(gym) > 0:
     
-        items = []
-        _gymName = "not set"
-        _date = "not set"
+#         items = []
+#         _gymName = "not set"
+#         _date = "not set"
 
-        for item in data.each():
-            itemDict = item.val()
-            userInfo = ""
-            if _gymName == "not set":
-                if gym.lower() in itemDict["gym_name"].lower():
-                    _gymName = itemDict["gym_name"]
-                    _date = itemDict["date_extracted"]
+#         for item in data.each():
+#             itemDict = item.val()
+#             userInfo = ""
+#             if _gymName == "not set":
+#                 if gym.lower() in itemDict["gym_name"].lower():
+#                     _gymName = itemDict["gym_name"]
+#                     _date = itemDict["date_extracted"]
 
-            userInfo += (itemDict["discord_name"] + "?" + itemDict["team"])
+#             userInfo += (itemDict["discord_name"] + "?" + itemDict["team"])
 
-            items.append([itemDict["gym_name"], userInfo])
+#             items.append([itemDict["gym_name"], userInfo])
 
 
 
-        for item in items:
-            if gym.lower() in item[0].lower():
+#         for item in items:
+#             if gym.lower() in item[0].lower():
                 
-                try:
-                    discordName = item[1].split('?')
-                    print("discordName = " + discordName[0])
-                    user = discord.utils.get(context.message.server.members, name=discordName[0])
-                    print("user")
-                    print(str(user))
-                    print("Roll call: " + user.name)
-                    await client.send_message(context.message.channel, user.mention + " testing out !rollcall for raid: " + gym)
-                except Exception as e:
-                    print("member not found: " + item[1] + " Error -> " + str(e)) 
+#                 try:
+#                     discordName = item[1].split('?')
+#                     print("discordName = " + discordName[0])
+#                     user = discord.utils.get(context.message.server.members, name=discordName[0])
+#                     print("user")
+#                     print(str(user))
+#                     print("Roll call: " + user.name)
+#                     await client.send_message(context.message.channel, user.mention + " testing out !rollcall for raid: " + gym)
+#                 except Exception as e:
+#                     print("member not found: " + item[1] + " Error -> " + str(e)) 
                 
-        admin = discord.utils.get(context.message.server.members, id=environ['adminID'])
-        # await  client.send_message(context.message.channel, "You can also view all raids and all raiders at this link! \n http://bit.ly/ViewRaids")
-        await client.send_message(admin, "Roll call for " + gym + " was called!")
-    else:
-        client.send_message(context.message.channel, context.message.author.mention + " Hmmm, I couldn't find a gym result. try searching without the words 'the', 'park', or 'church' ")
+#         admin = discord.utils.get(context.message.server.members, id=environ['adminID'])
+#         # await  client.send_message(context.message.channel, "You can also view all raids and all raiders at this link! \n http://bit.ly/ViewRaids")
+#         await client.send_message(admin, "Roll call for " + gym + " was called!")
+#     else:
+#         client.send_message(context.message.channel, context.message.author.mention + " Hmmm, I couldn't find a gym result. try searching without the words 'the', 'park', or 'church' ")
 
 
 
